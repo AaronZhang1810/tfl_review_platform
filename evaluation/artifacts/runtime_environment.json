@@ -1,0 +1,13 @@
+{
+  "all_systems_seconds_measured": 0.037198000005446374,
+  "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",
+  "generation_seconds_measured": 0.010291459009749815,
+  "platform": "macOS-26.5-arm64-arm-64bit",
+  "python": "3.12.5",
+  "reproducibility_note": "Machine-dependent runtime metadata; deliberately excluded from artifact_hashes.txt. All other listed artifacts are deterministic for the same configuration.",
+  "rules_only_detection_seconds_measured": 0.00012779200915247202,
+  "rules_only_microseconds_per_current_table_measured": 0.25558401830494404,
+  "rules_only_microseconds_per_project_measured": 2.5558401830494404,
+  "scoring_and_bootstrap_seconds_measured": 1.490599500000826,
+  "total_seconds_measured": 1.554792124996311
+}

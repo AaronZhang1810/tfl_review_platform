@@ -1,0 +1,13 @@
+# Runtime dependencies for the synthetic portfolio demonstration.
+# Bounds avoid silently crossing major versions; release builds should also retain
+# the resolved dependency inventory produced by public_release.py.
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+python-multipart>=0.0.12,<1
+pypdf>=5,<7
+pdfplumber>=0.11,<1
+pypdfium2>=4,<6
+openpyxl>=3.1,<4
+pyyaml>=6,<7
+anthropic>=0.116,<1
+truststore>=0.9,<1

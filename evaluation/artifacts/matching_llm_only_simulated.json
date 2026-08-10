@@ -1,0 +1,2686 @@
+{
+  "false_positives": [
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        77,
+        77
+      ],
+      "confidence": 0.5476,
+      "duplicate": false,
+      "family": "AIX-3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 7"
+      },
+      "message": "Pooled-indication N mismatch at Table 2 / SYNTHETIC ROW 7; review the cited synthetic evidence.",
+      "numbers": [
+        77,
+        77
+      ],
+      "observed": null,
+      "operation": "equals",
+      "prediction_id": "llm_only_simulated:SYN-P004:AIX-3:1",
+      "project_id": "SYN-P004",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5517,
+      "duplicate": false,
+      "family": "AIW-7.2",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 14"
+      },
+      "message": "Forbidden zero in Any AE row at Table 3 / SYNTHETIC ROW 14; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P004:AIW-7.2:1",
+      "project_id": "SYN-P004",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        196,
+        189
+      ],
+      "confidence": 0.8497,
+      "duplicate": true,
+      "family": "AIV-7.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 15"
+      },
+      "message": "AE-overview change versus prior at Table 7 / SYNTHETIC ROW 15; review the cited synthetic evidence.",
+      "numbers": [
+        196,
+        189
+      ],
+      "observed": null,
+      "operation": "decreased",
+      "prediction_id": "llm_only_simulated:SYN-P005:AIV-7.3:2",
+      "project_id": "SYN-P005",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4922,
+      "duplicate": false,
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "message": "Blank or empty page at Table 10 / SYNTHETIC ROW 1; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P010:FMT-010:1",
+      "project_id": "SYN-P010",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        29,
+        74
+      ],
+      "confidence": 0.534,
+      "duplicate": false,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 10 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        29,
+        74,
+        103
+      ],
+      "observed": 103,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P011:AIW-2.1:1",
+      "project_id": "SYN-P011",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        174,
+        182
+      ],
+      "confidence": 0.5685,
+      "duplicate": false,
+      "family": "AIV-6.2",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 11"
+      },
+      "message": "N decreased versus prior edition at Table 2 / SYNTHETIC ROW 11; review the cited synthetic evidence.",
+      "numbers": [
+        174,
+        182
+      ],
+      "observed": null,
+      "operation": "decreased",
+      "prediction_id": "llm_only_simulated:SYN-P012:AIV-6.2:1",
+      "project_id": "SYN-P012",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5996,
+      "duplicate": false,
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "message": "Preferred term renamed or moved at Table 7 / SYNTHETIC ROW 16; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P012:AIV-7.4:1",
+      "project_id": "SYN-P012",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.7449,
+      "duplicate": true,
+      "family": "AIV-6.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 10"
+      },
+      "message": "New study versus prior edition at Table 10 / SYNTHETIC ROW 10; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P013:AIV-6.1:2",
+      "project_id": "SYN-P013",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4509,
+      "duplicate": false,
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "message": "Gap in output numbering at Table 10 / SYNTHETIC ROW 3; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P014:XOUT-001:1",
+      "project_id": "SYN-P014",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.7974,
+      "duplicate": true,
+      "family": "AIV-6.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 10"
+      },
+      "message": "New study versus prior edition at Table 1 / SYNTHETIC ROW 10; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P014:AIV-6.1:2",
+      "project_id": "SYN-P014",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        88,
+        88
+      ],
+      "confidence": 0.4933,
+      "duplicate": false,
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "message": "Table 1 versus by-study N mismatch at Table 6 / SYNTHETIC ROW 8; review the cited synthetic evidence.",
+      "numbers": [
+        88,
+        88
+      ],
+      "observed": null,
+      "operation": "equals",
+      "prediction_id": "llm_only_simulated:SYN-P015:AIX-4:1",
+      "project_id": "SYN-P015",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        34,
+        20
+      ],
+      "confidence": 0.5426,
+      "duplicate": false,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 6",
+        "output_label": "Table 5",
+        "page": 5,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 5 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        34,
+        20,
+        54
+      ],
+      "observed": 54,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P016:AIW-2.1:1",
+      "project_id": "SYN-P016",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        34,
+        20
+      ],
+      "confidence": 0.5426,
+      "duplicate": true,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 6",
+        "output_label": "Table 5",
+        "page": 5,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 5 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        34,
+        20,
+        54
+      ],
+      "observed": 54,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P016:AIW-2.1:2",
+      "project_id": "SYN-P016",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4452,
+      "duplicate": false,
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "message": "Footnote study-list mismatch at Table 10 / SYNTHETIC ROW 9; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P016:AIX-5:1",
+      "project_id": "SYN-P016",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        111,
+        105
+      ],
+      "confidence": 0.7068,
+      "duplicate": true,
+      "family": "AIX-3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 6",
+        "output_label": "Table 5",
+        "page": 5,
+        "row": "SYNTHETIC ROW 7"
+      },
+      "message": "Pooled-indication N mismatch at Table 5 / SYNTHETIC ROW 7; review the cited synthetic evidence.",
+      "numbers": [
+        111,
+        105
+      ],
+      "observed": null,
+      "operation": "equals",
+      "prediction_id": "llm_only_simulated:SYN-P017:AIX-3:2",
+      "project_id": "SYN-P017",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.7363,
+      "duplicate": true,
+      "family": "XOUT-020",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 2"
+      },
+      "message": "Output missing versus prior edition at Table 2 / SYNTHETIC ROW 2; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P019:XOUT-020:2",
+      "project_id": "SYN-P019",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        100,
+        100
+      ],
+      "confidence": 0.5085,
+      "duplicate": false,
+      "family": "AIV-6.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 12"
+      },
+      "message": "N increased versus prior edition at Table 2 / SYNTHETIC ROW 12; review the cited synthetic evidence.",
+      "numbers": [
+        100,
+        100
+      ],
+      "observed": null,
+      "operation": "increased",
+      "prediction_id": "llm_only_simulated:SYN-P019:AIV-6.3:1",
+      "project_id": "SYN-P019",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        50,
+        35
+      ],
+      "confidence": 0.5181,
+      "duplicate": false,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 9 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        50,
+        35,
+        85
+      ],
+      "observed": 85,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P020:AIW-2.1:1",
+      "project_id": "SYN-P020",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        33,
+        66
+      ],
+      "confidence": 0.4628,
+      "duplicate": false,
+      "family": "AIW-2.2",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 5"
+      },
+      "message": "Component columns do not sum to row total at Table 3 / SYNTHETIC ROW 5; review the cited synthetic evidence.",
+      "numbers": [
+        33,
+        66,
+        99
+      ],
+      "observed": 99,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P021:AIW-2.2:1",
+      "project_id": "SYN-P021",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        72,
+        72
+      ],
+      "confidence": 0.5028,
+      "duplicate": false,
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "message": "Table 1 versus by-study N mismatch at Table 2 / SYNTHETIC ROW 8; review the cited synthetic evidence.",
+      "numbers": [
+        72,
+        72
+      ],
+      "observed": null,
+      "operation": "equals",
+      "prediction_id": "llm_only_simulated:SYN-P021:AIX-4:1",
+      "project_id": "SYN-P021",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4502,
+      "duplicate": false,
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "message": "Preferred term renamed or moved at Table 6 / SYNTHETIC ROW 16; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P021:AIV-7.4:1",
+      "project_id": "SYN-P021",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        21,
+        52
+      ],
+      "confidence": 0.4864,
+      "duplicate": false,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 1 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        21,
+        52,
+        73
+      ],
+      "observed": 73,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P022:AIW-2.1:1",
+      "project_id": "SYN-P022",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5877,
+      "duplicate": false,
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "message": "Blank or empty page at Table 7 / SYNTHETIC ROW 1; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P027:FMT-010:1",
+      "project_id": "SYN-P027",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        195,
+        189
+      ],
+      "confidence": 0.9428,
+      "duplicate": true,
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "message": "Within-table numeric integrity at Table 2 / SYNTHETIC ROW 6; review the cited synthetic evidence.",
+      "numbers": [
+        195,
+        189
+      ],
+      "observed": null,
+      "operation": "less_equal",
+      "prediction_id": "llm_only_simulated:SYN-P027:AIW-2.3:2",
+      "project_id": "SYN-P027",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        163,
+        163
+      ],
+      "confidence": 0.5028,
+      "duplicate": false,
+      "family": "AIV-6.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 12"
+      },
+      "message": "N increased versus prior edition at Table 10 / SYNTHETIC ROW 12; review the cited synthetic evidence.",
+      "numbers": [
+        163,
+        163
+      ],
+      "observed": null,
+      "operation": "increased",
+      "prediction_id": "llm_only_simulated:SYN-P027:AIV-6.3:1",
+      "project_id": "SYN-P027",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        171,
+        178
+      ],
+      "confidence": 0.7548,
+      "duplicate": true,
+      "family": "AIV-6.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 12"
+      },
+      "message": "N increased versus prior edition at Table 2 / SYNTHETIC ROW 12; review the cited synthetic evidence.",
+      "numbers": [
+        171,
+        178
+      ],
+      "observed": null,
+      "operation": "increased",
+      "prediction_id": "llm_only_simulated:SYN-P029:AIV-6.3:2",
+      "project_id": "SYN-P029",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5544,
+      "duplicate": false,
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "message": "Blank or empty page at Table 10 / SYNTHETIC ROW 1; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P030:FMT-010:1",
+      "project_id": "SYN-P030",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        115,
+        109
+      ],
+      "confidence": 0.7707,
+      "duplicate": true,
+      "family": "AIX-3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 7"
+      },
+      "message": "Pooled-indication N mismatch at Table 8 / SYNTHETIC ROW 7; review the cited synthetic evidence.",
+      "numbers": [
+        115,
+        109
+      ],
+      "observed": null,
+      "operation": "equals",
+      "prediction_id": "llm_only_simulated:SYN-P030:AIX-3:2",
+      "project_id": "SYN-P030",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.517,
+      "duplicate": false,
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "message": "Gap in output numbering at Table 7 / SYNTHETIC ROW 3; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P031:XOUT-001:1",
+      "project_id": "SYN-P031",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5604,
+      "duplicate": false,
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "message": "Gap in output numbering at Table 8 / SYNTHETIC ROW 3; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P032:XOUT-001:1",
+      "project_id": "SYN-P032",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.506,
+      "duplicate": false,
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "message": "Footnote study-list mismatch at Table 8 / SYNTHETIC ROW 9; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P034:AIX-5:1",
+      "project_id": "SYN-P034",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.506,
+      "duplicate": true,
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "message": "Footnote study-list mismatch at Table 8 / SYNTHETIC ROW 9; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P034:AIX-5:2",
+      "project_id": "SYN-P034",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        216,
+        227
+      ],
+      "confidence": 0.5139,
+      "duplicate": false,
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "message": "Within-table numeric integrity at Table 1 / SYNTHETIC ROW 6; review the cited synthetic evidence.",
+      "numbers": [
+        216,
+        227
+      ],
+      "observed": null,
+      "operation": "less_equal",
+      "prediction_id": "llm_only_simulated:SYN-P036:AIW-2.3:1",
+      "project_id": "SYN-P036",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4903,
+      "duplicate": false,
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 6",
+        "output_label": "Table 5",
+        "page": 5,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "message": "Gap in output numbering at Table 5 / SYNTHETIC ROW 3; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P039:XOUT-001:1",
+      "project_id": "SYN-P039",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        85,
+        27
+      ],
+      "confidence": 0.8436,
+      "duplicate": true,
+      "family": "AIW-2.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 4"
+      },
+      "message": "Subgroups do not sum to heading N at Table 9 / SYNTHETIC ROW 4; review the cited synthetic evidence.",
+      "numbers": [
+        85,
+        27,
+        115
+      ],
+      "observed": 115,
+      "operation": "sum_equals",
+      "prediction_id": "llm_only_simulated:SYN-P040:AIW-2.1:2",
+      "project_id": "SYN-P040",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.7797,
+      "duplicate": true,
+      "family": "AIV-6.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 10"
+      },
+      "message": "New study versus prior edition at Table 9 / SYNTHETIC ROW 10; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P042:AIV-6.1:2",
+      "project_id": "SYN-P042",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4742,
+      "duplicate": false,
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "message": "Gap in output numbering at Table 3 / SYNTHETIC ROW 3; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P047:XOUT-001:1",
+      "project_id": "SYN-P047",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        178,
+        189
+      ],
+      "confidence": 0.5385,
+      "duplicate": false,
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "message": "Within-table numeric integrity at Table 2 / SYNTHETIC ROW 6; review the cited synthetic evidence.",
+      "numbers": [
+        178,
+        189
+      ],
+      "observed": null,
+      "operation": "less_equal",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIW-2.3:1",
+      "project_id": "SYN-P047",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [
+        178,
+        189
+      ],
+      "confidence": 0.5385,
+      "duplicate": true,
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "message": "Within-table numeric integrity at Table 2 / SYNTHETIC ROW 6; review the cited synthetic evidence.",
+      "numbers": [
+        178,
+        189
+      ],
+      "observed": null,
+      "operation": "less_equal",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIW-2.3:2",
+      "project_id": "SYN-P047",
+      "risk": "High",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.5036,
+      "duplicate": false,
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "message": "Footnote study-list mismatch at Table 1 / SYNTHETIC ROW 9; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIX-5:1",
+      "project_id": "SYN-P047",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    },
+    {
+      "citation_corrupted": false,
+      "cited_numbers": [],
+      "confidence": 0.4434,
+      "duplicate": false,
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "message": "Blank or empty page at Table 8 / SYNTHETIC ROW 1; review the cited synthetic evidence.",
+      "numbers": [],
+      "observed": null,
+      "operation": "none",
+      "prediction_id": "llm_only_simulated:SYN-P048:FMT-010:1",
+      "project_id": "SYN-P048",
+      "risk": "Low",
+      "simulator_version": "simulated-llm-v1"
+    }
+  ],
+  "matched": [
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P001:XOUT-001:1",
+      "project_id": "SYN-P001",
+      "truth_id": "TRUTH:SYN-P001:XOUT-001"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P001:AIW-2.2:1",
+      "project_id": "SYN-P001",
+      "truth_id": "TRUTH:SYN-P001:AIW-2.2"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P001:AIW-7.2:1",
+      "project_id": "SYN-P001",
+      "truth_id": "TRUTH:SYN-P001:AIW-7.2"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P001:AIV-7.4:1",
+      "project_id": "SYN-P001",
+      "truth_id": "TRUTH:SYN-P001:AIV-7.4"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P002:AIW-2.2:1",
+      "project_id": "SYN-P002",
+      "truth_id": "TRUTH:SYN-P002:AIW-2.2"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P002:AIX-3:1",
+      "project_id": "SYN-P002",
+      "truth_id": "TRUTH:SYN-P002:AIX-3"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P004:AIX-7.1:1",
+      "project_id": "SYN-P004",
+      "truth_id": "TRUTH:SYN-P004:AIX-7.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P004:AIV-7.3:1",
+      "project_id": "SYN-P004",
+      "truth_id": "TRUTH:SYN-P004:AIV-7.3"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P005:AIW-2.1:1",
+      "project_id": "SYN-P005",
+      "truth_id": "TRUTH:SYN-P005:AIW-2.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P005:AIV-7.3:1",
+      "project_id": "SYN-P005",
+      "truth_id": "TRUTH:SYN-P005:AIV-7.3"
+    },
+    {
+      "family": "AIW-2.3",
+      "prediction_id": "llm_only_simulated:SYN-P006:AIW-2.3:1",
+      "project_id": "SYN-P006",
+      "truth_id": "TRUTH:SYN-P006:AIW-2.3"
+    },
+    {
+      "family": "AIX-4",
+      "prediction_id": "llm_only_simulated:SYN-P006:AIX-4:1",
+      "project_id": "SYN-P006",
+      "truth_id": "TRUTH:SYN-P006:AIX-4"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P006:AIV-6.1:1",
+      "project_id": "SYN-P006",
+      "truth_id": "TRUTH:SYN-P006:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P007:FMT-010:1",
+      "project_id": "SYN-P007",
+      "truth_id": "TRUTH:SYN-P007:FMT-010"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P007:AIV-6.1:1",
+      "project_id": "SYN-P007",
+      "truth_id": "TRUTH:SYN-P007:AIV-6.1"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P007:AIV-6.3:1",
+      "project_id": "SYN-P007",
+      "truth_id": "TRUTH:SYN-P007:AIV-6.3"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P007:AIW-7.2:1",
+      "project_id": "SYN-P007",
+      "truth_id": "TRUTH:SYN-P007:AIW-7.2"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P008:AIW-2.2:1",
+      "project_id": "SYN-P008",
+      "truth_id": "TRUTH:SYN-P008:AIW-2.2"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P008:AIW-7.2:1",
+      "project_id": "SYN-P008",
+      "truth_id": "TRUTH:SYN-P008:AIW-7.2"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P008:AIV-7.4:1",
+      "project_id": "SYN-P008",
+      "truth_id": "TRUTH:SYN-P008:AIV-7.4"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P009:AIW-2.2:1",
+      "project_id": "SYN-P009",
+      "truth_id": "TRUTH:SYN-P009:AIW-2.2"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P010:AIV-6.2:1",
+      "project_id": "SYN-P010",
+      "truth_id": "TRUTH:SYN-P010:AIV-6.2"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P011:XOUT-020:1",
+      "project_id": "SYN-P011",
+      "truth_id": "TRUTH:SYN-P011:XOUT-020"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P011:AIV-6.2:1",
+      "project_id": "SYN-P011",
+      "truth_id": "TRUTH:SYN-P011:AIV-6.2"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P011:AIX-7.1:1",
+      "project_id": "SYN-P011",
+      "truth_id": "TRUTH:SYN-P011:AIX-7.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P011:AIV-7.3:1",
+      "project_id": "SYN-P011",
+      "truth_id": "TRUTH:SYN-P011:AIV-7.3"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P012:XOUT-020:1",
+      "project_id": "SYN-P012",
+      "truth_id": "TRUTH:SYN-P012:XOUT-020"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P012:AIW-2.1:1",
+      "project_id": "SYN-P012",
+      "truth_id": "TRUTH:SYN-P012:AIW-2.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P012:AIV-7.3:1",
+      "project_id": "SYN-P012",
+      "truth_id": "TRUTH:SYN-P012:AIV-7.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P012:AIX-8:1",
+      "project_id": "SYN-P012",
+      "truth_id": "TRUTH:SYN-P012:AIX-8"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P013:AIV-6.1:1",
+      "project_id": "SYN-P013",
+      "truth_id": "TRUTH:SYN-P013:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P014:FMT-010:1",
+      "project_id": "SYN-P014",
+      "truth_id": "TRUTH:SYN-P014:FMT-010"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P014:AIV-6.1:1",
+      "project_id": "SYN-P014",
+      "truth_id": "TRUTH:SYN-P014:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P015:FMT-010:1",
+      "project_id": "SYN-P015",
+      "truth_id": "TRUTH:SYN-P015:FMT-010"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P015:XOUT-001:1",
+      "project_id": "SYN-P015",
+      "truth_id": "TRUTH:SYN-P015:XOUT-001"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P015:AIW-7.2:1",
+      "project_id": "SYN-P015",
+      "truth_id": "TRUTH:SYN-P015:AIW-7.2"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P015:AIV-7.4:1",
+      "project_id": "SYN-P015",
+      "truth_id": "TRUTH:SYN-P015:AIV-7.4"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P016:AIW-2.2:1",
+      "project_id": "SYN-P016",
+      "truth_id": "TRUTH:SYN-P016:AIW-2.2"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P016:AIX-3:1",
+      "project_id": "SYN-P016",
+      "truth_id": "TRUTH:SYN-P016:AIX-3"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P017:AIX-3:1",
+      "project_id": "SYN-P017",
+      "truth_id": "TRUTH:SYN-P017:AIX-3"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P017:AIV-6.2:1",
+      "project_id": "SYN-P017",
+      "truth_id": "TRUTH:SYN-P017:AIV-6.2"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P018:XOUT-020:1",
+      "project_id": "SYN-P018",
+      "truth_id": "TRUTH:SYN-P018:XOUT-020"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P018:AIV-6.2:1",
+      "project_id": "SYN-P018",
+      "truth_id": "TRUTH:SYN-P018:AIV-6.2"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P018:AIX-7.1:1",
+      "project_id": "SYN-P018",
+      "truth_id": "TRUTH:SYN-P018:AIX-7.1"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P019:XOUT-020:1",
+      "project_id": "SYN-P019",
+      "truth_id": "TRUTH:SYN-P019:XOUT-020"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P019:AIW-2.1:1",
+      "project_id": "SYN-P019",
+      "truth_id": "TRUTH:SYN-P019:AIW-2.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P019:AIV-7.3:1",
+      "project_id": "SYN-P019",
+      "truth_id": "TRUTH:SYN-P019:AIV-7.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P019:AIX-8:1",
+      "project_id": "SYN-P019",
+      "truth_id": "TRUTH:SYN-P019:AIX-8"
+    },
+    {
+      "family": "AIW-2.3",
+      "prediction_id": "llm_only_simulated:SYN-P020:AIW-2.3:1",
+      "project_id": "SYN-P020",
+      "truth_id": "TRUTH:SYN-P020:AIW-2.3"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P021:AIV-6.1:1",
+      "project_id": "SYN-P021",
+      "truth_id": "TRUTH:SYN-P021:AIV-6.1"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P021:AIV-6.3:1",
+      "project_id": "SYN-P021",
+      "truth_id": "TRUTH:SYN-P021:AIV-6.3"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P022:XOUT-001:1",
+      "project_id": "SYN-P022",
+      "truth_id": "TRUTH:SYN-P022:XOUT-001"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P022:AIV-6.3:1",
+      "project_id": "SYN-P022",
+      "truth_id": "TRUTH:SYN-P022:AIV-6.3"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P023:XOUT-001:1",
+      "project_id": "SYN-P023",
+      "truth_id": "TRUTH:SYN-P023:XOUT-001"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P023:AIW-2.2:1",
+      "project_id": "SYN-P023",
+      "truth_id": "TRUTH:SYN-P023:AIW-2.2"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P023:AIV-7.4:1",
+      "project_id": "SYN-P023",
+      "truth_id": "TRUTH:SYN-P023:AIV-7.4"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P024:AIX-3:1",
+      "project_id": "SYN-P024",
+      "truth_id": "TRUTH:SYN-P024:AIX-3"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P024:AIV-6.2:1",
+      "project_id": "SYN-P024",
+      "truth_id": "TRUTH:SYN-P024:AIV-6.2"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P025:AIV-6.2:1",
+      "project_id": "SYN-P025",
+      "truth_id": "TRUTH:SYN-P025:AIV-6.2"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P025:AIX-7.1:1",
+      "project_id": "SYN-P025",
+      "truth_id": "TRUTH:SYN-P025:AIX-7.1"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P026:XOUT-020:1",
+      "project_id": "SYN-P026",
+      "truth_id": "TRUTH:SYN-P026:XOUT-020"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P026:AIW-2.1:1",
+      "project_id": "SYN-P026",
+      "truth_id": "TRUTH:SYN-P026:AIW-2.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P026:AIV-7.3:1",
+      "project_id": "SYN-P026",
+      "truth_id": "TRUTH:SYN-P026:AIV-7.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P026:AIX-8:1",
+      "project_id": "SYN-P026",
+      "truth_id": "TRUTH:SYN-P026:AIX-8"
+    },
+    {
+      "family": "AIW-2.3",
+      "prediction_id": "llm_only_simulated:SYN-P027:AIW-2.3:1",
+      "project_id": "SYN-P027",
+      "truth_id": "TRUTH:SYN-P027:AIW-2.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P027:AIX-8:1",
+      "project_id": "SYN-P027",
+      "truth_id": "TRUTH:SYN-P027:AIX-8"
+    },
+    {
+      "family": "AIX-4",
+      "prediction_id": "llm_only_simulated:SYN-P028:AIX-4:1",
+      "project_id": "SYN-P028",
+      "truth_id": "TRUTH:SYN-P028:AIX-4"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P028:AIV-6.1:1",
+      "project_id": "SYN-P028",
+      "truth_id": "TRUTH:SYN-P028:AIV-6.1"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P028:AIV-6.3:1",
+      "project_id": "SYN-P028",
+      "truth_id": "TRUTH:SYN-P028:AIV-6.3"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P029:XOUT-001:1",
+      "project_id": "SYN-P029",
+      "truth_id": "TRUTH:SYN-P029:XOUT-001"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P029:AIV-6.3:1",
+      "project_id": "SYN-P029",
+      "truth_id": "TRUTH:SYN-P029:AIV-6.3"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P029:AIW-7.2:1",
+      "project_id": "SYN-P029",
+      "truth_id": "TRUTH:SYN-P029:AIW-7.2"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P030:XOUT-001:1",
+      "project_id": "SYN-P030",
+      "truth_id": "TRUTH:SYN-P030:XOUT-001"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P030:AIW-2.2:1",
+      "project_id": "SYN-P030",
+      "truth_id": "TRUTH:SYN-P030:AIW-2.2"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P030:AIX-3:1",
+      "project_id": "SYN-P030",
+      "truth_id": "TRUTH:SYN-P030:AIX-3"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P030:AIV-7.4:1",
+      "project_id": "SYN-P030",
+      "truth_id": "TRUTH:SYN-P030:AIV-7.4"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P031:AIX-3:1",
+      "project_id": "SYN-P031",
+      "truth_id": "TRUTH:SYN-P031:AIX-3"
+    },
+    {
+      "family": "AIX-5",
+      "prediction_id": "llm_only_simulated:SYN-P031:AIX-5:1",
+      "project_id": "SYN-P031",
+      "truth_id": "TRUTH:SYN-P031:AIX-5"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P032:AIV-6.2:1",
+      "project_id": "SYN-P032",
+      "truth_id": "TRUTH:SYN-P032:AIV-6.2"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P032:AIX-7.1:1",
+      "project_id": "SYN-P032",
+      "truth_id": "TRUTH:SYN-P032:AIX-7.1"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P033:AIW-2.1:1",
+      "project_id": "SYN-P033",
+      "truth_id": "TRUTH:SYN-P033:AIW-2.1"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P033:AIX-7.1:1",
+      "project_id": "SYN-P033",
+      "truth_id": "TRUTH:SYN-P033:AIX-7.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P033:AIV-7.3:1",
+      "project_id": "SYN-P033",
+      "truth_id": "TRUTH:SYN-P033:AIV-7.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P033:AIX-8:1",
+      "project_id": "SYN-P033",
+      "truth_id": "TRUTH:SYN-P033:AIX-8"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P034:AIW-2.1:1",
+      "project_id": "SYN-P034",
+      "truth_id": "TRUTH:SYN-P034:AIW-2.1"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P035:AIV-6.1:1",
+      "project_id": "SYN-P035",
+      "truth_id": "TRUTH:SYN-P035:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P036:FMT-010:1",
+      "project_id": "SYN-P036",
+      "truth_id": "TRUTH:SYN-P036:FMT-010"
+    },
+    {
+      "family": "XOUT-001",
+      "prediction_id": "llm_only_simulated:SYN-P036:XOUT-001:1",
+      "project_id": "SYN-P036",
+      "truth_id": "TRUTH:SYN-P036:XOUT-001"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P036:AIV-6.3:1",
+      "project_id": "SYN-P036",
+      "truth_id": "TRUTH:SYN-P036:AIV-6.3"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P036:AIW-7.2:1",
+      "project_id": "SYN-P036",
+      "truth_id": "TRUTH:SYN-P036:AIW-7.2"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P037:AIW-2.2:1",
+      "project_id": "SYN-P037",
+      "truth_id": "TRUTH:SYN-P037:AIW-2.2"
+    },
+    {
+      "family": "AIV-7.4",
+      "prediction_id": "llm_only_simulated:SYN-P037:AIV-7.4:1",
+      "project_id": "SYN-P037",
+      "truth_id": "TRUTH:SYN-P037:AIV-7.4"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P038:AIX-3:1",
+      "project_id": "SYN-P038",
+      "truth_id": "TRUTH:SYN-P038:AIX-3"
+    },
+    {
+      "family": "AIX-5",
+      "prediction_id": "llm_only_simulated:SYN-P038:AIX-5:1",
+      "project_id": "SYN-P038",
+      "truth_id": "TRUTH:SYN-P038:AIX-5"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P039:AIV-6.2:1",
+      "project_id": "SYN-P039",
+      "truth_id": "TRUTH:SYN-P039:AIV-6.2"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P039:AIX-7.1:1",
+      "project_id": "SYN-P039",
+      "truth_id": "TRUTH:SYN-P039:AIX-7.1"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P040:XOUT-020:1",
+      "project_id": "SYN-P040",
+      "truth_id": "TRUTH:SYN-P040:XOUT-020"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P040:AIW-2.1:1",
+      "project_id": "SYN-P040",
+      "truth_id": "TRUTH:SYN-P040:AIW-2.1"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P040:AIX-7.1:1",
+      "project_id": "SYN-P040",
+      "truth_id": "TRUTH:SYN-P040:AIX-7.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P040:AIV-7.3:1",
+      "project_id": "SYN-P040",
+      "truth_id": "TRUTH:SYN-P040:AIV-7.3"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P040:AIX-8:1",
+      "project_id": "SYN-P040",
+      "truth_id": "TRUTH:SYN-P040:AIX-8"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P041:AIW-2.1:1",
+      "project_id": "SYN-P041",
+      "truth_id": "TRUTH:SYN-P041:AIW-2.1"
+    },
+    {
+      "family": "AIW-2.3",
+      "prediction_id": "llm_only_simulated:SYN-P041:AIW-2.3:1",
+      "project_id": "SYN-P041",
+      "truth_id": "TRUTH:SYN-P041:AIW-2.3"
+    },
+    {
+      "family": "AIX-4",
+      "prediction_id": "llm_only_simulated:SYN-P041:AIX-4:1",
+      "project_id": "SYN-P041",
+      "truth_id": "TRUTH:SYN-P041:AIX-4"
+    },
+    {
+      "family": "AIX-8",
+      "prediction_id": "llm_only_simulated:SYN-P041:AIX-8:1",
+      "project_id": "SYN-P041",
+      "truth_id": "TRUTH:SYN-P041:AIX-8"
+    },
+    {
+      "family": "AIX-4",
+      "prediction_id": "llm_only_simulated:SYN-P042:AIX-4:1",
+      "project_id": "SYN-P042",
+      "truth_id": "TRUTH:SYN-P042:AIX-4"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P042:AIV-6.1:1",
+      "project_id": "SYN-P042",
+      "truth_id": "TRUTH:SYN-P042:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P043:FMT-010:1",
+      "project_id": "SYN-P043",
+      "truth_id": "TRUTH:SYN-P043:FMT-010"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P043:AIV-6.3:1",
+      "project_id": "SYN-P043",
+      "truth_id": "TRUTH:SYN-P043:AIV-6.3"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P043:AIW-7.2:1",
+      "project_id": "SYN-P043",
+      "truth_id": "TRUTH:SYN-P043:AIW-7.2"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P044:AIW-2.2:1",
+      "project_id": "SYN-P044",
+      "truth_id": "TRUTH:SYN-P044:AIW-2.2"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P044:AIW-7.2:1",
+      "project_id": "SYN-P044",
+      "truth_id": "TRUTH:SYN-P044:AIW-7.2"
+    },
+    {
+      "family": "AIW-2.2",
+      "prediction_id": "llm_only_simulated:SYN-P045:AIW-2.2:1",
+      "project_id": "SYN-P045",
+      "truth_id": "TRUTH:SYN-P045:AIW-2.2"
+    },
+    {
+      "family": "AIX-3",
+      "prediction_id": "llm_only_simulated:SYN-P045:AIX-3:1",
+      "project_id": "SYN-P045",
+      "truth_id": "TRUTH:SYN-P045:AIX-3"
+    },
+    {
+      "family": "AIV-6.2",
+      "prediction_id": "llm_only_simulated:SYN-P046:AIV-6.2:1",
+      "project_id": "SYN-P046",
+      "truth_id": "TRUTH:SYN-P046:AIV-6.2"
+    },
+    {
+      "family": "XOUT-020",
+      "prediction_id": "llm_only_simulated:SYN-P047:XOUT-020:1",
+      "project_id": "SYN-P047",
+      "truth_id": "TRUTH:SYN-P047:XOUT-020"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIW-2.1:1",
+      "project_id": "SYN-P047",
+      "truth_id": "TRUTH:SYN-P047:AIW-2.1"
+    },
+    {
+      "family": "AIX-7.1",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIX-7.1:1",
+      "project_id": "SYN-P047",
+      "truth_id": "TRUTH:SYN-P047:AIX-7.1"
+    },
+    {
+      "family": "AIV-7.3",
+      "prediction_id": "llm_only_simulated:SYN-P047:AIV-7.3:1",
+      "project_id": "SYN-P047",
+      "truth_id": "TRUTH:SYN-P047:AIV-7.3"
+    },
+    {
+      "family": "AIW-2.1",
+      "prediction_id": "llm_only_simulated:SYN-P048:AIW-2.1:1",
+      "project_id": "SYN-P048",
+      "truth_id": "TRUTH:SYN-P048:AIW-2.1"
+    },
+    {
+      "family": "AIW-2.3",
+      "prediction_id": "llm_only_simulated:SYN-P048:AIW-2.3:1",
+      "project_id": "SYN-P048",
+      "truth_id": "TRUTH:SYN-P048:AIW-2.3"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P049:AIV-6.1:1",
+      "project_id": "SYN-P049",
+      "truth_id": "TRUTH:SYN-P049:AIV-6.1"
+    },
+    {
+      "family": "FMT-010",
+      "prediction_id": "llm_only_simulated:SYN-P050:FMT-010:1",
+      "project_id": "SYN-P050",
+      "truth_id": "TRUTH:SYN-P050:FMT-010"
+    },
+    {
+      "family": "AIV-6.1",
+      "prediction_id": "llm_only_simulated:SYN-P050:AIV-6.1:1",
+      "project_id": "SYN-P050",
+      "truth_id": "TRUTH:SYN-P050:AIV-6.1"
+    },
+    {
+      "family": "AIV-6.3",
+      "prediction_id": "llm_only_simulated:SYN-P050:AIV-6.3:1",
+      "project_id": "SYN-P050",
+      "truth_id": "TRUTH:SYN-P050:AIV-6.3"
+    },
+    {
+      "family": "AIW-7.2",
+      "prediction_id": "llm_only_simulated:SYN-P050:AIW-7.2:1",
+      "project_id": "SYN-P050",
+      "truth_id": "TRUTH:SYN-P050:AIW-7.2"
+    }
+  ],
+  "missed": [
+    {
+      "evidence": {
+        "character_count": 0
+      },
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "opportunity_id": "SYN-P001:FMT-010",
+      "project_id": "SYN-P001",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P001:FMT-010"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P002:AIX-5",
+      "project_id": "SYN-P002",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P002:AIX-5"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P003:AIX-5",
+      "project_id": "SYN-P003",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P003:AIX-5"
+    },
+    {
+      "evidence": {
+        "current": 75,
+        "prior": 82
+      },
+      "family": "AIV-6.2",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 11"
+      },
+      "opportunity_id": "SYN-P003:AIV-6.2",
+      "project_id": "SYN-P003",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P003:AIV-6.2"
+    },
+    {
+      "evidence": {
+        "current_labels": [
+          "Table 5.1",
+          "Table 5.3"
+        ],
+        "current_present": false,
+        "prior_label": "Table 5.2",
+        "prior_present": true
+      },
+      "family": "XOUT-020",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 2"
+      },
+      "opportunity_id": "SYN-P004:XOUT-020",
+      "project_id": "SYN-P004",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P004:XOUT-020"
+    },
+    {
+      "evidence": {
+        "count": 226,
+        "group_n": 224
+      },
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "opportunity_id": "SYN-P005:AIW-2.3",
+      "project_id": "SYN-P005",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P005:AIW-2.3"
+    },
+    {
+      "evidence": {
+        "left": 162,
+        "right": 156
+      },
+      "family": "AIX-8",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 17"
+      },
+      "opportunity_id": "SYN-P005:AIX-8",
+      "project_id": "SYN-P005",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P005:AIX-8"
+    },
+    {
+      "evidence": {
+        "character_count": 0
+      },
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "opportunity_id": "SYN-P008:FMT-010",
+      "project_id": "SYN-P008",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P008:FMT-010"
+    },
+    {
+      "evidence": {
+        "expected": "4.3",
+        "numbers": [
+          "4.1",
+          "4.2",
+          "4.4"
+        ]
+      },
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 5",
+        "output_label": "Table 4",
+        "page": 4,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "opportunity_id": "SYN-P008:XOUT-001",
+      "project_id": "SYN-P008",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P008:XOUT-001"
+    },
+    {
+      "evidence": {
+        "left": 134,
+        "right": 138
+      },
+      "family": "AIX-3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 7"
+      },
+      "opportunity_id": "SYN-P009:AIX-3",
+      "project_id": "SYN-P009",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P009:AIX-3"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 5",
+        "output_label": "Table 4",
+        "page": 4,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P010:AIX-5",
+      "project_id": "SYN-P010",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P010:AIX-5"
+    },
+    {
+      "evidence": {
+        "count": 90,
+        "group_n": 89
+      },
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "opportunity_id": "SYN-P012:AIW-2.3",
+      "project_id": "SYN-P012",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P012:AIW-2.3"
+    },
+    {
+      "evidence": {
+        "count": 216,
+        "group_n": 209
+      },
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "opportunity_id": "SYN-P013:AIW-2.3",
+      "project_id": "SYN-P013",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P013:AIW-2.3"
+    },
+    {
+      "evidence": {
+        "left": 236,
+        "right": 240
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 5",
+        "output_label": "Table 4",
+        "page": 4,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P013:AIX-4",
+      "project_id": "SYN-P013",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P013:AIX-4"
+    },
+    {
+      "evidence": {
+        "current": 137,
+        "prior": 130
+      },
+      "family": "AIV-6.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 12"
+      },
+      "opportunity_id": "SYN-P014:AIV-6.3",
+      "project_id": "SYN-P014",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P014:AIV-6.3"
+    },
+    {
+      "evidence": {
+        "current_soc": "Musculoskeletal disorders",
+        "current_term": "Injection site pain",
+        "prior_soc": "General disorders",
+        "prior_term": "Injection site pain"
+      },
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "opportunity_id": "SYN-P016:AIV-7.4",
+      "project_id": "SYN-P016",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P016:AIV-7.4"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P017:AIX-5",
+      "project_id": "SYN-P017",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P017:AIX-5"
+    },
+    {
+      "evidence": {
+        "current": 146,
+        "prior": 152
+      },
+      "family": "AIV-7.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 15"
+      },
+      "opportunity_id": "SYN-P018:AIV-7.3",
+      "project_id": "SYN-P018",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P018:AIV-7.3"
+    },
+    {
+      "evidence": {
+        "count": 88,
+        "group_n": 82
+      },
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 5",
+        "output_label": "Table 4",
+        "page": 4,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "opportunity_id": "SYN-P019:AIW-2.3",
+      "project_id": "SYN-P019",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P019:AIW-2.3"
+    },
+    {
+      "evidence": {
+        "left": 170,
+        "right": 176
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P020:AIX-4",
+      "project_id": "SYN-P020",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P020:AIX-4"
+    },
+    {
+      "evidence": {
+        "character_count": 0
+      },
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "opportunity_id": "SYN-P022:FMT-010",
+      "project_id": "SYN-P022",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P022:FMT-010"
+    },
+    {
+      "evidence": {
+        "any_ae_count": 0,
+        "group_n": 81
+      },
+      "family": "AIW-7.2",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 14"
+      },
+      "opportunity_id": "SYN-P022:AIW-7.2",
+      "project_id": "SYN-P022",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P022:AIW-7.2"
+    },
+    {
+      "evidence": {
+        "current_soc": "Musculoskeletal disorders",
+        "current_term": "Injection site pain",
+        "prior_soc": "General disorders",
+        "prior_term": "Injection site pain"
+      },
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 8",
+        "output_label": "Table 7",
+        "page": 7,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "opportunity_id": "SYN-P022:AIV-7.4",
+      "project_id": "SYN-P022",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P022:AIV-7.4"
+    },
+    {
+      "evidence": {
+        "left": 235,
+        "right": 239
+      },
+      "family": "AIX-3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 2",
+        "output_label": "Table 1",
+        "page": 1,
+        "row": "SYNTHETIC ROW 7"
+      },
+      "opportunity_id": "SYN-P023:AIX-3",
+      "project_id": "SYN-P023",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P023:AIX-3"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P024:AIX-5",
+      "project_id": "SYN-P024",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P024:AIX-5"
+    },
+    {
+      "evidence": {
+        "current_labels": [
+          "Table 5.1",
+          "Table 5.3"
+        ],
+        "current_present": false,
+        "prior_label": "Table 5.2",
+        "prior_present": true
+      },
+      "family": "XOUT-020",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 2"
+      },
+      "opportunity_id": "SYN-P025:XOUT-020",
+      "project_id": "SYN-P025",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P025:XOUT-020"
+    },
+    {
+      "evidence": {
+        "left": 206,
+        "right": 202
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P027:AIX-4",
+      "project_id": "SYN-P027",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P027:AIX-4"
+    },
+    {
+      "evidence": {
+        "character_count": 0
+      },
+      "family": "FMT-010",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 1"
+      },
+      "opportunity_id": "SYN-P029:FMT-010",
+      "project_id": "SYN-P029",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P029:FMT-010"
+    },
+    {
+      "evidence": {
+        "current_soc": "General disorders",
+        "current_term": "Administration site pain",
+        "prior_soc": "General disorders",
+        "prior_term": "Injection site pain"
+      },
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 5",
+        "output_label": "Table 4",
+        "page": 4,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "opportunity_id": "SYN-P029:AIV-7.4",
+      "project_id": "SYN-P029",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P029:AIV-7.4"
+    },
+    {
+      "evidence": {
+        "current_labels": [
+          "Table 5.1",
+          "Table 5.3"
+        ],
+        "current_present": false,
+        "prior_label": "Table 5.2",
+        "prior_present": true
+      },
+      "family": "XOUT-020",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 2"
+      },
+      "opportunity_id": "SYN-P033:XOUT-020",
+      "project_id": "SYN-P033",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P033:XOUT-020"
+    },
+    {
+      "evidence": {
+        "count": 123,
+        "group_n": 119
+      },
+      "family": "AIW-2.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 6"
+      },
+      "opportunity_id": "SYN-P034:AIW-2.3",
+      "project_id": "SYN-P034",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P034:AIW-2.3"
+    },
+    {
+      "evidence": {
+        "left": 219,
+        "right": 215
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 6",
+        "output_label": "Table 5",
+        "page": 5,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P034:AIX-4",
+      "project_id": "SYN-P034",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P034:AIX-4"
+    },
+    {
+      "evidence": {
+        "left": 131,
+        "right": 125
+      },
+      "family": "AIX-8",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 17"
+      },
+      "opportunity_id": "SYN-P034:AIX-8",
+      "project_id": "SYN-P034",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P034:AIX-8"
+    },
+    {
+      "evidence": {
+        "left": 75,
+        "right": 71
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P035:AIX-4",
+      "project_id": "SYN-P035",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P035:AIX-4"
+    },
+    {
+      "evidence": {
+        "current": 78,
+        "prior": 75
+      },
+      "family": "AIV-6.3",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 9",
+        "output_label": "Table 8",
+        "page": 8,
+        "row": "SYNTHETIC ROW 12"
+      },
+      "opportunity_id": "SYN-P035:AIV-6.3",
+      "project_id": "SYN-P035",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P035:AIV-6.3"
+    },
+    {
+      "evidence": {
+        "expected": "4.3",
+        "numbers": [
+          "4.1",
+          "4.2",
+          "4.4"
+        ]
+      },
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "opportunity_id": "SYN-P037:XOUT-001",
+      "project_id": "SYN-P037",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P037:XOUT-001"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 4",
+        "output_label": "Table 3",
+        "page": 3,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P039:AIX-5",
+      "project_id": "SYN-P039",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P039:AIX-5"
+    },
+    {
+      "evidence": {
+        "expected": "4.3",
+        "numbers": [
+          "4.1",
+          "4.2",
+          "4.4"
+        ]
+      },
+      "family": "XOUT-001",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 3"
+      },
+      "opportunity_id": "SYN-P044:XOUT-001",
+      "project_id": "SYN-P044",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P044:XOUT-001"
+    },
+    {
+      "evidence": {
+        "current_soc": "Musculoskeletal disorders",
+        "current_term": "Injection site pain",
+        "prior_soc": "General disorders",
+        "prior_term": "Injection site pain"
+      },
+      "family": "AIV-7.4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 16"
+      },
+      "opportunity_id": "SYN-P044:AIV-7.4",
+      "project_id": "SYN-P044",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P044:AIV-7.4"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 10",
+        "output_label": "Table 9",
+        "page": 9,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P045:AIX-5",
+      "project_id": "SYN-P045",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P045:AIX-5"
+    },
+    {
+      "evidence": {
+        "expected_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-103"
+        ],
+        "observed_set": [
+          "SYN-101",
+          "SYN-102",
+          "SYN-199"
+        ]
+      },
+      "family": "AIX-5",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 9"
+      },
+      "opportunity_id": "SYN-P046:AIX-5",
+      "project_id": "SYN-P046",
+      "risk": "Low",
+      "truth_id": "TRUTH:SYN-P046:AIX-5"
+    },
+    {
+      "evidence": {
+        "left": 128,
+        "right": 124
+      },
+      "family": "AIX-7.1",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 3",
+        "output_label": "Table 2",
+        "page": 2,
+        "row": "SYNTHETIC ROW 13"
+      },
+      "opportunity_id": "SYN-P046:AIX-7.1",
+      "project_id": "SYN-P046",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P046:AIX-7.1"
+    },
+    {
+      "evidence": {
+        "left": 74,
+        "right": 80
+      },
+      "family": "AIX-8",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 7",
+        "output_label": "Table 6",
+        "page": 6,
+        "row": "SYNTHETIC ROW 17"
+      },
+      "opportunity_id": "SYN-P048:AIX-8",
+      "project_id": "SYN-P048",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P048:AIX-8"
+    },
+    {
+      "evidence": {
+        "left": 220,
+        "right": 216
+      },
+      "family": "AIX-4",
+      "locator": {
+        "column": "Drug X",
+        "comparison_output": "Table 1",
+        "output_label": "Table 10",
+        "page": 10,
+        "row": "SYNTHETIC ROW 8"
+      },
+      "opportunity_id": "SYN-P049:AIX-4",
+      "project_id": "SYN-P049",
+      "risk": "High",
+      "truth_id": "TRUTH:SYN-P049:AIX-4"
+    }
+  ]
+}

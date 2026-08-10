@@ -1,0 +1,65 @@
+{
+  "benchmark_version": "synthetic-tlf-benchmark-v1",
+  "bootstrap_iterations": 2000,
+  "bootstrap_unit": "project",
+  "current_tables_per_project": 10,
+  "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",
+  "expected_total_findings": 170,
+  "families": 17,
+  "matching_key": [
+    "project_id",
+    "family",
+    "output_label",
+    "row",
+    "column",
+    "comparison_output"
+  ],
+  "one_table_per_page": true,
+  "pages_per_project": 20,
+  "positives_per_family": 10,
+  "prior_tables_per_project": 10,
+  "projects": 50,
+  "reproducibility": {
+    "dependency_lock": "requirements-lock.txt",
+    "dependency_lock_sha256": "4dff8cbfaad8fd4ceb05ea401768e8cfb14656dc71cd4b112b1a2bc509d55254",
+    "source_files": [
+      "evaluation/catalog.py",
+      "evaluation/generate.py",
+      "evaluation/report.py",
+      "evaluation/run_benchmark.py",
+      "evaluation/scoring.py",
+      "evaluation/systems.py"
+    ],
+    "source_tree_sha256": "f39170efd967d28f69d5a135ab86c726d91f94dae6da6777fc112914b680f7e3"
+  },
+  "seed": 20260808,
+  "simulator_assumptions": {
+    "detection_probability": {
+      "arithmetic": 0.87,
+      "cross_output": 0.78,
+      "semantic": 0.74,
+      "structural": 0.72,
+      "version": 0.82
+    },
+    "difficulty_multiplier": {
+      "easy": 1.0,
+      "hard": 0.77,
+      "medium": 0.91
+    },
+    "duplicate_probability": 0.09,
+    "false_positive_probability": {
+      "arithmetic": 0.026,
+      "cross_output": 0.042,
+      "semantic": 0.06,
+      "structural": 0.03,
+      "version": 0.032
+    },
+    "numeric_citation_corruption_probability": 0.04,
+    "self_check_recovery_probability": 0.82
+  },
+  "simulator_version": "simulated-llm-v1",
+  "token_prices_per_million": {
+    "input": null,
+    "output": null
+  }
+}

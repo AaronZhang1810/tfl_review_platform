@@ -1,0 +1,54 @@
+# Local study configuration. The checked-in public substitute is
+# configs/study_config.synthetic.json; never commit the working configuration.
+/study_config.json
+
+# Clinical/project material and mutable application state.
+/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.pdf
+*.docx
+*.xlsx
+*.xls
+*.rtf
+
+# Secrets and local configuration.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Bundled runtimes and generated release material.
+/runtime/
+/_runtime_build/
+/runtime_old/
+/dist/
+/build/
+/demo/artifacts/
+/demo-data/
+*.zip
+
+# Python/tooling caches.
+/.venv/
+/venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# Editors and operating-system metadata.
+.DS_Store
+.RData
+.Rhistory
+.Ruserdata
+.idea/
+.vscode/
+Thumbs.db

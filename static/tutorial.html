@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TLF Review Platform — User Tutorial</title>
+<!-- Apply the saved (or OS-preferred) theme before the stylesheet paints, to avoid a flash of
+     light. Same localStorage key as the app, so Help matches whatever theme you left it in. -->
+<script>(function(){try{var t=localStorage.getItem("tlf_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<!-- The app's OWN stylesheet: the tutorial inherits every design token (colours, radii,
+     shadows) and the whole dark theme for free, so Help can never drift from the app.
+     Relative href so this page also works when opened directly from the folder. -->
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Tutorial-only layout. Everything below is expressed in the APP's tokens
+     (--panel/--ink/--line/--accent/--radius/--shadow...), so light + dark both
+     follow the application automatically. */
+  body { line-height: 1.6; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 1.4rem 1.5rem 4rem; }
+
+  .doc-hero { margin: .4rem 0 1.2rem; }
+  .doc-hero h1 { margin: 0; font-size: 1.6rem; letter-spacing: -.01em; }
+  .doc-hero p { margin: .35rem 0 0; color: var(--muted); font-size: .95rem; }
+
+  /* Contents card */
+  nav.toc { margin: 1.2rem 0 1.8rem; }
+  nav.toc h2 { margin: 0 0 .6rem; font-size: .78rem; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--muted); }
+  nav.toc ol { margin: 0; padding-left: 1.2rem; columns: 2; column-gap: 2rem; font-size: .92rem; }
+  nav.toc li { margin-bottom: .18rem; break-inside: avoid; }
+
+  h2.sec { margin: 2.4rem 0 .7rem; padding-top: .9rem; border-top: 2px solid var(--line);
+    font-size: 1.28rem; letter-spacing: -.01em; }
+  h3 { margin: 1.5rem 0 .45rem; font-size: 1.04rem; color: var(--accent-ink); }
+
+  code { background: var(--line-soft); padding: .1rem .35rem; border-radius: 5px;
+    font-size: .89em; color: var(--ink); }
+  pre { background: #0f172a; color: #e2e8f0; padding: .9rem 1rem;
+    border-radius: var(--radius-sm); overflow: auto; font-size: .85rem; }
+  .pill { font-family: Consolas, monospace; background: var(--line-soft); color: var(--ink);
+    padding: .06rem .42rem; border-radius: 5px; font-size: .88em; }
+  .kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px;
+    padding: 0 .35rem; font-size: .82em; background: var(--panel); }
+
+  /* Tables — the app's grid look, minus the sticky header (wrong in a prose document) */
+  table.t { width: 100%; border-collapse: collapse; margin: .9rem 0 1.1rem;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); }
+  table.t th, table.t td { text-align: left; padding: .55rem .7rem;
+    border-bottom: 1px solid var(--line); font-size: .875rem; vertical-align: top; }
+  table.t th { background: var(--line-soft); font-weight: 700; }
+  table.t tr:last-child td { border-bottom: 0; }
+
+  /* Risk / source tags — built from the app's severity tokens via color-mix so they
+     stay legible on the dark panel without a separate dark override. */
+  .tag { display: inline-block; font-size: .72rem; padding: .12rem .55rem; border-radius: 20px;
+    font-weight: 600; white-space: nowrap; }
+  .t-high  { background: color-mix(in srgb, var(--crit) 16%, transparent);  color: var(--crit); }
+  .t-med   { background: color-mix(in srgb, var(--major) 18%, transparent); color: var(--major); }
+  .t-low   { background: color-mix(in srgb, var(--minor) 16%, transparent); color: var(--minor); }
+  .t-ai    { background: var(--accent-soft); color: var(--accent-ink); }
+
+  /* Callouts + steps, on the app's panel surface */
+  .callout { border-left: 4px solid var(--accent); background: var(--accent-soft);
+    color: var(--ink); padding: .75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 1rem 0; font-size: .93rem; }
+  .callout.warn { border-left-color: var(--warn);
+    background: color-mix(in srgb, var(--warn) 12%, var(--panel)); }
+  .step { background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius-sm); padding: .8rem 1rem; margin: .6rem 0;
+    box-shadow: var(--shadow-sm); font-size: .93rem; }
+  .step b { color: var(--accent-ink); }
+
+  /* Screenshot figures (used once images are added to static/img/) */
+  figure.fig { margin: 1rem 0 1.3rem; }
+  figure.fig img { display: block; width: 100%; height: auto; background: var(--panel);
+    border: 1px solid var(--line); border-radius: var(--radius-sm); box-shadow: var(--shadow); }
+  figure.fig figcaption { margin-top: .45rem; font-size: .84rem; color: var(--muted); }
+
+  footer { color: var(--muted); font-size: .85rem; margin-top: 3rem;
+    border-top: 1px solid var(--line); padding-top: 1rem; }
+
+  a { color: var(--accent); }
+  ul, ol { padding-left: 1.35rem; }
+  li { margin-bottom: .2rem; }
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand">TLF Review Platform</div>
+  <a class="nav-home" href="index.html" title="Open the application">← Open the app</a>
+  <div class="proj-meta">User Tutorial</div>
+  <div class="tabs">
+    <button type="button" class="active">Help</button>
+  </div>
+  <button type="button" class="topbar-btn" id="themeToggle" title="Toggle light / dark theme">🌙</button>
+</header>
+
+<div class="wrap">
+
+<div class="doc-hero">
+  <h1>🧪 User Tutorial</h1>
+  <p>AI-assisted QC review of clinical Tables, Listings &amp; Figures (TLF) deliveries.</p>
+</div>
+
+<div class="callout warn"><b>Portfolio boundary.</b> Use only the generated fictional
+documents in this public-source demonstration. It is not authorized for confidential,
+clinical, patient, or regulated data, and it is not a validated clinical-review system.</div>
+
+<nav class="toc card">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#what">What the app does</a></li>
+    <li><a href="#run">Starting the app</a></li>
+    <li><a href="#create">Projects (create — or use ones already loaded)</a></li>
+    <li><a href="#dashboard">Overview dashboard</a></li>
+    <li><a href="#toc">TOC tab</a></li>
+    <li><a href="#tlf">TLF review workspace</a></li>
+    <li><a href="#ai">AI Review tab</a></li>
+    <li><a href="#checks">What each check means</a></li>
+    <li><a href="#findings">Acting on findings</a></li>
+    <li><a href="#chat">Asking the AI</a></li>
+    <li><a href="#comments">Comments &amp; export</a></li>
+    <li><a href="#config">Customising the checklist</a></li>
+    <li><a href="#limits">Limitations</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<h2 class="sec" id="what">1. What the app does</h2>
+<p>You upload one or more <b>TLF output PDFs</b> (e.g. an Investigator Brochure table
+package). The app indexes every table from the PDF bookmarks, lets you page through
+each one, record a review status, leave comments, and run an <b>AI review</b> that reads
+each table and judges it against a configurable <b>checklist</b>. If you upload two editions
+(e.g. this year vs last year), it also compares them.</p>
+
+<div class="callout">
+<b>How model assistance is used.</b> In normal source mode, a configured Claude model
+<b>proposes review candidates</b>, guided
+by an editable <b>checklist</b> (see <a href="#checks">§8</a>): it reads each table, extracts the
+numbers, and decides what looks wrong. Only three <b>structural</b> checks are plain deterministic
+code — blank pages, an output missing versus last year, and a numbering gap. Two guards keep the
+AI honest: an <b>extraction self-check</b> re-reads any number whose count and percent don’t line
+up <i>before</i> judging, and a <b>verify pass</b> has Python re-do the arithmetic the AI itself
+cites and <b>drops</b> any finding whose own numbers don’t actually contradict. Every finding
+carries a <b>risk tier</b> and is a <b>candidate a human confirms</b>, not a final verdict.
+</div>
+
+<h2 class="sec" id="run">2. Starting the app</h2>
+<p>The app runs locally in your browser and requires Python 3.11 or 3.12.</p>
+<div class="step">From the repository root, run
+<b><span class="pill">./run_synthetic_demo.sh</span></b> on macOS/Linux or
+<b><span class="pill">RUN_SYNTHETIC_DEMO.bat</span></b> on Windows. The launcher creates an
+isolated fictional project and opens the browser when ready. <b>Leave the terminal open</b>
+while you work — closing it stops the server.</div>
+<p>The synthetic demo is normally at
+<b><a href="http://127.0.0.1:8765">http://127.0.0.1:8765</a></b>. To stop it, return to the
+terminal and press <span class="kbd">Ctrl</span>+<span class="kbd">C</span>.</p>
+<div class="callout"><b>The app tells you when it's working.</b> A thin animated bar across the very
+top of the window appears whenever the app is busy — opening a project, running an action, importing
+or exporting. A slow step (a large Excel import can take a while) therefore never looks frozen: as
+long as the bar is moving, the app is still working.</div>
+<div class="callout warn"><b>The synthetic demo never calls an external model.</b> Its
+findings are pre-seeded and model behavior is simulated, even if the launching shell
+contains an API key. In normal source mode, model-backed <b>AI Review</b> and <b>chat</b>
+require an <code>ANTHROPIC_API_KEY</code>; browsing PDFs, statuses, comments, and exports
+do not.</div>
+
+<h2 class="sec" id="create">3. Creating and sharing projects </h2>
+<div class="callout"><b>The one-click demo already contains a fictional project.</b> Explore
+that generated project without uploading a document or enabling an external model.</div>
+<p>To create your own, fill the form on the left of the home page:</p>
+<ul>
+  <li><b>Compound / Study / Project name</b> — free text to identify the delivery.</li>
+  <li><b>Delivery TLF PDF(s)</b> — one or more PDFs. To enable year-over-year comparison,
+      upload <b>both</b> editions (the app detects each edition year from the cover/header).</li>
+  <li><b>SAP / Protocol</b> (optional) — reference documents that power SAP-aware answers in chat.</li>
+</ul>
+<p>Click <b>Create project</b>. Existing projects appear on the
+right; click one to open it, or use <b>Delete</b> to remove it. You may import/export projects as <code>.zip</code> files.</p>
+
+<h2 class="sec" id="dashboard">4. Overview dashboard 📊</h2>
+<p>Opening a project lands you on <b>Overview</b> — an at-a-glance summary of where the review
+stands, so you don't have to scan the TOC to know what is left. It is computed live from your
+current data, and (like the rest of the app) needs no API key.</p>
+<ul>
+  <li><b>KPI cards</b> — the four headline numbers: outputs <b>approved</b>, AI findings still
+      <b>open</b>, findings <b>flagged</b> for attention, and comment threads <b>resolved</b>.</li>
+  <li><b>Review-status donut</b> — every output split across Not Reviewed / In Progress /
+      Approved / Needs Revision.</li>
+  <li><b>Findings panel</b> — the open-vs-addressed split, a severity breakdown, and separate tiles
+      for findings marked <i>new</i> or <i>may be resolved</i>.</li>
+  <li><b>Comments meter</b> — resolved versus open threads.</li>
+  <li><b>Last AI run</b> — a chip shows when the review last ran (or “Not run yet”).</li>
+</ul>
+<p>Click a card or panel header to jump straight to the tab behind it (TOC, AI Review, Comments).
+A brand-new project with no outputs, findings or comments still renders cleanly, with friendly
+empty states instead of blank panels.</p>
+
+<h2 class="sec" id="toc">5. TOC tab 📋</h2>
+<p>A searchable table of every output: <b>Type, Number, Output, Title, Pages, Status</b>.
+Type in the search box to filter by label or title. Click any <b>Output</b> link (e.g.
+<span class="pill">Table 2.2.1</span>) to open it in the TLF workspace.</p>
+
+<h2 class="sec" id="tlf">6. TLF review workspace 📑</h2>
+<p>Three columns:</p>
+<ul>
+  <li><b>Left — bookmark list:</b> every output; click to jump. The current one is highlighted.</li>
+  <li><b>Centre — the PDF:</b> just the pages for that output.
+      <ul>
+        <li><b>‹ Prev / Next ›</b> move between outputs.</li>
+        <li><b>◀ / ▶</b> move between pages within the output. The label shows
+            “Page X / N (doc p.NNN)” so you always know the real page in the source PDF.</li>
+        <li><b>−&nbsp;/&nbsp;Fit&nbsp;/&nbsp;+</b> zoom. The page fits the column width by
+            default; click <b>+</b> to enlarge dense tables, <b>Fit</b> to reset. Rendering
+            is high-resolution, so zooming in keeps text sharp.</li>
+        <li><b>Check TOC</b> jumps back to this output’s row in the TOC tab.</li>
+      </ul>
+  </li>
+  <li><b>Right — sidebar:</b>
+      <ul>
+        <li><b>Review status:</b> Not Reviewed → In Progress → Approved / Needs Revision.
+            Adding a comment or posting an AI finding auto-moves it to In Progress.</li>
+        <li><b>Comments:</b> add a title (optional) + comment; delete any comment.</li>
+        <li><b>AI findings:</b> the findings for this specific output (after a run).</li>
+        <li><b>Ask about this output:</b> a mini chat scoped to this table.</li>
+      </ul>
+  </li>
+</ul>
+
+<h2 class="sec" id="ai">7. AI Review tab 🤖</h2>
+<p>If this project came pre-reviewed, its findings are already here — you can read them with no
+API key. A key is only needed to run or re-run the review, or to use chat.</p>
+<div class="step"><b>Run:</b> click <b>▶ Run AI review</b>. A progress bar shows which output
+is being analysed. Findings appear grouped and colour-coded by risk. You can also pick the
+<b>Model</b> and reasoning <b>Effort</b>; an estimated time updates as you change them.</div>
+<div class="step"><b>Fresh re-run:</b> ignores the cache and re-reads <em>and</em> re-judges every
+output from scratch (slower). Use it if you suspect a stale AI reading.</div>
+<div class="step"><b>Import Excel:</b> load findings from a structured <code>.xlsx</code> — the
+reverse of <b>Export</b>. Columns are matched by header name (<b>Output</b>, <b>Risk</b>,
+<b>Finding</b>, optional <b>Page</b>/<b>Section</b>), so you can export, edit in Excel, and
+re-import, or author findings offline. Imported findings are <b>added alongside</b> the AI ones
+(they aren’t wiped by a later AI run); a row whose <b>Output</b> label isn’t in this project is
+still imported but not tied to a table.</div>
+<div class="callout"><b>Runs are continuable.</b> Each table’s findings are saved the moment it’s
+judged, so if the app or laptop shuts down mid-run, nothing already done is lost. Just click
+<b>▶ Run AI review</b> again — it skips the tables it already finished and does only what’s
+left. For the same reason a normal re-run is fast: unchanged tables (same model, effort and
+checklist) are reused rather than re-judged. <b>Fresh re-run</b> is the way to force a full
+re-judge.</div>
+<div class="callout"><b>Caching &amp; cost in normal source mode.</b> The first model-backed run
+is the slow one (the configured model reads and
+judges each output). Extractions are cached by content, so a normal re-run is fast and only
+re-reads outputs whose content changed. Every table in the current edition is analysed (listings
+and figures are not); the tab shows how many outputs were analysed and how many skipped. If the
+API can’t be reached, the run aborts loudly and says so — it will <b>not</b> quietly report
+“0 findings”.</div>
+<div class="callout warn"><b>Coverage — read this if you see an amber banner.</b> A very long
+table is read <b>page by page</b>, and there is a safety cap on how many pages one table may
+use. If a table hits that cap, the pages past it are <b>never sent to the AI</b>, so no finding
+can exist for them — <b>“0 findings” on such a table does not mean it is clean.</b> The run
+line shows <span class="pill">read N/M pages</span>, and an amber banner lists any table that
+was only partially read. The default cap is high enough that normal deliveries are read in
+full; if you do hit it, set <span class="pill">TLF_MAX_SLICES</span> higher (or
+<span class="pill">0</span> for no limit) and re-run.</div>
+
+<h3>Speed</h3>
+<p>Tables are analysed <b>concurrently</b>, and the page-by-page reading is done by a
+smaller, faster model while the <b>judging</b> uses the model you picked. Three environment
+variables tune this if you ever need to:</p>
+<table class="t">
+<tr><th>Variable</th><th>Default</th><th>Effect</th></tr>
+<tr><td><span class="pill">TLF_MAX_INFLIGHT</span></td><td>6</td>
+    <td>How many AI requests may be in flight at once. Higher is faster until the API
+    rate-limits you; <span class="pill">1</span> restores fully serial behaviour.</td></tr>
+<tr><td><span class="pill">TLF_MAX_SLICES</span></td><td>400</td>
+    <td>Max pages read per table (<span class="pill">0</span> = no limit). Lower it to
+    trade coverage for speed.</td></tr>
+<tr><td><span class="pill">TLF_FAST_EXTRACT</span></td><td>1</td>
+    <td>Set to <span class="pill">0</span> to read pages with your chosen model instead of
+    the fast one (slower, and rarely needed — two precision guards already re-check the
+    numbers).</td></tr>
+</table>
+<div class="callout"><b>Fresh re-run only re-reads the current edition.</b> Last year's PDF
+cannot have changed, so its cached reading is kept — that alone removes a large share of the
+work. If you edit <code>study_config.json</code>'s extraction wording and want <i>everything</i>
+re-read, that is the <code>kind=rebuild</code> run.</div>
+
+<h2 class="sec" id="checks">8. What each check means</h2>
+<p>Every finding carries one <b>risk tier</b> from the checklist — just two levels:
+<span class="tag t-high">High</span> a real QC signal (a broken sum, an N that dropped versus
+last year) and <span class="tag t-low">Low</span> worth a look or informational (e.g. an N that
+grew as data accrued). That single High/Low label is the only severity marker on a finding.</p>
+<p>A finding’s <b>check id</b> tells you where it came from:
+<span class="pill">FMT-*</span> / <span class="pill">XOUT-*</span> = structural (deterministic
+Python); <span class="pill">AIW-*</span> = within-table AI judge;
+<span class="pill">AIX-*</span> = cross-output AI judge; <span class="pill">AIV-*</span> = version
+(versus prior) AI judge. The number is the checklist item — e.g. <span class="pill">AIW-2.1</span>
+is item&nbsp;2.1 below.</p>
+
+<h3>Structural — deterministic, no AI (checklist §1)</h3>
+<table class="t">
+<tr><th>Item · check id</th><th>Risk</th><th>What it verifies</th></tr>
+<tr><td><b>1.1</b> · <span class="pill">FMT-010</span></td><td><span class="tag t-low">Low</span></td>
+    <td>Empty or blank pages anywhere in the delivery.</td></tr>
+<tr><td><b>1.2</b> · <span class="pill">XOUT-020</span></td><td><span class="tag t-low">Low</span></td>
+    <td>An output present in the prior edition is missing from the current one.</td></tr>
+<tr><td><b>1.3</b> · <span class="pill">XOUT-001</span></td><td><span class="tag t-high">High</span></td>
+    <td>A gap in output numbering (e.g. Table 4.3 → 4.5 with no 4.4).</td></tr>
+</table>
+
+<h3>Within-table — AI judge (checklist §2 &amp; §7.2)</h3>
+<table class="t">
+<tr><th>Item · check id</th><th>Risk</th><th>What it verifies</th></tr>
+<tr><td><b>2.1</b> · <span class="pill">AIW-2.1</span></td><td><span class="tag t-high">High</span></td>
+    <td>Subgroups under a heading sum to that heading’s N (e.g. fictional studies sum to the
+    corresponding condition-group row).</td></tr>
+<tr><td><b>2.2</b> · <span class="pill">AIW-2.2</span></td><td><span class="tag t-high">High</span></td>
+    <td>Component columns in a row sum to the row’s total (e.g. <code>Monotherapy + Combination =
+    Compound Z All</code>; <code>Compound Z All + Comparator + Blinded = Any Study Drug</code>).</td></tr>
+<tr><td><b>2.3</b> · <span class="pill">AIW-2.3</span></td><td><span class="tag t-high">High</span></td>
+    <td>Numeric integrity within a table: no count exceeds its group N; a percent equals
+    <code>round(n/N×100)</code>; AE severity ordering holds (Grade≥3 / Serious / Deaths /
+    Withdrawals ≤ Any AE); a blank total beside present components is flagged as a missing N
+    (<span class="pill">FMT-002</span>).</td></tr>
+<tr><td><b>7.2</b> · <span class="pill">AIW-7.2</span></td><td><span class="tag t-high">High</span></td>
+    <td>In an AE-overview table, no treatment-group column is entirely 0 and the “Any Adverse
+    Event” row has no 0.</td></tr>
+</table>
+
+<h3>Cross-output — AI judge (checklist §3–§5, §7.1, §8)</h3>
+<table class="t">
+<tr><th>Item · check id</th><th>Risk</th><th>What it verifies</th></tr>
+<tr><td><b>3</b> · <span class="pill">AIX-3</span></td><td><span class="tag t-high">High</span></td>
+    <td>Each indication’s Table 1 group N’s match its pooled AE-overview and SOC/PT tables. A
+    study deliberately summarized separately (an intended exclusion) is not flagged.</td></tr>
+<tr><td><b>4</b> · <span class="pill">AIX-4</span></td><td><span class="tag t-high">High</span></td>
+    <td>Table 1’s per-study subjects match the by-study tables (intended exclusions not flagged).</td></tr>
+<tr><td><b>5</b> · <span class="pill">AIX-5</span></td><td><span class="tag t-low">Low</span></td>
+    <td>The studies in each indication are listed correctly in the AE-overview table footnotes.</td></tr>
+<tr><td><b>7.1</b> · <span class="pill">AIX-7.1</span></td><td><span class="tag t-high">High</span></td>
+    <td>An AE-overview table’s category totals reconcile with the corresponding SOC/PT table.</td></tr>
+<tr><td><b>8</b> · <span class="pill">AIX-8</span></td><td><span class="tag t-high">High</span></td>
+    <td>By-study tables match explicitly equivalent fictional population rows in Table 1, and
+    expected by-study outputs missing versus the prior edition are flagged.</td></tr>
+</table>
+
+<h3>Versus the prior edition — AI judge (only when two editions are uploaded)</h3>
+<table class="t">
+<tr><th>Item · check id</th><th>Risk</th><th>What it verifies</th></tr>
+<tr><td><b>6.1</b> · <span class="pill">AIV-6.1</span></td><td><span class="tag t-low">Low</span></td>
+    <td>Studies or rows that appear now but were not in the prior edition.</td></tr>
+<tr><td><b>6.2</b> · <span class="pill">AIV-6.2</span></td><td><span class="tag t-high">High</span></td>
+    <td>A group N or subject count that <b>decreased</b> versus the prior edition — counts should
+    only grow as data accrues, so a decrease is a real signal.</td></tr>
+<tr><td><b>6.3</b> · <span class="pill">AIV-6.3</span></td><td><span class="tag t-low">Low</span></td>
+    <td>A group N that increased versus prior (expected as data accrues; informational).</td></tr>
+<tr><td><b>7.3</b> · <span class="pill">AIV-7.3</span></td><td><span class="tag t-high">High</span></td>
+    <td>AE-overview counts versus prior — decreases are High, increases Low.</td></tr>
+<tr><td><b>7.4</b> · <span class="pill">AIV-7.4</span></td><td><span class="tag t-high">High</span></td>
+    <td>In SOC/PT tables, a preferred-term n that decreased or a 0 in the “Any Adverse Event” row;
+    also a preferred term renamed or moved to a different System Organ Class between versions.</td></tr>
+</table>
+
+<p><b>Roadmap.</b> Item&nbsp;9 — cross-document reconciliation (IB vs PSUR/DSUR: the same study
+under different IDs, indication big-N mismatches) — is defined in the checklist but <b>gated</b>
+on multi-document upload the app does not yet support, so it does not run.</p>
+<p>The full, editable catalogue lives in <code>study_config.json</code> (see <a href="#config">§12</a>).</p>
+
+<h2 class="sec" id="findings">9. Acting on findings</h2>
+<p>Each finding card offers:</p>
+<ul>
+  <li><b>Edit &amp; post</b> — turn it into a review comment (you can edit the text first).
+      This marks the output <i>In Progress</i> and the comment is tagged
+      <span class="tag t-ai">ai</span> in the Comments tab.</li>
+  <li><b>Reject</b> — dismiss it (the card is struck through).</li>
+  <li><b>Reopen</b> — undo a previous post/reject.</li>
+</ul>
+<p>Click a finding’s output label to jump straight to that table in the TLF workspace and
+verify it against the PDF. Your post / reject / reopen decisions are logged (with the finding’s
+context) so the tool can learn from how reviewers act.</p>
+
+<h2 class="sec" id="chat">10. Asking the AI 💬</h2>
+<ul>
+  <li><b>Global chat</b> (right side of the AI Review tab) — ask about the whole delivery,
+      e.g. <i>“Which tables have an N decrease?”</i> Answers are grounded in the findings
+      and the output list.</li>
+  <li><b>Per-output chat</b> (TLF sidebar) — scoped to the open table’s extraction and findings.</li>
+</ul>
+<p>If you attached a SAP/Protocol, its text is provided to the chat as context. Chat needs an API key.</p>
+
+<h2 class="sec" id="comments">11. Comments &amp; export 💬</h2>
+<p>The <b>Comments</b> tab lists every comment (manual and AI-posted) with output, title,
+text, source and date. Options:</p>
+<ul>
+  <li><b>Group by output</b> — sort the table by output.</li>
+  <li><b>⬇ Export to Excel</b> — download the full comment log as <code>.xlsx</code> for
+      sharing or sign-off.</li>
+</ul>
+
+<h2 class="sec" id="config">12. Customising the checklist</h2>
+<p>The checklist is data, not code. Edit <span class="pill">study_config.json</span> in the app
+folder and re-run. The top-level keys:</p>
+<ul>
+  <li><b>structural_checks</b> — toggle the three deterministic checks
+      (<code>blank_pages</code>, <code>missing_outputs_vs_prior</code>, <code>numbering_gap</code>).</li>
+  <li><b>deterministic_checks</b> — the §1 items (1.1–1.3) and the Python <code>check_id</code>
+      that implements each.</li>
+  <li><b>checklist</b> — the AI-reviewed items (§2–§9). Each has an <code>id</code>,
+      <code>title</code>, <code>risk</code> (High/Medium/Low), <code>scope</code>
+      (<code>within_table</code> / <code>cross_output</code> / <code>version</code> /
+      <code>cross_document</code>), <code>applies_to</code> (which tables it targets),
+      <code>guidance</code> (the rule, in words the AI follows), and <code>examples</code>.
+      <b>Edit the guidance / examples / risk, or add your own item</b> — it takes effect on the
+      next run.</li>
+  <li><b>selfcheck</b> / <b>verify_pass</b> — the two precision guards (enable/disable and their
+      tolerances).</li>
+  <li><b>dedupe_findings</b> — collapse duplicate findings.</li>
+</ul>
+<div class="callout"><b>Examples are guidance, not rules.</b> The <code>examples</code> on each
+item are few-shot hints shown to the configured model in normal source mode; they are
+<b>never</b> parsed into hardcoded logic. Plain-language guidance can influence a model response,
+but it does not guarantee that the check is applied correctly. Results can vary between model
+runs; the verify pass and self-check can reject some unsupported numeric candidates but cannot
+establish that a table is correct. The synthetic demo uses pre-seeded results instead.</div>
+
+<h2 class="sec" id="limits">13. Limitations</h2>
+<ul>
+  <li><b>Reviewer-assist, not auto-approve.</b> Model-backed review can make mistakes,
+      so confirm each finding against the PDF (shown right beside the finding). Treat every
+      finding as a candidate.</li>
+  <li><b>Results can vary between model-backed runs.</b> The model path is not fixed code, so two
+      runs may not be identical. The <b>extraction self-check</b> and <b>verify pass</b> can reject
+      some misread-number and arithmetic candidates, but do not eliminate model error. The
+      synthetic demo itself is seeded and makes no external model call.</li>
+  <li><b>Tables only.</b> A run analyses every <em>table</em> in the current edition; listings
+      and figures are not analysed. The tab reports how many were skipped.</li>
+  <li><b>Version &amp; cross-document.</b> Year-over-year checks need <b>two editions</b> uploaded.
+      Cross-document reconciliation (IB vs PSUR/DSUR, item 9) is on the roadmap and does not run yet.</li>
+  <li><b>Single user.</b> This public edition has no login, roles, or multi-reviewer separation.
+      <b>PDF inputs only</b> (no RTF conversion), and
+      figures’ image-only content isn’t analysed.</li>
+</ul>
+
+<h2 class="sec" id="trouble">14. Troubleshooting</h2>
+<table class="t">
+<tr><th>Symptom</th><th>Fix</th></tr>
+<tr><td>Page won’t load at the URL</td><td>The server isn’t running — relaunch the synthetic-demo script and keep the terminal open.</td></tr>
+<tr><td>AI Review says “AI unavailable”</td><td>This is expected in the offline synthetic demo. For source mode, set <code>ANTHROPIC_API_KEY</code> before launching. Viewing existing findings needs no key.</td></tr>
+<tr><td>Upload seems stuck</td><td>Large PDFs take a moment to index; wait for “Project created”. Very large files may take several seconds.</td></tr>
+<tr><td>A finding looks wrong</td><td>Open the output (click its label), check the numbers against the PDF, and Reject if it’s a misread.</td></tr>
+<tr><td>Run is slow</td><td>In normal source mode, the first model-backed run reads and judges every target; re-runs reuse cached extractions and can be faster. The synthetic demo does not make model calls.</td></tr>
+<tr><td>A step looks frozen / nothing happens</td><td>Watch the thin bar at the very top of the window — if it is animating, the app is still working (a large Excel import or export can take a while). It disappears when the step finishes.</td></tr>
+</table>
+
+<footer>
+TLF Review Platform · local single-user prototype · normal source mode can ask a
+configured model to propose candidates against <code>study_config.json</code>; the synthetic
+demo simulates that behavior; every finding requires human review.
+</footer>
+
+</div>
+
+<script>
+  // Theme toggle — writes the SAME localStorage key the app uses, so switching here
+  // also switches the app (and vice versa) on the next paint.
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    var paint = function () {
+      btn.textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
+    };
+    paint();
+    btn.addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("tlf_theme", next); } catch (e) {}
+      paint();
+    });
+  })();
+</script>
+</body>
+</html>

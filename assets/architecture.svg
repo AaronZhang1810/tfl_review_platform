@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">TLF Review Platform architecture</title>
+  <desc id="desc">Documents flow through local indexing and extraction into model-assisted judges and deterministic guards, then human review and export.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.box{fill:#fff;stroke:#315a7d;stroke-width:2;rx:12}.safe{fill:#ecfdf5;stroke:#18794e}.ai{fill:#fff7ed;stroke:#b45309}.human{fill:#f5f3ff;stroke:#6d28d9}.txt{font:16px system-ui,sans-serif;fill:#172033}.sm{font:13px system-ui,sans-serif;fill:#475569}.hd{font:bold 23px system-ui,sans-serif;fill:#172033}.arrow{stroke:#475569;stroke-width:2.2;fill:none;marker-end:url(#m)}.dash{stroke-dasharray:7 6}.note{fill:#fff1f2;stroke:#be123c;stroke-width:2;rx:10}
+    </style>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+  <text class="hd" x="60" y="48">TLF Review Platform — reviewer-assist architecture</text>
+  <rect class="note" x="60" y="68" width="1080" height="48"/>
+  <text class="txt" x="600" y="98" text-anchor="middle">Local files stay local except text explicitly sent to the configured AI provider; demo mode sends nothing.</text>
+
+  <rect class="box" x="60" y="165" width="210" height="115"/>
+  <text class="txt" x="165" y="197" text-anchor="middle" font-weight="bold">Input documents</text>
+  <text class="sm" x="165" y="224" text-anchor="middle">Current/prior TLF PDFs</text>
+  <text class="sm" x="165" y="246" text-anchor="middle">TOC · SAP · protocol</text>
+
+  <rect class="safe box" x="330" y="145" width="235" height="155"/>
+  <text class="txt" x="447" y="178" text-anchor="middle" font-weight="bold">Local ingestion</text>
+  <text class="sm" x="447" y="205" text-anchor="middle">PDF page extraction</text>
+  <text class="sm" x="447" y="227" text-anchor="middle">Bookmark/header indexing</text>
+  <text class="sm" x="447" y="249" text-anchor="middle">SQLite + content hashes</text>
+  <text class="sm" x="447" y="271" text-anchor="middle">Coverage accounting</text>
+
+  <rect class="ai box" x="635" y="135" width="245" height="175"/>
+  <text class="txt" x="757" y="170" text-anchor="middle" font-weight="bold">Model-assisted review</text>
+  <text class="sm" x="757" y="198" text-anchor="middle">Structured extraction</text>
+  <text class="sm" x="757" y="220" text-anchor="middle">Within-table judge</text>
+  <text class="sm" x="757" y="242" text-anchor="middle">Prior-version judge</text>
+  <text class="sm" x="757" y="264" text-anchor="middle">Cross-output judge</text>
+  <text class="sm" x="757" y="286" text-anchor="middle">Fail-closed response validation</text>
+
+  <rect class="safe box" x="930" y="145" width="210" height="155"/>
+  <text class="txt" x="1035" y="178" text-anchor="middle" font-weight="bold">Deterministic guards</text>
+  <text class="sm" x="1035" y="205" text-anchor="middle">Blank / missing / gaps</text>
+  <text class="sm" x="1035" y="227" text-anchor="middle">Suspect-cell recheck</text>
+  <text class="sm" x="1035" y="249" text-anchor="middle">Arithmetic verification</text>
+  <text class="sm" x="1035" y="271" text-anchor="middle">Dedupe + completeness gate</text>
+
+  <path class="arrow" d="M270 222 H330"/><path class="arrow" d="M565 222 H635"/><path class="arrow" d="M880 222 H930"/>
+
+  <rect class="human box" x="330" y="395" width="550" height="135"/>
+  <text class="txt" x="605" y="430" text-anchor="middle" font-weight="bold">Human review workspace</text>
+  <text class="sm" x="605" y="458" text-anchor="middle">Source-linked finding · accept / reject · comment · highlight</text>
+  <text class="sm" x="605" y="482" text-anchor="middle">Status ownership · audit trail · collaboration-ready project bundle</text>
+  <text class="sm" x="605" y="506" text-anchor="middle">No clean decision when any required stage or page is incomplete</text>
+  <path class="arrow" d="M757 310 V365 H605 V395"/><path class="arrow" d="M1035 300 V365 H755 V395"/>
+
+  <rect class="box" x="60" y="595" width="300" height="80"/>
+  <text class="txt" x="210" y="627" text-anchor="middle" font-weight="bold">Exports / imports</text>
+  <text class="sm" x="210" y="652" text-anchor="middle">PDF · XLSX · project ZIP</text>
+  <rect class="box" x="450" y="595" width="300" height="80"/>
+  <text class="txt" x="600" y="627" text-anchor="middle" font-weight="bold">Operational telemetry</text>
+  <text class="sm" x="600" y="652" text-anchor="middle">coverage · errors · latency · usage</text>
+  <rect class="box" x="840" y="595" width="300" height="80"/>
+  <text class="txt" x="990" y="627" text-anchor="middle" font-weight="bold">Synthetic evaluation</text>
+  <text class="sm" x="990" y="652" text-anchor="middle">rules · LLM proxy · hybrid + CIs</text>
+  <path class="arrow" d="M520 530 V565 H210 V595"/><path class="arrow" d="M605 530 V595"/><path class="arrow dash" d="M690 530 V565 H990 V595"/>
+</svg>

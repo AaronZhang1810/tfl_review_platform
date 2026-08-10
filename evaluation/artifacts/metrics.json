@@ -1,0 +1,1075 @@
+{
+  "benchmark_version": "synthetic-tlf-benchmark-v1",
+  "dataset": {
+    "benchmark_version": "synthetic-tlf-benchmark-v1",
+    "clean_opportunities": 680,
+    "current_pages": 500,
+    "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",
+    "families": 17,
+    "figures": 0,
+    "findings_by_family": {
+      "AIV-6.1": 10,
+      "AIV-6.2": 10,
+      "AIV-6.3": 10,
+      "AIV-7.3": 10,
+      "AIV-7.4": 10,
+      "AIW-2.1": 10,
+      "AIW-2.2": 10,
+      "AIW-2.3": 10,
+      "AIW-7.2": 10,
+      "AIX-3": 10,
+      "AIX-4": 10,
+      "AIX-5": 10,
+      "AIX-7.1": 10,
+      "AIX-8": 10,
+      "FMT-010": 10,
+      "XOUT-001": 10,
+      "XOUT-020": 10
+    },
+    "high_risk_findings": 120,
+    "listings": 0,
+    "low_risk_findings": 50,
+    "name": "Synthetic one-table-per-page TLF stress benchmark",
+    "opportunities": 850,
+    "pages": 1000,
+    "prior_pages": 500,
+    "projects": 50,
+    "scope_exclusions": [
+      "real clinical or patient data",
+      "cross-document checklist item 9",
+      "figures",
+      "listings",
+      "scanned/image-only pages",
+      "actual LLM performance",
+      "regulatory validation"
+    ],
+    "tables_per_page": 1,
+    "truth_findings": 170
+  },
+  "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",
+  "paired_comparisons": {
+    "hybrid_simulated_minus_llm_only_simulated": {
+      "clean_table_specificity": {
+        "ci95": {
+          "high": 0.05312823594674552,
+          "iterations": 2000,
+          "low": 0.01552795031055898
+        },
+        "estimate": 0.033333333333333326
+      },
+      "coverage_rate": {
+        "ci95": {
+          "high": 0.0,
+          "iterations": 2000,
+          "low": 0.0
+        },
+        "estimate": 0.0
+      },
+      "extraction_row_recall": {
+        "ci95": {
+          "high": 0.0,
+          "iterations": 2000,
+          "low": 0.0
+        },
+        "estimate": 0.0
+      },
+      "f1": {
+        "ci95": {
+          "high": 0.11968878767617348,
+          "iterations": 2000,
+          "low": 0.06554903808561933
+        },
+        "estimate": 0.09235091113736349
+      },
+      "false_positive_findings_per_100_tables": {
+        "ci95": {
+          "high": -3.400000000000001,
+          "iterations": 2000,
+          "low": -7.2
+        },
+        "estimate": -5.200000000000001
+      },
+      "high_risk_recall": {
+        "ci95": {
+          "high": 0.03731343283582089,
+          "iterations": 2000,
+          "low": -0.01834862385321101
+        },
+        "estimate": 0.008333333333333304
+      },
+      "issue_table_miss_rate": {
+        "ci95": {
+          "high": -0.0178571428571429,
+          "iterations": 2000,
+          "low": -0.08384326851914149
+        },
+        "estimate": -0.047058823529411764
+      },
+      "macro_f1": {
+        "ci95": {
+          "high": 0.11851006130795116,
+          "iterations": 2000,
+          "low": 0.05956405119475673
+        },
+        "estimate": 0.08788559296703058
+      },
+      "numeric_cell_exact_accuracy": {
+        "ci95": {
+          "high": 0.015035313553481405,
+          "iterations": 2000,
+          "low": 0.01031239262286542
+        },
+        "estimate": 0.012609420591913278
+      },
+      "precision": {
+        "ci95": {
+          "high": 0.18207982702197287,
+          "iterations": 2000,
+          "low": 0.10601929844264746
+        },
+        "estimate": 0.1448378410963309
+      },
+      "recall": {
+        "ci95": {
+          "high": 0.08572660098522163,
+          "iterations": 2000,
+          "low": 0.012195121951219523
+        },
+        "estimate": 0.04705882352941171
+      },
+      "unsafe_autoapproval_rate": {
+        "ci95": {
+          "high": -0.015741401268132078,
+          "iterations": 2000,
+          "low": -0.048787898081564585
+        },
+        "estimate": -0.0310866910866911
+      }
+    },
+    "hybrid_simulated_minus_rules_only": {
+      "clean_table_specificity": {
+        "ci95": {
+          "high": -0.014879848452734162,
+          "iterations": 2000,
+          "low": -0.04805166612395531
+        },
+        "estimate": -0.030303030303030276
+      },
+      "coverage_rate": {
+        "ci95": {
+          "high": -0.007000000000000006,
+          "iterations": 2000,
+          "low": -0.02200000000000002
+        },
+        "estimate": -0.014000000000000012
+      },
+      "extraction_row_recall": {
+        "ci95": {
+          "high": null,
+          "iterations": 2000,
+          "low": null
+        },
+        "estimate": null
+      },
+      "f1": {
+        "ci95": {
+          "high": 0.60200949505557,
+          "iterations": 2000,
+          "low": 0.4830541358755035
+        },
+        "estimate": 0.5401253918495297
+      },
+      "false_positive_findings_per_100_tables": {
+        "ci95": {
+          "high": 4.6,
+          "iterations": 2000,
+          "low": 1.6
+        },
+        "estimate": 3.0
+      },
+      "high_risk_recall": {
+        "ci95": {
+          "high": 0.7796610169491526,
+          "iterations": 2000,
+          "low": 0.6146421152847499
+        },
+        "estimate": 0.7
+      },
+      "issue_table_miss_rate": {
+        "ci95": {
+          "high": -0.5632183908045977,
+          "iterations": 2000,
+          "low": -0.6807293591544091
+        },
+        "estimate": -0.6235294117647059
+      },
+      "macro_f1": {
+        "ci95": {
+          "high": 0.6910182662117914,
+          "iterations": 2000,
+          "low": 0.5864908799925347
+        },
+        "estimate": 0.6492390144912454
+      },
+      "numeric_cell_exact_accuracy": {
+        "ci95": {
+          "high": null,
+          "iterations": 2000,
+          "low": null
+        },
+        "estimate": null
+      },
+      "precision": {
+        "ci95": {
+          "high": -0.057683121019108344,
+          "iterations": 2000,
+          "low": -0.1486661986661987
+        },
+        "estimate": -0.10067114093959728
+      },
+      "recall": {
+        "ci95": {
+          "high": 0.6687926136363633,
+          "iterations": 2000,
+          "low": 0.5529375228352211
+        },
+        "estimate": 0.6117647058823529
+      },
+      "unsafe_autoapproval_rate": {
+        "ci95": {
+          "high": -0.1802145458113893,
+          "iterations": 2000,
+          "low": -0.23884432558280896
+        },
+        "estimate": -0.20930091185410332
+      }
+    }
+  },
+  "systems": {
+    "hybrid_simulated": {
+      "cells_recovered_by_self_check": 121,
+      "ci95": {
+        "clean_table_specificity": {
+          "high": 0.9851201515472657,
+          "iterations": 2000,
+          "low": 0.9519483338760447
+        },
+        "coverage_rate": {
+          "high": 0.993,
+          "iterations": 2000,
+          "low": 0.978
+        },
+        "extraction_row_recall": {
+          "high": 0.9676,
+          "iterations": 2000,
+          "low": 0.9512
+        },
+        "f1": {
+          "high": 0.8821796694508618,
+          "iterations": 2000,
+          "low": 0.7874421659907467
+        },
+        "false_positive_findings_per_100_tables": {
+          "high": 4.6,
+          "iterations": 2000,
+          "low": 1.6
+        },
+        "high_risk_recall": {
+          "high": 0.8571709786276713,
+          "iterations": 2000,
+          "low": 0.7036892361111111
+        },
+        "issue_table_miss_rate": {
+          "high": 0.27160672232926564,
+          "iterations": 2000,
+          "low": 0.13714285714285715
+        },
+        "macro_f1": {
+          "high": 0.8674888544470855,
+          "iterations": 2000,
+          "low": 0.7629614682278288
+        },
+        "numeric_cell_exact_accuracy": {
+          "high": 0.9854303510092692,
+          "iterations": 2000,
+          "low": 0.9810084890510237
+        },
+        "precision": {
+          "high": 0.9423168789808917,
+          "iterations": 2000,
+          "low": 0.8513338013338013
+        },
+        "recall": {
+          "high": 0.8503062839837566,
+          "iterations": 2000,
+          "low": 0.7151506342494716
+        },
+        "unsafe_autoapproval_rate": {
+          "high": 0.11389066951566951,
+          "iterations": 2000,
+          "low": 0.06451612903225806
+        }
+      },
+      "clean_table_specificity": 0.9696969696969697,
+      "counts": {
+        "fn": 36,
+        "fp": 15,
+        "predictions": 149,
+        "tp": 134,
+        "truth": 170
+      },
+      "coverage_rate": 0.986,
+      "display_name": "Hybrid (simulated proxy + deterministic guards)",
+      "extraction_row_recall": 0.9596,
+      "f1": 0.8401253918495297,
+      "false_positive_findings_per_100_tables": 3.0,
+      "families": {
+        "AIV-6.1": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "New study versus prior edition",
+          "tp": 10
+        },
+        "AIV-6.2": {
+          "f1": 0.9473684210526316,
+          "fn": 1,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "N decreased versus prior edition",
+          "tp": 9
+        },
+        "AIV-6.3": {
+          "f1": 0.888888888888889,
+          "fn": 2,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.8,
+          "risk": "Low",
+          "title": "N increased versus prior edition",
+          "tp": 8
+        },
+        "AIV-7.3": {
+          "f1": 0.9473684210526316,
+          "fn": 1,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "AE-overview change versus prior",
+          "tp": 9
+        },
+        "AIV-7.4": {
+          "f1": 0.6666666666666665,
+          "fn": 4,
+          "fp": 2,
+          "precision": 0.75,
+          "recall": 0.6,
+          "risk": "High",
+          "title": "Preferred term renamed or moved",
+          "tp": 6
+        },
+        "AIW-2.1": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "High",
+          "title": "Subgroups do not sum to heading N",
+          "tp": 10
+        },
+        "AIW-2.2": {
+          "f1": 0.9473684210526316,
+          "fn": 1,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "Component columns do not sum to row total",
+          "tp": 9
+        },
+        "AIW-2.3": {
+          "f1": 0.6666666666666666,
+          "fn": 5,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.5,
+          "risk": "High",
+          "title": "Within-table numeric integrity",
+          "tp": 5
+        },
+        "AIW-7.2": {
+          "f1": 0.9,
+          "fn": 1,
+          "fp": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "Forbidden zero in Any AE row",
+          "tp": 9
+        },
+        "AIX-3": {
+          "f1": 0.888888888888889,
+          "fn": 2,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.8,
+          "risk": "High",
+          "title": "Pooled-indication N mismatch",
+          "tp": 8
+        },
+        "AIX-4": {
+          "f1": 0.5714285714285715,
+          "fn": 6,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.4,
+          "risk": "High",
+          "title": "Table 1 versus by-study N mismatch",
+          "tp": 4
+        },
+        "AIX-5": {
+          "f1": 0.26666666666666666,
+          "fn": 8,
+          "fp": 3,
+          "precision": 0.4,
+          "recall": 0.2,
+          "risk": "Low",
+          "title": "Footnote study-list mismatch",
+          "tp": 2
+        },
+        "AIX-7.1": {
+          "f1": 0.888888888888889,
+          "fn": 2,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.8,
+          "risk": "High",
+          "title": "AE overview does not match SOC/PT",
+          "tp": 8
+        },
+        "AIX-8": {
+          "f1": 0.8235294117647058,
+          "fn": 3,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.7,
+          "risk": "High",
+          "title": "By-study output mismatch",
+          "tp": 7
+        },
+        "FMT-010": {
+          "f1": 0.8333333333333333,
+          "fn": 0,
+          "fp": 4,
+          "precision": 0.7142857142857143,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "Blank or empty page",
+          "tp": 10
+        },
+        "XOUT-001": {
+          "f1": 0.8,
+          "fn": 0,
+          "fp": 5,
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "risk": "High",
+          "title": "Gap in output numbering",
+          "tp": 10
+        },
+        "XOUT-020": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "Output missing versus prior edition",
+          "tp": 10
+        }
+      },
+      "guard_stats": {
+        "duplicates_dropped": 31,
+        "verification_dropped": 17
+      },
+      "high_risk_recall": 0.7833333333333333,
+      "issue_table_miss_rate": 0.2,
+      "macro_f1": 0.8257096027265396,
+      "numeric_cell_exact_accuracy": 0.9831179658190913,
+      "precision": 0.8993288590604027,
+      "recall": 0.788235294117647,
+      "simulated_latency": {
+        "median_serial_seconds_per_project": 9.119044,
+        "note": "Deterministic latency proxy, not measured model latency.",
+        "p95_serial_seconds_per_project": 9.6182497,
+        "total_serial_seconds": 457.893849
+      },
+      "simulated_usage": {
+        "cost_note": "N/A — no token prices supplied; no API call occurred.",
+        "cost_usd": null,
+        "input_tokens": 182095,
+        "input_tokens_per_1000_pages": 182095.0,
+        "output_tokens": 9758,
+        "output_tokens_per_1000_pages": 9758.0
+      },
+      "unsafe_autoapproval_rate": 0.08857142857142856
+    },
+    "llm_only_simulated": {
+      "cells_recovered_by_self_check": 0,
+      "ci95": {
+        "clean_table_specificity": {
+          "high": 0.9638581352436774,
+          "iterations": 2000,
+          "low": 0.9049043236926673
+        },
+        "coverage_rate": {
+          "high": 0.993,
+          "iterations": 2000,
+          "low": 0.978
+        },
+        "extraction_row_recall": {
+          "high": 0.9676,
+          "iterations": 2000,
+          "low": 0.9512
+        },
+        "f1": {
+          "high": 0.7987809455797261,
+          "iterations": 2000,
+          "low": 0.6920821114369501
+        },
+        "false_positive_findings_per_100_tables": {
+          "high": 11.200000000000001,
+          "iterations": 2000,
+          "low": 5.6000000000000005
+        },
+        "high_risk_recall": {
+          "high": 0.8495802663137869,
+          "iterations": 2000,
+          "low": 0.6949034839924672
+        },
+        "issue_table_miss_rate": {
+          "high": 0.31250872905027927,
+          "iterations": 2000,
+          "low": 0.1839080459770115
+        },
+        "macro_f1": {
+          "high": 0.7858704111935536,
+          "iterations": 2000,
+          "low": 0.670460427517173
+        },
+        "numeric_cell_exact_accuracy": {
+          "high": 0.9740309463592977,
+          "iterations": 2000,
+          "low": 0.9672628450249661
+        },
+        "precision": {
+          "high": 0.8194552277432712,
+          "iterations": 2000,
+          "low": 0.6887526542408872
+        },
+        "recall": {
+          "high": 0.805718487394958,
+          "iterations": 2000,
+          "low": 0.6745494505494506
+        },
+        "unsafe_autoapproval_rate": {
+          "high": 0.14825820981344237,
+          "iterations": 2000,
+          "low": 0.09253731343283582
+        }
+      },
+      "clean_table_specificity": 0.9363636363636364,
+      "counts": {
+        "fn": 44,
+        "fp": 41,
+        "predictions": 167,
+        "tp": 126,
+        "truth": 170
+      },
+      "coverage_rate": 0.986,
+      "display_name": "LLM-only (seeded simulated proxy)",
+      "extraction_row_recall": 0.9596,
+      "f1": 0.7477744807121662,
+      "false_positive_findings_per_100_tables": 8.200000000000001,
+      "families": {
+        "AIV-6.1": {
+          "f1": 0.8695652173913044,
+          "fn": 0,
+          "fp": 3,
+          "precision": 0.7692307692307693,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "New study versus prior edition",
+          "tp": 10
+        },
+        "AIV-6.2": {
+          "f1": 0.9,
+          "fn": 1,
+          "fp": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "N decreased versus prior edition",
+          "tp": 9
+        },
+        "AIV-6.3": {
+          "f1": 0.761904761904762,
+          "fn": 2,
+          "fp": 3,
+          "precision": 0.7272727272727273,
+          "recall": 0.8,
+          "risk": "Low",
+          "title": "N increased versus prior edition",
+          "tp": 8
+        },
+        "AIV-7.3": {
+          "f1": 0.9,
+          "fn": 1,
+          "fp": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "AE-overview change versus prior",
+          "tp": 9
+        },
+        "AIV-7.4": {
+          "f1": 0.6666666666666665,
+          "fn": 4,
+          "fp": 2,
+          "precision": 0.75,
+          "recall": 0.6,
+          "risk": "High",
+          "title": "Preferred term renamed or moved",
+          "tp": 6
+        },
+        "AIW-2.1": {
+          "f1": 0.7692307692307693,
+          "fn": 0,
+          "fp": 6,
+          "precision": 0.625,
+          "recall": 1.0,
+          "risk": "High",
+          "title": "Subgroups do not sum to heading N",
+          "tp": 10
+        },
+        "AIW-2.2": {
+          "f1": 0.9523809523809523,
+          "fn": 0,
+          "fp": 1,
+          "precision": 0.9090909090909091,
+          "recall": 1.0,
+          "risk": "High",
+          "title": "Component columns do not sum to row total",
+          "tp": 10
+        },
+        "AIW-2.3": {
+          "f1": 0.5263157894736842,
+          "fn": 5,
+          "fp": 4,
+          "precision": 0.5555555555555556,
+          "recall": 0.5,
+          "risk": "High",
+          "title": "Within-table numeric integrity",
+          "tp": 5
+        },
+        "AIW-7.2": {
+          "f1": 0.9,
+          "fn": 1,
+          "fp": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "Forbidden zero in Any AE row",
+          "tp": 9
+        },
+        "AIX-3": {
+          "f1": 0.761904761904762,
+          "fn": 2,
+          "fp": 3,
+          "precision": 0.7272727272727273,
+          "recall": 0.8,
+          "risk": "High",
+          "title": "Pooled-indication N mismatch",
+          "tp": 8
+        },
+        "AIX-4": {
+          "f1": 0.5,
+          "fn": 6,
+          "fp": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.4,
+          "risk": "High",
+          "title": "Table 1 versus by-study N mismatch",
+          "tp": 4
+        },
+        "AIX-5": {
+          "f1": 0.25,
+          "fn": 8,
+          "fp": 4,
+          "precision": 0.3333333333333333,
+          "recall": 0.2,
+          "risk": "Low",
+          "title": "Footnote study-list mismatch",
+          "tp": 2
+        },
+        "AIX-7.1": {
+          "f1": 0.9473684210526316,
+          "fn": 1,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.9,
+          "risk": "High",
+          "title": "AE overview does not match SOC/PT",
+          "tp": 9
+        },
+        "AIX-8": {
+          "f1": 0.8235294117647058,
+          "fn": 3,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 0.7,
+          "risk": "High",
+          "title": "By-study output mismatch",
+          "tp": 7
+        },
+        "FMT-010": {
+          "f1": 0.6,
+          "fn": 4,
+          "fp": 4,
+          "precision": 0.6,
+          "recall": 0.6,
+          "risk": "Low",
+          "title": "Blank or empty page",
+          "tp": 6
+        },
+        "XOUT-001": {
+          "f1": 0.6363636363636365,
+          "fn": 3,
+          "fp": 5,
+          "precision": 0.5833333333333334,
+          "recall": 0.7,
+          "risk": "High",
+          "title": "Gap in output numbering",
+          "tp": 7
+        },
+        "XOUT-020": {
+          "f1": 0.7777777777777777,
+          "fn": 3,
+          "fp": 1,
+          "precision": 0.875,
+          "recall": 0.7,
+          "risk": "Low",
+          "title": "Output missing versus prior edition",
+          "tp": 7
+        }
+      },
+      "guard_stats": {
+        "duplicates_dropped": 0,
+        "verification_dropped": 0
+      },
+      "high_risk_recall": 0.775,
+      "issue_table_miss_rate": 0.24705882352941178,
+      "macro_f1": 0.737824009759509,
+      "numeric_cell_exact_accuracy": 0.970508545227178,
+      "precision": 0.7544910179640718,
+      "recall": 0.7411764705882353,
+      "simulated_latency": {
+        "median_serial_seconds_per_project": 9.119044,
+        "note": "Deterministic latency proxy, not measured model latency.",
+        "p95_serial_seconds_per_project": 9.6182497,
+        "total_serial_seconds": 457.893849
+      },
+      "simulated_usage": {
+        "cost_note": "N/A — no token prices supplied; no API call occurred.",
+        "cost_usd": null,
+        "input_tokens": 182095,
+        "input_tokens_per_1000_pages": 182095.0,
+        "output_tokens": 10514,
+        "output_tokens_per_1000_pages": 10514.0
+      },
+      "unsafe_autoapproval_rate": 0.11965811965811966
+    },
+    "rules_only": {
+      "cells_recovered_by_self_check": 0,
+      "ci95": {
+        "clean_table_specificity": {
+          "high": 1.0,
+          "iterations": 2000,
+          "low": 1.0
+        },
+        "coverage_rate": {
+          "high": 1.0,
+          "iterations": 2000,
+          "low": 1.0
+        },
+        "extraction_row_recall": {
+          "high": null,
+          "iterations": 2000,
+          "low": null
+        },
+        "f1": {
+          "high": 0.3660745724346076,
+          "iterations": 2000,
+          "low": 0.22950819672131148
+        },
+        "false_positive_findings_per_100_tables": {
+          "high": 0.0,
+          "iterations": 2000,
+          "low": 0.0
+        },
+        "high_risk_recall": {
+          "high": 0.12821100917431189,
+          "iterations": 2000,
+          "low": 0.04123077573094473
+        },
+        "issue_table_miss_rate": {
+          "high": 0.8703703703703702,
+          "iterations": 2000,
+          "low": 0.7759539287733181
+        },
+        "macro_f1": {
+          "high": 0.17647058823529413,
+          "iterations": 2000,
+          "low": 0.17647058823529413
+        },
+        "numeric_cell_exact_accuracy": {
+          "high": null,
+          "iterations": 2000,
+          "low": null
+        },
+        "precision": {
+          "high": 1.0,
+          "iterations": 2000,
+          "low": 1.0
+        },
+        "recall": {
+          "high": 0.22404607122668171,
+          "iterations": 2000,
+          "low": 0.12962962962962962
+        },
+        "unsafe_autoapproval_rate": {
+          "high": 0.3203463203463204,
+          "iterations": 2000,
+          "low": 0.2773077887871567
+        }
+      },
+      "clean_table_specificity": 1.0,
+      "counts": {
+        "fn": 140,
+        "fp": 0,
+        "predictions": 30,
+        "tp": 30,
+        "truth": 170
+      },
+      "coverage_rate": 1.0,
+      "display_name": "Rules-only (current structural checks)",
+      "extraction_row_recall": null,
+      "f1": 0.3,
+      "false_positive_findings_per_100_tables": 0.0,
+      "families": {
+        "AIV-6.1": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "Low",
+          "title": "New study versus prior edition",
+          "tp": 0
+        },
+        "AIV-6.2": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "N decreased versus prior edition",
+          "tp": 0
+        },
+        "AIV-6.3": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "Low",
+          "title": "N increased versus prior edition",
+          "tp": 0
+        },
+        "AIV-7.3": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "AE-overview change versus prior",
+          "tp": 0
+        },
+        "AIV-7.4": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Preferred term renamed or moved",
+          "tp": 0
+        },
+        "AIW-2.1": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Subgroups do not sum to heading N",
+          "tp": 0
+        },
+        "AIW-2.2": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Component columns do not sum to row total",
+          "tp": 0
+        },
+        "AIW-2.3": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Within-table numeric integrity",
+          "tp": 0
+        },
+        "AIW-7.2": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Forbidden zero in Any AE row",
+          "tp": 0
+        },
+        "AIX-3": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Pooled-indication N mismatch",
+          "tp": 0
+        },
+        "AIX-4": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "Table 1 versus by-study N mismatch",
+          "tp": 0
+        },
+        "AIX-5": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "Low",
+          "title": "Footnote study-list mismatch",
+          "tp": 0
+        },
+        "AIX-7.1": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "AE overview does not match SOC/PT",
+          "tp": 0
+        },
+        "AIX-8": {
+          "f1": 0.0,
+          "fn": 10,
+          "fp": 0,
+          "precision": null,
+          "recall": 0.0,
+          "risk": "High",
+          "title": "By-study output mismatch",
+          "tp": 0
+        },
+        "FMT-010": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "Blank or empty page",
+          "tp": 10
+        },
+        "XOUT-001": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "High",
+          "title": "Gap in output numbering",
+          "tp": 10
+        },
+        "XOUT-020": {
+          "f1": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "risk": "Low",
+          "title": "Output missing versus prior edition",
+          "tp": 10
+        }
+      },
+      "guard_stats": {
+        "duplicates_dropped": 0,
+        "verification_dropped": 0
+      },
+      "high_risk_recall": 0.08333333333333333,
+      "issue_table_miss_rate": 0.8235294117647058,
+      "macro_f1": 0.17647058823529413,
+      "numeric_cell_exact_accuracy": null,
+      "precision": 1.0,
+      "recall": 0.17647058823529413,
+      "simulated_latency": {
+        "median_serial_seconds_per_project": 0.0,
+        "note": "Deterministic latency proxy, not measured model latency.",
+        "p95_serial_seconds_per_project": 0.0,
+        "total_serial_seconds": 0.0
+      },
+      "simulated_usage": {
+        "cost_note": "N/A — no token prices supplied; no API call occurred.",
+        "cost_usd": null,
+        "input_tokens": 0,
+        "input_tokens_per_1000_pages": 0.0,
+        "output_tokens": 0,
+        "output_tokens_per_1000_pages": 0.0
+      },
+      "unsafe_autoapproval_rate": 0.2978723404255319
+    }
+  }
+}

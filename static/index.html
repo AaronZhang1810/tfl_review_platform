@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TLF Review Platform</title>
+  <!-- Apply the saved (or OS-preferred) theme before the stylesheet paints, to avoid a flash of light. -->
+  <script>(function(){try{var t=localStorage.getItem("tlf_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="demoBanner" class="demo-banner hidden" role="status">
+    SYNTHETIC DEMO — no real clinical or patient data; AI behavior is simulated.
+  </div>
+  <header id="topbar">
+    <div class="brand">TLF Review Platform</div>
+    <button type="button" class="nav-home hidden" id="homeBtn" title="Back to the project list">← Projects</button>
+    <div id="projMeta" class="proj-meta"></div>
+    <nav id="tabs" class="tabs hidden">
+      <button data-tab="dashboard" class="active">Overview</button>
+      <button data-tab="toc">TOC</button>
+      <button data-tab="tlf">TLF</button>
+      <button data-tab="ai">AI Review</button>
+      <button data-tab="comments">Comments</button>
+    </nav>
+    <button type="button" id="themeToggle" class="topbar-btn" title="Toggle light / dark theme" aria-label="Toggle theme">🌙</button>
+    <a id="helpLink" href="/tutorial.html" target="_blank" title="How to use this app"
+       style="color:#cdd7e5;margin-left:.6rem;text-decoration:none;font-size:.9rem;white-space:nowrap">Help</a>
+  </header>
+
+  <main id="app"><!-- views injected here --></main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script type="module">
+    import * as pdfjsLib from "/vendor/pdf.mjs";
+    window.pdfjsLib = pdfjsLib;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "/vendor/pdf.worker.mjs";
+    await import("/app.js");
+  </script>
+</body>
+</html>

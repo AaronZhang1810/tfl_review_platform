@@ -1,0 +1,138 @@
+[
+  {
+    "detector_group": "structural",
+    "id": "FMT-010",
+    "operation": "blank",
+    "risk": "Low",
+    "scope": "structural",
+    "title": "Blank or empty page"
+  },
+  {
+    "detector_group": "structural",
+    "id": "XOUT-020",
+    "operation": "missing_current",
+    "risk": "Low",
+    "scope": "structural",
+    "title": "Output missing versus prior edition"
+  },
+  {
+    "detector_group": "structural",
+    "id": "XOUT-001",
+    "operation": "number_gap",
+    "risk": "High",
+    "scope": "structural",
+    "title": "Gap in output numbering"
+  },
+  {
+    "detector_group": "arithmetic",
+    "id": "AIW-2.1",
+    "operation": "sum_equals",
+    "risk": "High",
+    "scope": "within_table",
+    "title": "Subgroups do not sum to heading N"
+  },
+  {
+    "detector_group": "arithmetic",
+    "id": "AIW-2.2",
+    "operation": "sum_equals",
+    "risk": "High",
+    "scope": "within_table",
+    "title": "Component columns do not sum to row total"
+  },
+  {
+    "detector_group": "arithmetic",
+    "id": "AIW-2.3",
+    "operation": "less_equal",
+    "risk": "High",
+    "scope": "within_table",
+    "title": "Within-table numeric integrity"
+  },
+  {
+    "detector_group": "cross_output",
+    "id": "AIX-3",
+    "operation": "equals",
+    "risk": "High",
+    "scope": "cross_output",
+    "title": "Pooled-indication N mismatch"
+  },
+  {
+    "detector_group": "cross_output",
+    "id": "AIX-4",
+    "operation": "equals",
+    "risk": "High",
+    "scope": "cross_output",
+    "title": "Table 1 versus by-study N mismatch"
+  },
+  {
+    "detector_group": "semantic",
+    "id": "AIX-5",
+    "operation": "set_equals",
+    "risk": "Low",
+    "scope": "cross_output",
+    "title": "Footnote study-list mismatch"
+  },
+  {
+    "detector_group": "version",
+    "id": "AIV-6.1",
+    "operation": "new_present",
+    "risk": "Low",
+    "scope": "version",
+    "title": "New study versus prior edition"
+  },
+  {
+    "detector_group": "version",
+    "id": "AIV-6.2",
+    "operation": "decreased",
+    "risk": "High",
+    "scope": "version",
+    "title": "N decreased versus prior edition"
+  },
+  {
+    "detector_group": "version",
+    "id": "AIV-6.3",
+    "operation": "increased",
+    "risk": "Low",
+    "scope": "version",
+    "title": "N increased versus prior edition"
+  },
+  {
+    "detector_group": "cross_output",
+    "id": "AIX-7.1",
+    "operation": "equals",
+    "risk": "High",
+    "scope": "cross_output",
+    "title": "AE overview does not match SOC/PT"
+  },
+  {
+    "detector_group": "arithmetic",
+    "id": "AIW-7.2",
+    "operation": "zero_forbidden",
+    "risk": "High",
+    "scope": "within_table",
+    "title": "Forbidden zero in Any AE row"
+  },
+  {
+    "detector_group": "version",
+    "id": "AIV-7.3",
+    "operation": "decreased",
+    "risk": "High",
+    "scope": "version",
+    "title": "AE-overview change versus prior"
+  },
+  {
+    "detector_group": "semantic",
+    "id": "AIV-7.4",
+    "operation": "term_changed",
+    "risk": "High",
+    "scope": "version",
+    "title": "Preferred term renamed or moved"
+  },
+  {
+    "detector_group": "cross_output",
+    "id": "AIX-8",
+    "operation": "equals",
+    "risk": "High",
+    "scope": "cross_output",
+    "title": "By-study output mismatch"
+  }
+]

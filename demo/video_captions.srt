@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:12,000
+Reviewer-assist architecture: local indexing, structured model calls, deterministic guards, and accountable human decisions.
+
+2
+00:00:12,000 --> 00:00:25,000
+The one-click showcase is seeded, offline, and isolated. Every document, value, finding, and model behavior is synthetic.
+
+3
+00:00:25,000 --> 00:00:40,000
+Twelve current tables and twelve prior-edition tables are indexed one table per page, with page-level coverage visible.
+
+4
+00:00:40,000 --> 00:01:00,000
+Within-table example: 120 + 118 = 238, but the printed Total is 237. The candidate cites its operands, page, and source.
+
+5
+00:01:00,000 --> 00:01:18,000
+Cross-output example: the AE overview reports 185 participants, while the SOC/PT table reports 184.
+
+6
+00:01:18,000 --> 00:01:36,000
+Candidates are grouped by risk and scope. A human can inspect the source, edit and post, reject, or reopen each one.
+
+7
+00:01:36,000 --> 00:01:48,000
+Comments and decisions remain traceable and can be exported. AI output is evidence to review, not a final clinical decision.
+
+8
+00:01:48,000 --> 00:02:00,000
+The seeded benchmark compares rules-only, a simulated LLM proxy, and the guarded hybrid. It does not measure clinical performance or regulatory fitness.

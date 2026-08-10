@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out complete history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-lock.txt
+            requirements-demo-lock.txt
+
+      - name: Install exact development inventory
+        run: |
+          python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: \
+            --requirement requirements-lock.txt
+          python -m pip check
+
+      - name: Audit staged public tree and complete history
+        run: python public_release.py --check --staged --history
+
+      - name: Install synthetic public configuration
+        run: cp configs/study_config.synthetic.json study_config.json
+
+      - name: Lint
+        run: python -m ruff check .
+
+      - name: Python security static analysis
+        run: >-
+          python -m bandit --recursive --configfile pyproject.toml
+          --severity-level medium --confidence-level high .
+
+      - name: Test
+        run: python -m pytest
+
+      - name: Audit exact dependency inventories with OSV
+        run: |
+          python -m pip_audit --requirement requirements-lock.txt \
+            --no-deps --disable-pip --vulnerability-service osv
+          python -m pip_audit --requirement requirements-demo-lock.txt \
+            --no-deps --disable-pip --vulnerability-service osv
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build loopback-only demo image
+        run: docker build --pull --tag tlf-review-demo:ci .
+
+      - name: Scan image for vulnerabilities and secrets
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: tlf-review-demo:ci
+          scanners: vuln,secret
+          severity: HIGH,CRITICAL
+          exit-code: "1"
+          ignore-unfixed: false
+
+      - name: Verify non-root, read-only runtime and health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(docker image inspect --format '{{.Config.User}}' tlf-review-demo:ci)" = "app"
+          test -n "$(docker image inspect --format '{{json .Config.Healthcheck}}' tlf-review-demo:ci)"
+          container_id="$(docker run --detach \
+            --read-only \
+            --cap-drop ALL \
+            --security-opt no-new-privileges:true \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --tmpfs /app/data:rw,noexec,nosuid,size=64m \
+            --env TLF_DEMO_MODE=1 \
+            --env TLF_DATA_DIR=/app/data \
+            --publish 127.0.0.1:18000:8000 \
+            tlf-review-demo:ci)"
+          cleanup() {
+            docker logs "${container_id}" || true
+            docker rm --force "${container_id}" >/dev/null || true
+          }
+          trap cleanup EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error http://127.0.0.1:18000/api/projects >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Container did not become healthy within 30 seconds" >&2
+          exit 1

@@ -1,0 +1,184 @@
+{
+  "_notice": "FICTIONAL CONFIGURATION FOR A SYNTHETIC PORTFOLIO DEMONSTRATION. It is not derived from a sponsor checklist and must not be used for a real clinical review.",
+  "structural_checks": {
+    "blank_pages": true,
+    "missing_outputs_vs_prior": true,
+    "numbering_gap": true
+  },
+  "dedupe_findings": true,
+  "selfcheck": {
+    "enabled": true,
+    "pct_tolerance": 0.6
+  },
+  "verify_pass": {
+    "enabled": true,
+    "count_tolerance": 0,
+    "pct_tolerance": 0.6
+  },
+  "deterministic_checks": [
+    {
+      "id": "1.1",
+      "title": "Flag empty or blank pages",
+      "check_id": "FMT-010",
+      "risk": "Low"
+    },
+    {
+      "id": "1.2",
+      "title": "Flag outputs missing from the current fictional edition",
+      "check_id": "XOUT-020",
+      "risk": "Low"
+    },
+    {
+      "id": "1.3",
+      "title": "Flag gaps in output numbering",
+      "check_id": "XOUT-001",
+      "risk": "High"
+    }
+  ],
+  "checklist": [
+    {
+      "id": "2.1",
+      "title": "Subgroup counts reconcile to printed totals",
+      "risk": "High",
+      "scope": "within_table",
+      "applies_to": ["*"],
+      "guidance": "Within one fictional table, add the printed subgroup counts and compare the result with the printed subtotal. Report the cited addends and subtotal; do not infer missing values.",
+      "examples": [
+        "Cohort Alpha N=42 plus Cohort Beta N=38 equals the printed All Participants N=80."
+      ]
+    },
+    {
+      "id": "2.2",
+      "title": "Component columns reconcile to row totals",
+      "risk": "High",
+      "scope": "within_table",
+      "applies_to": ["*"],
+      "guidance": "Where a row explicitly presents mutually exclusive components and a total, compare the sum of those components with that total.",
+      "examples": [
+        "Oral N=31 plus Intravenous N=29 equals the printed Any Route N=60."
+      ]
+    },
+    {
+      "id": "2.3",
+      "title": "Within-table numeric integrity",
+      "risk": "High",
+      "scope": "within_table",
+      "applies_to": ["*"],
+      "guidance": "Check that n does not exceed its group N, printed percentages agree with n divided by N within tolerance, and a printed total is not blank when its declared components are populated.",
+      "examples": []
+    },
+    {
+      "id": "3",
+      "title": "Population totals reconcile across outputs",
+      "risk": "High",
+      "scope": "cross_output",
+      "applies_to": ["*"],
+      "guidance": "Compare a population total only when the fictional output labels, population definition, treatment grouping, and cutoff are explicitly compatible. Cite both outputs.",
+      "examples": [
+        "The Safety Population N in the participant summary matches the same population in the adverse-event overview."
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Per-study rows reconcile across outputs",
+      "risk": "High",
+      "scope": "cross_output",
+      "applies_to": ["*"],
+      "guidance": "For fictional studies with the same identifier and population definition, compare the participant count in the study summary with the corresponding by-study output.",
+      "examples": [
+        "Fictional study SYN-A101 has the same Safety Population N in both outputs."
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Footnote membership is internally consistent",
+      "risk": "Low",
+      "scope": "cross_output",
+      "applies_to": ["*"],
+      "guidance": "Compare fictional study identifiers listed in a pooled-output footnote with the corresponding study rows in the summary output.",
+      "examples": []
+    },
+    {
+      "id": "6.1",
+      "title": "New rows versus the prior fictional edition",
+      "risk": "Low",
+      "scope": "version",
+      "applies_to": ["*"],
+      "guidance": "Identify rows present in the current fictional edition but absent from the prior fictional edition.",
+      "examples": []
+    },
+    {
+      "id": "6.2",
+      "title": "Counts decreased versus the prior fictional edition",
+      "risk": "High",
+      "scope": "version",
+      "applies_to": ["*"],
+      "guidance": "Flag a decreased count only when the row, population, cutoff semantics, and column group are explicitly comparable across the two fictional editions.",
+      "examples": []
+    },
+    {
+      "id": "6.3",
+      "title": "Counts increased versus the prior fictional edition",
+      "risk": "Low",
+      "scope": "version",
+      "applies_to": ["*"],
+      "guidance": "Record comparable count increases as informational changes.",
+      "examples": []
+    },
+    {
+      "id": "7.1",
+      "title": "Adverse-event category totals reconcile",
+      "risk": "High",
+      "scope": "cross_output",
+      "applies_to": ["*overview*", "*adverse*", "*organ class*", "*preferred term*"],
+      "guidance": "Compare explicitly equivalent adverse-event category totals between the fictional overview and detail outputs.",
+      "examples": []
+    },
+    {
+      "id": "7.2",
+      "title": "Unexpected all-zero adverse-event columns",
+      "risk": "High",
+      "scope": "within_table",
+      "applies_to": ["*overview*", "*adverse*"],
+      "guidance": "Flag an all-zero treatment column or a zero in an Any Adverse Event row as a review candidate, not as a final error.",
+      "examples": []
+    },
+    {
+      "id": "7.3",
+      "title": "Adverse-event overview changes across fictional editions",
+      "risk": "High",
+      "scope": "version",
+      "applies_to": ["*overview*", "*adverse*"],
+      "guidance": "Compare explicitly compatible overview rows and report decreases as high-risk candidates and increases as informational candidates.",
+      "examples": []
+    },
+    {
+      "id": "7.4",
+      "title": "Preferred-term changes across fictional editions",
+      "risk": "High",
+      "scope": "version",
+      "applies_to": ["*preferred term*", "*organ class*", "*adverse*"],
+      "guidance": "Identify comparable preferred-term count decreases and apparent term renames or category moves for human confirmation.",
+      "examples": []
+    },
+    {
+      "id": "8",
+      "title": "By-study outputs reconcile with the summary",
+      "risk": "High",
+      "scope": "cross_output",
+      "applies_to": ["*"],
+      "guidance": "Compare fictional by-study population counts with explicitly equivalent rows in the project summary, and identify expected by-study outputs absent from the current edition.",
+      "examples": []
+    },
+    {
+      "id": "9",
+      "title": "Cross-document reconciliation roadmap",
+      "risk": "High",
+      "scope": "cross_document",
+      "applies_to": ["*"],
+      "requires_multi_document_upload": true,
+      "guidance": "Reserved for a future synthetic demonstration; do not report a result unless multi-document ingestion and an explicit comparison contract are implemented.",
+      "examples": []
+    }
+  ]
+}

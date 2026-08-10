@@ -1,0 +1,198 @@
+{
+  "hybrid_simulated_minus_llm_only_simulated": {
+    "clean_table_specificity": {
+      "ci95": {
+        "high": 0.05312823594674552,
+        "iterations": 2000,
+        "low": 0.01552795031055898
+      },
+      "estimate": 0.033333333333333326
+    },
+    "coverage_rate": {
+      "ci95": {
+        "high": 0.0,
+        "iterations": 2000,
+        "low": 0.0
+      },
+      "estimate": 0.0
+    },
+    "extraction_row_recall": {
+      "ci95": {
+        "high": 0.0,
+        "iterations": 2000,
+        "low": 0.0
+      },
+      "estimate": 0.0
+    },
+    "f1": {
+      "ci95": {
+        "high": 0.11968878767617348,
+        "iterations": 2000,
+        "low": 0.06554903808561933
+      },
+      "estimate": 0.09235091113736349
+    },
+    "false_positive_findings_per_100_tables": {
+      "ci95": {
+        "high": -3.400000000000001,
+        "iterations": 2000,
+        "low": -7.2
+      },
+      "estimate": -5.200000000000001
+    },
+    "high_risk_recall": {
+      "ci95": {
+        "high": 0.03731343283582089,
+        "iterations": 2000,
+        "low": -0.01834862385321101
+      },
+      "estimate": 0.008333333333333304
+    },
+    "issue_table_miss_rate": {
+      "ci95": {
+        "high": -0.0178571428571429,
+        "iterations": 2000,
+        "low": -0.08384326851914149
+      },
+      "estimate": -0.047058823529411764
+    },
+    "macro_f1": {
+      "ci95": {
+        "high": 0.11851006130795116,
+        "iterations": 2000,
+        "low": 0.05956405119475673
+      },
+      "estimate": 0.08788559296703058
+    },
+    "numeric_cell_exact_accuracy": {
+      "ci95": {
+        "high": 0.015035313553481405,
+        "iterations": 2000,
+        "low": 0.01031239262286542
+      },
+      "estimate": 0.012609420591913278
+    },
+    "precision": {
+      "ci95": {
+        "high": 0.18207982702197287,
+        "iterations": 2000,
+        "low": 0.10601929844264746
+      },
+      "estimate": 0.1448378410963309
+    },
+    "recall": {
+      "ci95": {
+        "high": 0.08572660098522163,
+        "iterations": 2000,
+        "low": 0.012195121951219523
+      },
+      "estimate": 0.04705882352941171
+    },
+    "unsafe_autoapproval_rate": {
+      "ci95": {
+        "high": -0.015741401268132078,
+        "iterations": 2000,
+        "low": -0.048787898081564585
+      },
+      "estimate": -0.0310866910866911
+    }
+  },
+  "hybrid_simulated_minus_rules_only": {
+    "clean_table_specificity": {
+      "ci95": {
+        "high": -0.014879848452734162,
+        "iterations": 2000,
+        "low": -0.04805166612395531
+      },
+      "estimate": -0.030303030303030276
+    },
+    "coverage_rate": {
+      "ci95": {
+        "high": -0.007000000000000006,
+        "iterations": 2000,
+        "low": -0.02200000000000002
+      },
+      "estimate": -0.014000000000000012
+    },
+    "extraction_row_recall": {
+      "ci95": {
+        "high": null,
+        "iterations": 2000,
+        "low": null
+      },
+      "estimate": null
+    },
+    "f1": {
+      "ci95": {
+        "high": 0.60200949505557,
+        "iterations": 2000,
+        "low": 0.4830541358755035
+      },
+      "estimate": 0.5401253918495297
+    },
+    "false_positive_findings_per_100_tables": {
+      "ci95": {
+        "high": 4.6,
+        "iterations": 2000,
+        "low": 1.6
+      },
+      "estimate": 3.0
+    },
+    "high_risk_recall": {
+      "ci95": {
+        "high": 0.7796610169491526,
+        "iterations": 2000,
+        "low": 0.6146421152847499
+      },
+      "estimate": 0.7
+    },
+    "issue_table_miss_rate": {
+      "ci95": {
+        "high": -0.5632183908045977,
+        "iterations": 2000,
+        "low": -0.6807293591544091
+      },
+      "estimate": -0.6235294117647059
+    },
+    "macro_f1": {
+      "ci95": {
+        "high": 0.6910182662117914,
+        "iterations": 2000,
+        "low": 0.5864908799925347
+      },
+      "estimate": 0.6492390144912454
+    },
+    "numeric_cell_exact_accuracy": {
+      "ci95": {
+        "high": null,
+        "iterations": 2000,
+        "low": null
+      },
+      "estimate": null
+    },
+    "precision": {
+      "ci95": {
+        "high": -0.057683121019108344,
+        "iterations": 2000,
+        "low": -0.1486661986661987
+      },
+      "estimate": -0.10067114093959728
+    },
+    "recall": {
+      "ci95": {
+        "high": 0.6687926136363633,
+        "iterations": 2000,
+        "low": 0.5529375228352211
+      },
+      "estimate": 0.6117647058823529
+    },
+    "unsafe_autoapproval_rate": {
+      "ci95": {
+        "high": -0.1802145458113893,
+        "iterations": 2000,
+        "low": -0.23884432558280896
+      },
+      "estimate": -0.20930091185410332
+    }
+  }
+}

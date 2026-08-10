@@ -1,0 +1,9 @@
+-r requirements-demo.txt
+
+fpdf2>=2.8,<3
+bandit>=1.9,<2
+pytest>=8.3,<10
+httpx>=0.28,<1
+coverage[toml]>=7.6,<8
+ruff>=0.9,<1
+pip-audit>=2.7,<3

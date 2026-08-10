@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# Used only to generate deterministic fictional TFL PDFs for the portfolio demo.
+reportlab>=4.2,<5
