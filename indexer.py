@@ -22,19 +22,12 @@ from pdftools import page_top_texts
 
 logger = logging.getLogger("tlf.index")
 
-# "TABLE 4.2.1   Some title...", "Listing 16.1", "Figure 2" — the keyword may be
-# preceded by leading noise (search, not match). The number is the full separated
-# string: SAS-generated captions use a double underscore between the table series
-# and the table number ("TABLE 14.1__6.3"), so `.` and `_` are both separators and
-# the whole run (14.1__6.3, not 14.1 or 14) is the number. No trailing `\b` — it
-# fails between a digit and an underscore and would truncate 14.1__6.3 back to 14.
+# "TABLE 4.2.1   Some title...", "Listing 16.1", "Figure 2" — the keyword may be preceded by leading noise (search, not match). The number is the full separated string: SAS-generated captions use a double underscore between the table series and the table number ("TABLE 14.1__6.3"), so `.` and `_` are both separators and the whole run (14.1__6.3, not 14.1 or 14) is the number. No trailing `\b` — it fails between a digit and an underscore and would truncate 14.1__6.3 back to 14.
 _SEP_NUM = r"[0-9]+(?:[._]+[0-9]+)*"
 _LABEL_RE = re.compile(
     r"\b(TABLE|LISTING|FIGURE)\s+(" + _SEP_NUM + r")\s*(.*)$", re.IGNORECASE
 )
-# Keyword-less bookmark titles like "14.1.6  Summary of AEs" / "14.1__6.3 …" — a
-# *separated* number (at least one `.`/`_` group) so a stray leading integer in
-# prose isn't mistaken for one.
+# Keyword-less bookmark titles like "14.1.6  Summary of AEs" / "14.1__6.3 …" — a *separated* number (at least one `.`/`_` group) so a stray leading integer in prose isn't mistaken for one.
 _NUM_ONLY_RE = re.compile(r"^\s*([0-9]+(?:[._]+[0-9]+)+)\s*(.*)$")
 
 
@@ -57,15 +50,7 @@ def _parse_label(text: str):
 def _page_caption(text: str):
     """Parse the printed output caption at the top of a page.
 
-    The number/title *printed on the page* ("Table 14.1.6  Summary of …") is the
-    ground truth for what an output is — unlike a bookmark title, which can be
-    wrong, section-level, or absent. Scans the top lines where a caption sits (a
-    few header lines — confidentiality, protocol id, "Page x of y" — may precede
-    it). SAS-generated captions print the number on its own line ("TABLE 14.1__6.3")
-    with the descriptive title on the following line, so when the caption line has no
-    trailing text we take the next non-empty line as the title. Returns
-    (output_type, number, title) or None.
-    """
+The number/title *printed on the page* ("Table 14.1.6  Summary of …") is the ground truth for what an output is — unlike a bookmark title, which can be wrong, section-level, or absent. Scans the top lines where a caption sits (a few header lines — confidentiality, protocol id, "Page x of y" — may precede it). SAS-generated captions print the number on its own line ("TABLE 14.1__6.3") with the descriptive title on the following line, so when the caption line has no trailing text we take the next non-empty line as the title. Returns (output_type, number, title) or None."""
     lines = (text or "").splitlines()[:12]
     for i, line in enumerate(lines):
         parsed = _parse_label(line)
@@ -85,8 +70,7 @@ def _item_title(item) -> str:
 
 
 def _resolve_page(reader, item) -> int | None:
-    """Best-effort 0-based page index for an outline item, with a fallback for
-    named destinations that ``get_destination_page_number`` can't resolve directly."""
+    """Best-effort 0-based page index for an outline item, with a fallback for named destinations that ``get_destination_page_number`` can't resolve directly."""
     try:
         pg = reader.get_destination_page_number(item)
         if isinstance(pg, int) and pg >= 0:
@@ -113,12 +97,7 @@ def _resolve_page(reader, item) -> int | None:
 def _collect_outputs(items) -> list:
     """Return the outline bookmark items that represent real outputs.
 
-    A pypdf outline lists a bookmark's children as a ``list`` immediately following
-    the parent item. A bookmark is a *section container* (skipped) when it has
-    children AND at least one child parses to a numbered table/listing/figure label.
-    A bookmark whose children are only page-navigation markers ("Page 2 of 10",
-    which don't parse) is kept as a leaf and its children are ignored.
-    """
+A pypdf outline lists a bookmark's children as a ``list`` immediately following the parent item. A bookmark is a *section container* (skipped) when it has children AND at least one child parses to a numbered table/listing/figure label. A bookmark whose children are only page-navigation markers ("Page 2 of 10", which don't parse) is kept as a leaf and its children are ignored."""
     out: list = []
     n = len(items)
     for i, item in enumerate(items):
@@ -236,8 +215,7 @@ def _reconcile_with_captions(path: str, outputs: list[dict]) -> list[dict]:
     rebuilt: list[dict] = []
     for o in outputs:
         ps, pe = o["page_start"], o["page_end"]
-        # First page of each DISTINCT caption inside this output's range
-        # (continuation pages repeat the caption and don't create a new anchor).
+        # First page of each DISTINCT caption inside this output's range (continuation pages repeat the caption and don't create a new anchor).
         anchors: list[tuple] = []
         prev_key = None
         for p in range(ps, pe + 1):
@@ -275,11 +253,7 @@ def _reconcile_with_captions(path: str, outputs: list[dict]) -> list[dict]:
                 "page_start": seg_start, "page_end": max(seg_start, seg_end),
             })
 
-    # Merge a run of same-label segments into one contiguous output. One real table
-    # whose continuation pages straddle a bookmark boundary is split by the per-range
-    # loop above (e.g. "14.1__4" on p4 and p5 landing in adjacent bookmark ranges);
-    # since the printed number is unique per output, adjacent/overlapping same-label
-    # segments are the same table and are stitched back into a single page range.
+    # Merge a run of same-label segments into one contiguous output. One real table whose continuation pages straddle a bookmark boundary is split by the per-range loop above (e.g. "14.1__4" on p4 and p5 landing in adjacent bookmark ranges); since the printed number is unique per output, adjacent/overlapping same-label segments are the same table and are stitched back into a single page range.
     merged: list[dict] = []
     for o in rebuilt:
         if merged and merged[-1]["label"] == o["label"] and o["page_start"] <= merged[-1]["page_end"] + 1:
@@ -294,8 +268,7 @@ def _reconcile_with_captions(path: str, outputs: list[dict]) -> list[dict]:
 def index_delivery(path: str) -> list[dict]:
     outputs = from_bookmarks(path)
     if outputs:
-        # Bookmark titles can be wrong / section-level / missing; the printed page
-        # captions are ground truth, so reconcile the bookmark result against them.
+        # Bookmark titles can be wrong / section-level / missing; the printed page captions are ground truth, so reconcile the bookmark result against them.
         return _reconcile_with_captions(path, outputs)
     # No usable outline: the header scan is already caption-derived.
     return from_header_scan(path)

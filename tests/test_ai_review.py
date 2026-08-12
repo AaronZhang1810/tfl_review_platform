@@ -1,6 +1,4 @@
-"""Unit tests for the pure (no-model, no-DB) parts of the AI-review inversion:
-the extraction self-check detector (Precision guard #1) and the arithmetic
-verify pass (Precision guard #2)."""
+"""Unit tests for the pure (no-model, no-DB) parts of the AI-review inversion: the extraction self-check detector (Precision guard #1) and the arithmetic verify pass (Precision guard #2)."""
 
 import pytest
 
@@ -113,8 +111,7 @@ def test_verify_drops_self_consistent_finding():
 
 
 def test_verify_keeps_qualitative_and_underdetermined():
-    # 'none' is qualitative (no arithmetic); sum_equals with no observed can't be
-    # verified — neither may be silently suppressed.
+    # 'none' is qualitative (no arithmetic); sum_equals with no observed can't be verified — neither may be silently suppressed.
     q = {"operation": "none", "cited_numbers": [], "observed": None, "message": "footnote wrong"}
     u = {"operation": "sum_equals", "cited_numbers": [1, 2], "observed": None, "message": "y"}
     kept, dropped = ai_review.verify_findings([q, u], VP)

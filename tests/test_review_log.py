@@ -1,8 +1,4 @@
-"""The human-review learning log (db.review_log) — capture only; no rule is derived
-from it yet. Verifies that every human decision is recorded with full context, that a
-finding's check_id maps back to its checklist item, and that the finding signature is
-stable across identical findings.
-"""
+"""The human-review learning log (db.review_log) — capture only; no rule is derived from it yet. Verifies that every human decision is recorded with full context, that a finding's check_id maps back to its checklist item, and that the finding signature is stable across identical findings."""
 
 import json
 
@@ -14,9 +10,7 @@ import checks
 
 @pytest.fixture()
 def iso_db(tmp_path, monkeypatch):
-    """Point db at a throwaway file, reset the thread-local connection, create schema.
-    Self-contained (does not use the server-only `temp_db` conftest fixture) so this
-    test file is byte-identical across both editions."""
+    """Point db at a throwaway file, reset the thread-local connection, create schema. Self-contained (does not use the server-only `temp_db` conftest fixture) so this test file is byte-identical across both editions."""
     monkeypatch.setattr(db, "DATA_DIR", str(tmp_path))
     monkeypatch.setattr(db, "DB_PATH", str(tmp_path / "app.db"))
     if hasattr(db._local, "conn"):
@@ -101,8 +95,7 @@ def test_log_comment_action_records_manual_review(iso_db):
 
 
 def test_finding_signature_matches_stored_key_across_identical_findings(iso_db):
-    # Two runs producing the same finding get the same signature — the key a future
-    # step will use to correlate a finding with the human-review log.
+    # Two runs producing the same finding get the same signature — the key a future step will use to correlate a finding with the human-review log.
     s1 = checks.finding_signature("AIW-2.1", "Table 1", [12, 5], "Sum mismatch: 12 != 5")
     s2 = checks.finding_signature("AIW-2.1", "Table 1", [5, 12], "Sum mismatch: 12 != 5")
     assert s1 == s2 and s1

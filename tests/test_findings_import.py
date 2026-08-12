@@ -1,12 +1,6 @@
-"""Excel AI-review import: deterministic checks aren't duplicated, and importing an AI
-review completes the review by auto-approving clean tables.
+"""Excel AI-review import: deterministic checks aren't duplicated, and importing an AI review completes the review by auto-approving clean tables.
 
-At project creation the deterministic structural checks (FMT-*/XOUT-*) are already written.
-A round-tripped export carries those same rows, so re-importing must SKIP them rather than
-add a second copy. Importing also counts as review completion: every 'Not Reviewed' output
-with no finding flips to Auto-approved. Self-contained fixture so this file is byte-identical
-across both editions.
-"""
+At project creation the deterministic structural checks (FMT-*/XOUT-*) are already written. A round-tripped export carries those same rows, so re-importing must SKIP them rather than add a second copy. Importing also counts as review completion: every 'Not Reviewed' output with no finding flips to Auto-approved. Self-contained fixture so this file is byte-identical across both editions."""
 
 import io
 
@@ -125,8 +119,7 @@ def test_import_auto_approves_clean_tables(iso_db):
 
 
 def test_table_with_deterministic_finding_is_not_approved(iso_db):
-    # A table flagged only by a creation-time structural check is NOT clean: the skipped
-    # deterministic row keeps its finding attached, so the table must not auto-approve.
+    # A table flagged only by a creation-time structural check is NOT clean: the skipped deterministic row keeps its finding attached, so the table must not auto-approve.
     pid = _project()
     oid = _output(pid, "Table 1")
     _structural_finding(pid, oid, "FMT-010")
@@ -187,9 +180,7 @@ def test_xlsx_compression_ratio_and_sheet_shape_limits(iso_db, monkeypatch):
 
 
 def test_legacy_approved_migration_splits_auto_vs_manual(iso_db):
-    # Legacy rows only ever stored the pre-split 'Approved'. Re-running init() must reclassify
-    # them exactly as a fresh run would: a clean table (no finding) becomes 'Auto-approved',
-    # a table that still carries a finding becomes 'Manually approved'.
+    # Legacy rows only ever stored the pre-split 'Approved'. Re-running init() must reclassify them exactly as a fresh run would: a clean table (no finding) becomes 'Auto-approved', a table that still carries a finding becomes 'Manually approved'.
     pid = _project()
     clean = _output(pid, "Table 1", status="Approved")          # no finding → AI clean pass
     flagged = _output(pid, "Table 2", seq=1, status="Approved")  # human approved despite a finding

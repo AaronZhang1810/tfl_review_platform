@@ -57,8 +57,7 @@ def _citation(opp: dict, *, corrupt: bool = False) -> tuple[str, list[float], fl
     if op in {"decreased", "increased"}:
         nums = [e["prior"], e["prior"] if corrupt else e["current"]]
         return op, nums, None
-    # The production judge schema uses operation='none' for qualitative/set,
-    # presence, blank-page, numbering, zero, and terminology findings.
+    # The production judge schema uses operation='none' for qualitative/set, presence, blank-page, numbering, zero, and terminology findings.
     return "none", [], None
 
 
@@ -119,8 +118,7 @@ def simulated_llm_raw(case: dict, seed: int) -> list[dict]:
         if not emit:
             continue
         predictions.append(_make_prediction(opp, LLM_ONLY, 1, seed=seed))
-        # Identical restatement: one-to-one scoring counts it as an extra FP unless
-        # the hybrid's production-style dedupe removes it.
+        # Identical restatement: one-to-one scoring counts it as an extra FP unless the hybrid's production-style dedupe removes it.
         if stable_uniform(seed, opp["opportunity_id"], "duplicate") < 0.09:
             predictions.append(_make_prediction(opp, LLM_ONLY, 2, seed=seed,
                                                 duplicate=True))

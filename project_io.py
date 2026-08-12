@@ -1,23 +1,12 @@
-"""Project export / import for the LOCAL edition — share one fully-reviewed
-project across a team as a portable ``*.zip`` bundle.
+"""Project export / import for the LOCAL edition — share one fully-reviewed project across a team as a portable ``*.zip`` bundle.
 
 A bundle is a ZIP containing:
 
-* ``project.json`` — a manifest of every DB row scoped to the project (all 9
-  tables), plus a small header (``format`` / ``version``).
-* ``files/<orig_doc_id>/<filename>`` — each document's supported source file.
+* ``project.json`` — a manifest of every DB row scoped to the project (all 9 tables), plus a small header (``format`` / ``version``). * ``files/<orig_doc_id>/<filename>`` — each document's supported source file.
 
-Import re-inserts every row under a **new** autoincrement project id, remapping
-all foreign keys AND non-FK logical references (``finding.run_id``,
-``comment.finding_id``, ``comment.parent_id``, ``audit_log.entity_id``) via
-old→new id maps. The whole import runs in ONE transaction on ONE connection with
-a single commit, so a mid-import failure leaves no half-project on disk or in the
-database.
+Import re-inserts every row under a **new** autoincrement project id, remapping all foreign keys AND non-FK logical references (``finding.run_id``, ``comment.finding_id``, ``comment.parent_id``, ``audit_log.entity_id``) via old→new id maps. The whole import runs in ONE transaction on ONE connection with a single commit, so a mid-import failure leaves no half-project on disk or in the database.
 
-LOCAL edition only — the server edition manages projects centrally and does not
-ship this module. It intentionally does NOT touch ``db.py`` (uses the generic
-``db`` helpers), so ``db.py`` stays byte-identical across editions.
-"""
+LOCAL edition only — the server edition manages projects centrally and does not ship this module. It intentionally does NOT touch ``db.py`` (uses the generic ``db`` helpers), so ``db.py`` stays byte-identical across editions."""
 
 from __future__ import annotations
 
@@ -36,9 +25,7 @@ import pdftools
 FORMAT = "tlf_project_bundle"
 VERSION = 1
 
-# Project-scoped tables in FK-safe INSERT order (a parent is always inserted
-# before any table that references it). ``audit_log`` / ``review_log`` have no FK
-# to project — they are append-only logs keyed by a plain ``project_id`` int.
+# Project-scoped tables in FK-safe INSERT order (a parent is always inserted before any table that references it). ``audit_log`` / ``review_log`` have no FK to project — they are append-only logs keyed by a plain ``project_id`` int.
 _TABLES = ["project", "ai_run", "document", "output", "finding",
            "comment", "annotation", "audit_log", "review_log"]
 
@@ -56,8 +43,7 @@ def _positive_env_int(name: str, default: int) -> int:
     return value
 
 
-# Import guards for the local public demo. These are checked from ZIP metadata before
-# any member is decompressed or any project row/file is written.
+# Import guards for the local public demo. These are checked from ZIP metadata before any member is decompressed or any project row/file is written.
 _MAX_ENTRIES = _positive_env_int("TLF_ZIP_MAX_ENTRIES", 5000)
 _MAX_ENTRY_UNCOMPRESSED = _positive_env_int("TLF_ZIP_MAX_ENTRY_BYTES", 128 * 1024 * 1024)
 _MAX_TOTAL_UNCOMPRESSED = _positive_env_int("TLF_ZIP_MAX_TOTAL_BYTES", 256 * 1024 * 1024)
@@ -81,9 +67,7 @@ _FINDING_STATES = frozenset({"pending", "posted", "rejected", "resolved"})
 _ANNOTATION_KINDS = frozenset({"highlight", "rect", "freehand"})
 _DOCUMENT_EXTENSIONS = frozenset({".pdf", ".docx", ".xlsx"})
 
-# Version 1 is an exact, closed schema. Unknown fields cannot become database
-# columns by accident after a future migration, and malformed compound values
-# cannot reach sqlite's binding layer as a 500 response.
+# Version 1 is an exact, closed schema. Unknown fields cannot become database columns by accident after a future migration, and malformed compound values cannot reach sqlite's binding layer as a 500 response.
 _ROW_FIELDS = {
     "project": {"id", "compound", "study", "name", "edition_label", "created_at"},
     "ai_run": {"id", "project_id", "kind", "started_at", "finished_at", "summary_json"},
@@ -418,10 +402,7 @@ def _validate_manifest(manifest: object) -> dict[str, list[dict]]:
 def export_bundle(pid: int) -> tuple[bytes, list[str]]:
     """Build an in-memory ``*.zip`` bundle for one project.
 
-    Returns ``(zip_bytes, warnings)``. JSON columns are carried as DB text in the
-    manifest; import parses their expected shape before writing and canonicalizes
-    annotation geometry.
-    """
+Returns ``(zip_bytes, warnings)``. JSON columns are carried as DB text in the manifest; import parses their expected shape before writing and canonicalizes annotation geometry."""
     proj = db.one("SELECT * FROM project WHERE id=?", (pid,))
     if not proj:
         raise ValueError("project not found")
@@ -431,9 +412,7 @@ def export_bundle(pid: int) -> tuple[bytes, list[str]]:
     tables = {
         "project": [proj],
         "ai_run": db.query("SELECT * FROM ai_run WHERE project_id=? ORDER BY id", (pid,)),
-        # Absolute workstation paths are runtime implementation details. Excluding
-        # them prevents a shared bundle from disclosing a username or directory
-        # layout; import reconstructs every path under its own uploads directory.
+        # Absolute workstation paths are runtime implementation details. Excluding them prevents a shared bundle from disclosing a username or directory layout; import reconstructs every path under its own uploads directory.
         "document": [{k: v for k, v in row.items() if k != "path"} for row in documents],
         "output": db.query("SELECT * FROM output WHERE project_id=? ORDER BY id", (pid,)),
         "finding": db.query("SELECT * FROM finding WHERE project_id=? ORDER BY id", (pid,)),
@@ -464,8 +443,7 @@ def export_bundle(pid: int) -> tuple[bytes, list[str]]:
         for d in tables["document"]:
             path = document_paths.get(d["id"], "")
             if path and os.path.isfile(path):
-                # Archive key is built ONLY from the trusted doc id + basename;
-                # never from any client-supplied path.
+                # Archive key is built ONLY from the trusted doc id + basename; never from any client-supplied path.
                 z.write(path, f"files/{d['id']}/{os.path.basename(path)}")
             else:
                 warnings.append(
@@ -479,8 +457,7 @@ def export_bundle(pid: int) -> tuple[bytes, list[str]]:
 # --------------------------------------------------------------------------- #
 
 def _live_columns(conn, table: str) -> set:
-    """Columns that currently exist in the DB for ``table`` (so migration-added
-    columns pass through and version-skew never crashes the INSERT)."""
+    """Columns that currently exist in the DB for ``table`` (so migration-added columns pass through and version-skew never crashes the INSERT)."""
     return {r["name"] for r in conn.execute(f"PRAGMA table_info({table})")}
 
 
@@ -502,16 +479,9 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
                   mode: str = "ask") -> dict:
     """Import a ``*.zip`` bundle as a NEW project.
 
-    ``mode``: ``"ask"`` (default) returns ``{"conflict": True, ...}`` without
-    writing if a project with the same compound/study/name already exists;
-    ``"new"`` always imports as a fresh copy; ``"replace"`` first deletes every
-    matching project (and its files) then imports.
+``mode``: ``"ask"`` (default) returns ``{"conflict": True, ...}`` without writing if a project with the same compound/study/name already exists; ``"new"`` always imports as a fresh copy; ``"replace"`` first deletes every matching project (and its files) then imports.
 
-    Returns ``{"id", "name", "label", "counts", "warnings", "replaced"}`` on a
-    successful import, or ``{"conflict": True, "existing", "label"}`` when asked.
-    Raises ``ValueError`` on a malformed/hostile bundle (the endpoint maps that
-    to HTTP 400).
-    """
+Returns ``{"id", "name", "label", "counts", "warnings", "replaced"}`` on a successful import, or ``{"conflict": True, "existing", "label"}`` when asked. Raises ``ValueError`` on a malformed/hostile bundle (the endpoint maps that to HTTP 400)."""
     if mode not in {"ask", "new", "replace"}:
         raise ValueError("import mode must be 'ask', 'new', or 'replace'")
 
@@ -556,9 +526,7 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
         tables = _validate_manifest(manifest)
         proj = tables["project"][0]
 
-        # Index document members once by their doc-id prefix files/<orig_id>/... .
-        # The archive member name is used ONLY as a lookup key into the zip; it
-        # is never used as a filesystem path (traversal-safe).
+        # Index document members once by their doc-id prefix files/<orig_id>/... . The archive member name is used ONLY as a lookup key into the zip; it is never used as a filesystem path (traversal-safe).
         members_by_docid: dict[str, str] = {}
         known_docids = {str(row["id"]) for row in tables["document"]}
         for info in infos:
@@ -596,9 +564,7 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
             if mode == "replace" and matches:
                 ids = [m["id"] for m in matches]
                 qs = ",".join("?" for _ in ids)
-                # Cascade removes document/output/comment/finding/annotation/ai_run;
-                # the logs have no FK, so clear them explicitly. Defer the file
-                # rmtree until AFTER commit (so a failed import can't lose them).
+                # Cascade removes document/output/comment/finding/annotation/ai_run; the logs have no FK, so clear them explicitly. Defer the file rmtree until AFTER commit (so a failed import can't lose them).
                 conn.execute(f"DELETE FROM project WHERE id IN ({qs})", tuple(ids))
                 conn.execute(f"DELETE FROM audit_log WHERE project_id IN ({qs})", tuple(ids))
                 conn.execute(f"DELETE FROM review_log WHERE project_id IN ({qs})", tuple(ids))
@@ -660,8 +626,7 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
                 c["document_id"] = docmap.get(r.get("document_id"))
                 outmap[r["id"]] = _insert(conn, "output", c)
 
-            # finding — .get() everywhere: output_id/run_id are nullable
-            # (cross-output XOUT findings have output_id=None).
+            # finding — .get() everywhere: output_id/run_id are nullable (cross-output XOUT findings have output_id=None).
             findmap: dict = {}
             for r in tables["finding"]:
                 c = _clean(r, live["finding"])
@@ -695,9 +660,7 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
                 c["output_id"] = outmap.get(r.get("output_id"))
                 _insert(conn, "annotation", c)
 
-            # audit_log — remap entity_id by entity kind; a target that no longer
-            # exists (append-only log of a since-deleted row) becomes NULL. Never
-            # re-insert a raw old id (it would point at an unrelated project's row).
+            # audit_log — remap entity_id by entity kind; a target that no longer exists (append-only log of a since-deleted row) becomes NULL. Never re-insert a raw old id (it would point at an unrelated project's row).
             entity_maps = {"output": outmap, "comment": commap, "finding": findmap}
             for r in tables["audit_log"]:
                 c = _clean(r, live["audit_log"])
@@ -710,8 +673,7 @@ def import_bundle(zip_bytes: bytes, uploads_dir: str, safe_filename,
                     c["entity_id"] = m.get(r.get("entity_id")) if m is not None else None
                 _insert(conn, "audit_log", c)
 
-            # review_log — only project_id is an id; output_label / finding_signature
-            # are TEXT and stay as-is.
+            # review_log — only project_id is an id; output_label / finding_signature are TEXT and stay as-is.
             for r in tables["review_log"]:
                 c = _clean(r, live["review_log"])
                 c["project_id"] = new_pid

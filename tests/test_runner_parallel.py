@@ -49,8 +49,7 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(ai_review, "load_config",
                         lambda: {"dedupe_findings": False, "structural_checks": {}})
     monkeypatch.setattr(pdftools, "range_text", lambda *a, **k: "")
-    # _analyze_table now reads page text once and reuses it, so page_texts
-    # (not range_text) is the call that must be stubbed away from disk.
+    # _analyze_table now reads page text once and reuses it, so page_texts (not range_text) is the call that must be stubbed away from disk.
     monkeypatch.setattr(pdftools, "page_texts",
                         lambda path, a, b: ["row 1 (50.0)" for _ in range(a, b + 1)])
     monkeypatch.setattr(ai_review, "self_check", lambda text, ex, cfg: (ex, 0, 0))
@@ -76,9 +75,7 @@ def _extraction(pages_total=10, pages_read=10):
 
 
 def test_findings_persist_and_read_back_in_output_order(env, monkeypatch):
-    """Workers now persist findings in completion order (later tables can finish first),
-    so the DISPLAY order must come from the query (by output seq), not insert order — and
-    every table's finding must be durably written."""
+    """Workers now persist findings in completion order (later tables can finish first), so the DISPLAY order must come from the query (by output seq), not insert order — and every table's finding must be durably written."""
     runner, db = env["runner"], env["db"]
     n = len(env["targets"])
     monkeypatch.setattr(runner, "_extraction_for", lambda o, pages=None: _extraction())
@@ -210,9 +207,7 @@ def test_truncated_table_is_reported_in_the_summary(env, monkeypatch):
 
 
 # --------------------------------------------------------------------------- #
-# Auto-approve clean tables: after an AI run, a fully-read table with no findings
-# flips Not Reviewed -> Auto-approved. A table with a finding, a partially-read table,
-# and a status a human already set are all left alone.
+# Auto-approve clean tables: after an AI run, a fully-read table with no findings flips Not Reviewed -> Auto-approved. A table with a finding, a partially-read table, and a status a human already set are all left alone.
 # --------------------------------------------------------------------------- #
 
 def test_clean_fully_read_tables_are_auto_approved(env, monkeypatch):
@@ -239,8 +234,7 @@ def test_clean_fully_read_tables_are_auto_approved(env, monkeypatch):
 
     st = {o["label"]: o["status"] for o in
           db.query("SELECT label, status FROM output WHERE project_id=?", (env["pid"],))}
-    # Fail closed at RUN scope: because one required table was only partially read,
-    # no zero-finding table is represented as a completed comprehensive review.
+    # Fail closed at RUN scope: because one required table was only partially read, no zero-finding table is represented as a completed comprehensive review.
     assert set(st.values()) == {"Not Reviewed"}
     summary = runner.RUN_PROGRESS[env["pid"]]["summary"]
     assert summary["auto_approved"] == 0
@@ -271,9 +265,7 @@ def test_auto_approve_never_overrides_a_human_status(env, monkeypatch):
 
 
 # --------------------------------------------------------------------------- #
-# Coverage honesty: a slice that ERRORS must not be counted as a page read.
-# Without this, a run where half the page-reads failed still reported 100%
-# coverage — presenting a partial extraction as a complete review.
+# Coverage honesty: a slice that ERRORS must not be counted as a page read. Without this, a run where half the page-reads failed still reported 100% coverage — presenting a partial extraction as a complete review.
 # --------------------------------------------------------------------------- #
 
 def test_coverage_counts_only_pages_that_actually_merged(monkeypatch):
@@ -317,8 +309,7 @@ def test_slice_cap_sets_truncated_not_just_incomplete(monkeypatch):
 
 
 def test_cache_key_covers_the_whole_table_not_just_the_prompt_window(env, monkeypatch):
-    """The content hash is the cache-invalidation key: hashing only the first 60k chars
-    left most of a long table outside it, so an edit on a later page went unnoticed."""
+    """The content hash is the cache-invalidation key: hashing only the first 60k chars left most of a long table outside it, so an edit on a later page went unnoticed."""
     import pdftools, runner
     db = env["db"]
     o = env["targets"][0]
@@ -334,8 +325,7 @@ def test_cache_key_covers_the_whole_table_not_just_the_prompt_window(env, monkey
 
 
 def test_page_text_is_read_once_per_table(env, monkeypatch):
-    """Extraction and the self-check used to pull the same pages independently, doubling
-    the (GIL-bound) pdfplumber cost of every table."""
+    """Extraction and the self-check used to pull the same pages independently, doubling the (GIL-bound) pdfplumber cost of every table."""
     import pdftools, runner
     calls = {"n": 0}
 
@@ -354,10 +344,7 @@ def test_page_text_is_read_once_per_table(env, monkeypatch):
 
 
 # --------------------------------------------------------------------------- #
-# The no-PDF-read fast path. Reading page text costs ~0.6 s/page (pdfplumber) and
-# holds the GIL; on an unchanged two-edition delivery that was ~18 min per run spent
-# only to re-derive a cache key. src_hash (a digest of the FILE BYTES) lets an
-# unchanged file skip the read entirely, while any byte change still invalidates.
+# The no-PDF-read fast path. Reading page text costs ~0.6 s/page (pdfplumber) and holds the GIL; on an unchanged two-edition delivery that was ~18 min per run spent only to re-derive a cache key. src_hash (a digest of the FILE BYTES) lets an unchanged file skip the read entirely, while any byte change still invalidates.
 # --------------------------------------------------------------------------- #
 
 @pytest.fixture()
@@ -423,8 +410,7 @@ def test_byte_change_invalidates_the_fast_path(fastpath):
 
 
 def test_suspect_cells_still_force_a_text_read_on_a_cache_hit(fastpath, monkeypatch):
-    """The precision guard is not skipped: if the extraction has inconsistent cells, the
-    source text is read so self_check can re-read them, cache hit or not."""
+    """The precision guard is not skipped: if the extraction has inconsistent cells, the source text is read so self_check can re-read them, cache hit or not."""
     f = fastpath
     import json
     bad = {"groups": [{"label": "G1", "n": 10}],
@@ -458,10 +444,7 @@ def test_file_hash_is_byte_exact_and_cached(tmp_path):
 # --------------------------------------------------------------------------- #
 # Cross-output bundle: EVERY row must reach the judge.
 #
-# _compact used to keep only rows matching _KEYROW_RE, which on real deliveries
-# selected 1-5 rows per table — a 295-row SOC/PT table contributed one row, so
-# checklist item 7.1 (AE overview vs SOC/PT) had nothing to reconcile against.
-# All rows now go, which exceeds one context window, so the bundle is chunked.
+# _compact used to keep only rows matching _KEYROW_RE, which on real deliveries selected 1-5 rows per table — a 295-row SOC/PT table contributed one row, so checklist item 7.1 (AE overview vs SOC/PT) had nothing to reconcile against. All rows now go, which exceeds one context window, so the bundle is chunked.
 # --------------------------------------------------------------------------- #
 
 def _ex(n_rows, label_prefix="PT"):
@@ -517,8 +500,7 @@ def test_chunk_bundle_edge_cases(monkeypatch):
 
 
 def test_every_chunk_is_judged_and_findings_are_merged(env, monkeypatch):
-    """All chunks must be judged (a skipped chunk = silently unreviewed tables), and
-    their findings merged into one deduped set."""
+    """All chunks must be judged (a skipped chunk = silently unreviewed tables), and their findings merged into one deduped set."""
     runner, db = env["runner"], env["db"]
     monkeypatch.setattr(runner, "_extraction_for", lambda o, pages=None: _extraction())
     monkeypatch.setattr(env["ai_review"], "within_table_judge",
@@ -537,8 +519,7 @@ def test_every_chunk_is_judged_and_findings_are_merged(env, monkeypatch):
                                        "total": len(env["targets"]), "message": "",
                                        "run_id": rid, "skipped": 0, "errors": []}
     runner._do_run(env["pid"], rid, "incremental", env["current"], None, env["targets"])
-    # The hub rides along in every chunk rather than forming one of its own, so with N
-    # tables there are N-1 chunks. The invariant that matters: no table goes unjudged.
+    # The hub rides along in every chunk rather than forming one of its own, so with N tables there are N-1 chunks. The invariant that matters: no table goes unjudged.
     labels = {o["label"] for o in env["targets"]}
     covered = {lbl for ch in seen for lbl in ch}
     assert covered == labels, f"tables never judged: {sorted(labels - covered)}"
@@ -550,9 +531,7 @@ def test_every_chunk_is_judged_and_findings_are_merged(env, monkeypatch):
 
 
 def test_chunk_boundaries_never_split_a_table_family(monkeypatch):
-    """Item 7.1 reconciles an AE-overview table against its SOC/PT sibling. If a chunk
-    boundary fell between them, no single call would see both and the comparison would
-    silently not happen — so families must stay whole."""
+    """Item 7.1 reconciles an AE-overview table against its SOC/PT sibling. If a chunk boundary fell between them, no single call would see both and the comparison would silently not happen — so families must stay whole."""
     import ai_review, runner
     monkeypatch.setattr(runner, "_XOUT_CHUNK_CHARS", 40_000)
     bundle = []
@@ -585,8 +564,7 @@ def test_family_extraction():
 
 
 # --------------------------------------------------------------------------- #
-# Continuability: a completed table is durable (judge_key stamped), so a re-run
-# or a crash-resume skips it and only does the outstanding tables. Fresh re-judges.
+# Continuability: a completed table is durable (judge_key stamped), so a re-run or a crash-resume skips it and only does the outstanding tables. Fresh re-judges.
 # --------------------------------------------------------------------------- #
 
 def _judge_env(env, monkeypatch, calls):
@@ -627,8 +605,7 @@ def test_resume_after_crash_only_finishes_outstanding_tables(env, monkeypatch):
     go()                                                    # full run
     calls.clear()
     db = env["db"]
-    # Emulate a crash that left ONE table unfinished: its judge_key was never stamped
-    # and its finding not written.
+    # Emulate a crash that left ONE table unfinished: its judge_key was never stamped and its finding not written.
     victim = env["targets"][2]["id"]
     db.execute("UPDATE output SET judge_key=NULL WHERE id=?", (victim,))
     db.execute("DELETE FROM finding WHERE output_id=? AND phase='within'", (victim,))
@@ -667,9 +644,7 @@ def test_imported_findings_survive_a_run(env, monkeypatch):
 
 
 # --------------------------------------------------------------------------- #
-# Transient page-slice failures: retried, and if they finally fail the page is
-# reported (not silently dropped) AND the extraction is not cached as complete,
-# so a plain re-run retries it.
+# Transient page-slice failures: retried, and if they finally fail the page is reported (not silently dropped) AND the extraction is not cached as complete, so a plain re-run retries it.
 # --------------------------------------------------------------------------- #
 
 def test_slice_retry_recovers_a_transient_failure(monkeypatch):
@@ -722,9 +697,7 @@ def test_persistent_slice_failure_is_recorded_and_not_baked_into_cache(env, monk
 
 
 def test_content_hash_cache_does_not_serve_a_failed_partial(env, monkeypatch):
-    """The regression that made 'nothing fixed' persist: a partial extraction whose
-    content_hash still matches (PDF text unchanged) was served by _extraction_for every
-    run, so the failed pages were never re-attempted. It must now RE-EXTRACT instead."""
+    """The regression that made 'nothing fixed' persist: a partial extraction whose content_hash still matches (PDF text unchanged) was served by _extraction_for every run, so the failed pages were never re-attempted. It must now RE-EXTRACT instead."""
     import ai_review, pdftools
     runner, db = env["runner"], env["db"]
     monkeypatch.setattr(ai_review, "_MAX_SLICES", 100)
@@ -757,9 +730,7 @@ def test_content_hash_cache_does_not_serve_a_failed_partial(env, monkeypatch):
 
 
 # --------------------------------------------------------------------------- #
-# Fail-closed completion and run isolation.  A valid empty finding list is a
-# clean result; an exception, malformed/missing comparison, failed cross phase,
-# or incomplete extraction is not.
+# Fail-closed completion and run isolation.  A valid empty finding list is a clean result; an exception, malformed/missing comparison, failed cross phase, or incomplete extraction is not.
 # --------------------------------------------------------------------------- #
 
 def _run_direct(env):
@@ -884,8 +855,7 @@ def test_project_lease_is_atomic_and_blocks_single_output_run(env, monkeypatch):
         with pytest.raises(runner.RunAlreadyActive):
             runner.run_single_output(env["targets"][0]["id"])
         assert configure_calls == [], "a rejected run mutated the active run's model/effort"
-        # The lease is process-global because model/effort configuration is also
-        # process-scoped; a different project cannot bleed its config into this run.
+        # The lease is process-global because model/effort configuration is also process-scoped; a different project cannot bleed its config into this run.
         with pytest.raises(runner.RunAlreadyActive):
             runner._acquire_project_lease(env["pid"] + 999)
     finally:

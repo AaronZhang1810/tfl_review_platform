@@ -6,10 +6,7 @@ After the AI-review inversion these are the only Python checks that produce find
   * XOUT-001 gaps in output numbering      (checklist 1.3)
 All numeric / cross-output / version judging moved to the AI judges in ai_review.py.
 
-`finding_signature` builds the stable key stored on every finding so a future step can
-match "the same finding" across runs (and against the human-review log); `dedupe`
-collapses overlapping findings within a single run.
-"""
+`finding_signature` builds the stable key stored on every finding so a future step can match "the same finding" across runs (and against the human-review log); `dedupe` collapses overlapping findings within a single run."""
 
 from __future__ import annotations
 
@@ -22,10 +19,7 @@ def _norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
 
 
-# The check_id families produced by the deterministic structural checks in this module
-# (FMT-010, XOUT-020, XOUT-001). Used to recognise these on Excel re-import so the app's
-# own checks — already generated at project creation — are not duplicated by the copies a
-# round-tripped export carries. AI findings use different families (AIW/AIX/AIV).
+# The check_id families produced by the deterministic structural checks in this module (FMT-010, XOUT-020, XOUT-001). Used to recognise these on Excel re-import so the app's own checks — already generated at project creation — are not duplicated by the copies a round-tripped export carries. AI findings use different families (AIW/AIX/AIV).
 DETERMINISTIC_FAMILIES = frozenset({"FMT", "XOUT"})
 
 
@@ -39,8 +33,7 @@ def is_deterministic_check(check_id) -> bool:
 # --------------------------------------------------------------------------- #
 
 def blank_page_findings(doc_path: str, outputs: list[dict], min_chars: int = 3) -> list[dict]:
-    """Flag pages whose text is effectively empty, attributing each to the output
-    whose page range contains it. Uses a fast per-page char count (pypdfium2)."""
+    """Flag pages whose text is effectively empty, attributing each to the output whose page range contains it. Uses a fast per-page char count (pypdfium2)."""
     findings: list[dict] = []
     counts = pdftools.page_char_counts(doc_path)
     for i, c in enumerate(counts):
@@ -81,9 +74,7 @@ def missing_output_findings(current_labels: list[str], prior_labels: list[str]) 
 def toc_gap_findings(numbers: list[str]) -> list[dict]:
     """Given output numbers like ['1','2.1','4.3','4.5'], flag missing siblings.
 
-    Groups by the prefix (all components but the last); within a group the last
-    components should be a contiguous 1..max run. Missing integers are reported.
-    """
+Groups by the prefix (all components but the last); within a group the last components should be a contiguous 1..max run. Missing integers are reported."""
     all_numbers = [n for n in numbers if n]
 
     def present_at(base: str) -> bool:
@@ -110,8 +101,7 @@ def toc_gap_findings(numbers: list[str]) -> list[dict]:
             if present_at(base):   # exists as a parent of deeper-numbered outputs
                 continue
             findings.append({
-                # A gap means a whole output may be absent — kept in the High tier, as it
-                # displayed before (was severity "major"). The other structural checks are Low.
+                # A gap means a whole output may be absent — kept in the High tier, as it displayed before (was severity "major"). The other structural checks are Low.
                 "check_id": "XOUT-001", "severity": "high", "risk": "High",
                 "message": (f"Numbering skips from Table {before} to Table {after} "
                             f"without a Table {base}."),
@@ -126,10 +116,7 @@ def toc_gap_findings(numbers: list[str]) -> list[dict]:
 # --------------------------------------------------------------------------- #
 
 def finding_signature(check_id: str, output_label, numbers, message: str) -> str:
-    """A stable identity for a finding: check family + output + sorted rounded
-    numbers + a normalized message stub. Stored on every finding (inert at runtime,
-    since findings are cleared each run) so a later step can recognise the same
-    finding across runs and correlate it with the human-review log."""
+    """A stable identity for a finding: check family + output + sorted rounded numbers + a normalized message stub. Stored on every finding (inert at runtime, since findings are cleared each run) so a later step can recognise the same finding across runs and correlate it with the human-review log."""
     nums = tuple(sorted(round(float(n), 3) for n in (numbers or [])
                         if isinstance(n, (int, float)) and not isinstance(n, bool)))
     family = (check_id or "").split("-")[0]
@@ -137,9 +124,7 @@ def finding_signature(check_id: str, output_label, numbers, message: str) -> str
 
 
 def dedupe(findings: list[dict]) -> list[dict]:
-    """Drop near-duplicate findings that describe the same cell/issue. Keeps the
-    first (higher-priority) occurrence. Signature = check family + page + sorted
-    numbers + a normalized message stub."""
+    """Drop near-duplicate findings that describe the same cell/issue. Keeps the first (higher-priority) occurrence. Signature = check family + page + sorted numbers + a normalized message stub."""
     seen = set()
     out = []
     for f in findings:

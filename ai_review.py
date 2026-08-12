@@ -28,17 +28,12 @@ import ai_client
 
 logger = logging.getLogger("tlf.ai")
 
-# A single page-slice occasionally fails on a transient gateway hiccup (429 / 5xx /
-# overloaded) even after the SDK's own retries. Retrying that one slice a few times
-# recovers the page instead of silently dropping it. Connection errors are NOT retried
-# here — they bubble up and abort the whole run loudly, as before.
+# A single page-slice occasionally fails on a transient gateway hiccup (429 / 5xx / overloaded) even after the SDK's own retries. Retrying that one slice a few times recovers the page instead of silently dropping it. Connection errors are NOT retried here — they bubble up and abort the whole run loudly, as before.
 _SLICE_RETRIES = max(0, int(os.environ.get("TLF_SLICE_RETRIES", "2") or 2))
 
 
 def _extract_slice_resilient(text: str, label: str, known_groups: list, page: int):
-    """_extract_slice with a bounded retry on transient (non-connection) errors.
-    Returns the slice dict, or raises: a connection error (to abort) or the last
-    transient error (so the caller can record which page failed)."""
+    """_extract_slice with a bounded retry on transient (non-connection) errors. Returns the slice dict, or raises: a connection error (to abort) or the last transient error (so the caller can record which page failed)."""
     last = None
     for attempt in range(_SLICE_RETRIES + 1):
         try:
@@ -148,28 +143,16 @@ _SYS = (
 )
 
 
-# Above ~5-6 KB of table text in one structured-output call the model returns ZERO
-# summary_rows for a wide multi-page table — even though it describes the table correctly
-# in `notes`. It is a recall cliff, not a schema or token-budget problem: the SAME schema
-# extracts every row cleanly from a single page (~2 KB). So a big table is extracted one
-# page-slice at a time (each kept under the cliff) and merged. Every row is stamped with
-# the exact page it came from, which also gives findings a real page instead of page 1.
+# Above ~5-6 KB of table text in one structured-output call the model returns ZERO summary_rows for a wide multi-page table — even though it describes the table correctly in `notes`. It is a recall cliff, not a schema or token-budget problem: the SAME schema extracts every row cleanly from a single page (~2 KB). So a big table is extracted one page-slice at a time (each kept under the cliff) and merged. Every row is stamped with the exact page it came from, which also gives findings a real page instead of page 1.
 _CHUNK_CHARS = 4500        # per-slice text ceiling, kept safely under the recall cliff
 
-# Extraction is mechanical TRANSCRIPTION, not judgement: it re-types numbers already
-# printed on the page, and the two precision guards (self_check, verify_findings) exist
-# precisely to catch it getting one wrong. It is also ~85% of a run's API calls. So it
-# runs on the small fast model while the JUDGES keep the reviewer's chosen model, where
-# reasoning actually decides whether something is a finding.
-# Set TLF_FAST_EXTRACT=0 to extract with the run's model instead.
+# Extraction is mechanical TRANSCRIPTION, not judgement: it re-types numbers already printed on the page, and the two precision guards (self_check, verify_findings) exist precisely to catch it getting one wrong. It is also ~85% of a run's API calls. So it runs on the small fast model while the JUDGES keep the reviewer's chosen model, where reasoning actually decides whether something is a finding. Set TLF_FAST_EXTRACT=0 to extract with the run's model instead.
 _FAST_EXTRACT = (os.environ.get("TLF_FAST_EXTRACT", "1").strip().lower()
                  not in ("0", "false", "no", "off"))
 
 
 def _extract_model() -> str | None:
-    """The model to extract with: the fast one when enabled AND the key actually grants
-    it, otherwise None = fall through to the run's model. Never let a gateway that
-    doesn't serve the fast model break extraction."""
+    """The model to extract with: the fast one when enabled AND the key actually grants it, otherwise None = fall through to the run's model. Never let a gateway that doesn't serve the fast model break extraction."""
     if not _FAST_EXTRACT:
         return None
     try:
@@ -179,13 +162,9 @@ def _extract_model() -> str | None:
         pass
     return None
 # Cap on extraction calls per output. This is a COVERAGE control, not just a cost knob:
-# slices past the cap are never sent to the model, so no judge can raise a finding on
-# those pages and "0 findings" on a long table would not mean it is clean. It used to be
-# 14, which read only the first 14 pages of a 92-page table (~15%). Now that extraction
-# runs concurrently on the fast model, full coverage is affordable, so the default is
-# high enough not to truncate real deliveries.
-#   TLF_MAX_SLICES=0  -> no limit at all
-#   TLF_MAX_SLICES=14 -> the old, deliberately cheap-and-partial behaviour
+# Slices past the cap are never sent to the model, so no judge can raise a finding on those pages and "0 findings" on a long table would not mean it is clean. It used to be 14, which read only the first 14 pages of a 92-page table (~15%). Now that extraction runs concurrently on the fast model, full coverage is affordable, so the default is high enough not to truncate real deliveries.
+#
+# TLF_MAX_SLICES=0 means no limit; TLF_MAX_SLICES=14 restores the old, deliberately cheap-and-partial behavior.
 _MAX_SLICES = int(os.environ.get("TLF_MAX_SLICES", "400") or 400)
 if _MAX_SLICES <= 0:
     _MAX_SLICES = 10 ** 9      # 0 = unlimited
@@ -213,11 +192,9 @@ def _coverage(pages_total: int, pages_read: int, slices_total: int, slices_used:
 
 
 def extract(output_text: str, label: str, page_texts: list[str] | None = None) -> dict:
-    """Extract one output's structured fields. When ``page_texts`` (per-page text, in
-    output order) is supplied and the output is large, extract page-by-page and merge so
-    the model never faces more than one page at a time; otherwise a single call.
+    """Extract one output's structured fields. When ``page_texts`` (per-page text, in output order) is supplied and the output is large, extract page-by-page and merge so the model never faces more than one page at a time; otherwise a single call.
 
-    The returned dict always carries a ``coverage`` key (see :func:`_coverage`)."""
+The returned dict always carries a ``coverage`` key (see :func:`_coverage`)."""
     pages = [p or "" for p in page_texts] if page_texts else None
     whole = output_text if output_text is not None else ("\n".join(pages) if pages else "")
     if not pages or len(pages) <= 1 or len(whole) <= _CHUNK_CHARS:
@@ -254,11 +231,7 @@ def _extract_slice(text: str, label: str, known_groups: list[str], page: int) ->
 def _validate_extraction_response(data) -> dict:
     """Reject malformed structured output before it can count toward coverage.
 
-    Provider-side schema enforcement is helpful but is not a trust boundary: a proxy,
-    SDK change, test double, or truncated response can still return the wrong shape.
-    Valid-but-empty lists are allowed here because a continuation/footnote page may have
-    no body rows; the runner separately requires usable evidence for a clean decision.
-    """
+Provider-side schema enforcement is helpful but is not a trust boundary: a proxy, SDK change, test double, or truncated response can still return the wrong shape. Valid-but-empty lists are allowed here because a continuation/footnote page may have no body rows; the runner separately requires usable evidence for a clean decision."""
     if not isinstance(data, dict):
         raise AIReviewResponseError("extraction response is not an object")
     for key in ("analysis_set", "header_label"):
@@ -290,8 +263,7 @@ def _validate_extraction_response(data) -> dict:
 
 
 def _slices(pages: list[str]) -> list[dict]:
-    """One {page, text} slice per page (page = 1-based within the output), so every row
-    gets an exact page. An oversized page is split on line boundaries, keeping its page."""
+    """One {page, text} slice per page (page = 1-based within the output), so every row gets an exact page. An oversized page is split on line boundaries, keeping its page."""
     out: list[dict] = []
     for pno, txt in enumerate(pages, start=1):
         t = txt or ""
@@ -320,10 +292,7 @@ def _extract_paged(pages: list[str], label: str) -> dict:
               "summary_rows": [], "pt_terms": [], "missing_n_rows": [], "notes": ""}
     known_groups: list[str] = []
     got_any = False
-    # Pages whose slice actually came back and was merged. Coverage MUST be derived from
-    # this, not from the slices we attempted: a slice that errored contributes no rows, so
-    # counting it as "read" would report a partial extraction as complete — the exact
-    # failure this coverage data exists to expose.
+    # Pages whose slice actually came back and was merged. Coverage MUST be derived from this, not from the slices we attempted: a slice that errored contributes no rows, so counting it as "read" would report a partial extraction as complete — the exact failure this coverage data exists to expose.
     read_pages: set[int] = set()
     read_errors: list[str] = []          # (page, short message) for slices that finally failed
 
@@ -332,11 +301,7 @@ def _extract_paged(pages: list[str], label: str) -> dict:
         read_errors.append(f"p{page}: {msg}")
         logger.warning("extract '%s' page %s failed after retries: %s", label, page, msg)
 
-    # Slice 1 runs ALONE first: it is what teaches us the table's column-group labels,
-    # which every later slice is told to key its values by. Only then can the rest go
-    # out concurrently. Without this the group labels would be learned by whichever
-    # slice happened to land first, and different slices could key the same column
-    # differently — so the merged extraction would not line up.
+    # Slice 1 runs ALONE first: it is what teaches us the table's column-group labels, which every later slice is told to key its values by. Only then can the rest go out concurrently. Without this the group labels would be learned by whichever slice happened to land first, and different slices could key the same column differently — so the merged extraction would not line up.
     first, rest = (slices[0], slices[1:]) if slices else (None, [])
     if first is not None:
         try:
@@ -350,10 +315,7 @@ def _extract_paged(pages: list[str], label: str) -> dict:
                 raise                    # abort the run loudly, same as a single-call failure
             _note_fail(first["page"], e)
 
-    # The remaining slices are independent given known_groups. They are pure I/O waits,
-    # so run them concurrently — ai_client._create caps total in-flight calls globally,
-    # which is what keeps this from stampeding the gateway. Results are merged in SLICE
-    # ORDER, not completion order, so the extraction stays deterministic.
+    # The remaining slices are independent given known_groups. They are pure I/O waits, so run them concurrently — ai_client._create caps total in-flight calls globally, which is what keeps this from stampeding the gateway. Results are merged in SLICE ORDER, not completion order, so the extraction stays deterministic.
     parts: list[tuple[dict, int] | None] = [None] * len(rest)
     if rest:
         conn_err: list[Exception] = []
@@ -386,8 +348,7 @@ def _extract_paged(pages: list[str], label: str) -> dict:
     merged["coverage"] = _coverage(len(pages), len(read_pages),
                                    len(all_slices), len(slices), slices_ok=n_ok)
     if read_errors:
-        # Surfaced by the runner into the run's errors + used to withhold the fast-path
-        # cache so a plain re-run RETRIES these pages instead of reusing the gap.
+        # Surfaced by the runner into the run's errors + used to withhold the fast-path cache so a plain re-run RETRIES these pages instead of reusing the gap.
         merged["coverage"]["read_errors"] = read_errors[:10]
     if truncated:
         tail = (f"[extraction limited to the first {len(slices)} page-slices of "
@@ -438,14 +399,11 @@ def _extend_unique(dst: list, src: list) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Extraction self-check (Precision guard #1): recompute round(n/N*100) on the
-# extracted cells; re-read only the ones that don't reconcile (or where n>N).
+# Extraction self-check (Precision guard #1): recompute round(n/N*100) on the extracted cells; re-read only the ones that don't reconcile (or where n>N).
 # --------------------------------------------------------------------------- #
 
 def suspect_cells(extraction: dict, tol: float = 0.6) -> list[dict]:
-    """Pure detector (no I/O). Return the cells whose extracted count/percent are
-    internally inconsistent (|round(n/N*100) - pct| > tol) or where n exceeds the
-    group N — i.e. the extraction (not the source) is likely mis-read."""
+    """Pure detector (no I/O). Return the cells whose extracted count/percent are internally inconsistent (|round(n/N*100) - pct| > tol) or where n exceeds the group N — i.e. the extraction (not the source) is likely mis-read."""
     out: list[dict] = []
     if not extraction:
         return out
@@ -479,12 +437,7 @@ _RECHECK_SCHEMA = {
 def needs_self_check(extraction: dict, config: dict) -> bool:
     """Whether self_check() would actually do anything for this extraction.
 
-    Pure — no PDF, no API. self_check needs the source TEXT only to re-read cells it has
-    already decided are suspect, and suspect detection depends on the extraction alone.
-    So a caller can ask this first and skip reading the PDF (~0.6 s/page) when the answer
-    is no. Same gate self_check applies internally, kept in one place so the two can't
-    drift apart.
-    """
+Pure — no PDF, no API. self_check needs the source TEXT only to re-read cells it has already decided are suspect, and suspect detection depends on the extraction alone. So a caller can ask this first and skip reading the PDF (~0.6 s/page) when the answer is no. Same gate self_check applies internally, kept in one place so the two can't drift apart."""
     sc = (config or {}).get("selfcheck", {}) or {}
     if not sc.get("enabled", True) or not extraction:
         return False
@@ -492,10 +445,7 @@ def needs_self_check(extraction: dict, config: dict) -> bool:
 
 
 def self_check(text: str, extraction: dict, config: dict) -> tuple[dict, int, int]:
-    """Re-read the suspect cells against the source text and patch the extraction in
-    place. Returns (extraction, n_suspect, n_corrected). One focused model call, only
-    when suspects exist, so cost stays flat. Any model or response error propagates:
-    an unverified suspect cell must never be treated as a clean review."""
+    """Re-read the suspect cells against the source text and patch the extraction in place. Returns (extraction, n_suspect, n_corrected). One focused model call, only when suspects exist, so cost stays flat. Any model or response error propagates: an unverified suspect cell must never be treated as a clean review."""
     sc = (config or {}).get("selfcheck", {}) or {}
     if not sc.get("enabled", True) or not extraction:
         return extraction, 0, 0
@@ -560,8 +510,7 @@ _JUDGE_SYS = (
 
 
 def check_id_for(item: dict) -> str:
-    """The finding check_id for a checklist/deterministic item. Checklist items get a
-    scope prefix (AIW/AIX/AIV) + their id; deterministic items keep their own check_id."""
+    """The finding check_id for a checklist/deterministic item. Checklist items get a scope prefix (AIW/AIX/AIV) + their id; deterministic items keep their own check_id."""
     scope = item.get("scope")
     if scope in _SCOPE_PREFIX:
         return f"{_SCOPE_PREFIX[scope]}-{item.get('id', '')}"
@@ -569,8 +518,7 @@ def check_id_for(item: dict) -> str:
 
 
 def checklist_index(config: dict) -> dict:
-    """{check_id -> item} across both the AI checklist and the deterministic checks —
-    used by export/UI to resolve a finding's title/risk/scope."""
+    """{check_id -> item} across both the AI checklist and the deterministic checks — used by export/UI to resolve a finding's title/risk/scope."""
     idx: dict[str, dict] = {}
     for it in config.get("checklist", []) or []:
         idx[check_id_for(it)] = it
@@ -632,9 +580,7 @@ def _judge_schema(cross: bool) -> dict:
             "required": ["findings"]}
 
 
-# The app has ONE two-tier scale: risk ∈ {High, Low}. "Medium" (and anything unknown)
-# reads as Low — which is how Medium was already displayed. `severity` is kept as the
-# lowercased tier purely as a sort/group key and legacy column; it mirrors the risk.
+# The app has ONE two-tier scale: risk ∈ {High, Low}. "Medium" (and anything unknown) reads as Low — which is how Medium was already displayed. `severity` is kept as the lowercased tier purely as a sort/group key and legacy column; it mirrors the risk.
 def _norm_risk(risk: str) -> str:
     return "High" if (risk or "").strip().lower() == "high" else "Low"
 
@@ -646,8 +592,7 @@ def _sev(risk: str) -> str:
 def _build_judge_findings(raw: list, config: dict, id2: dict,
                           default_scope: str, cross: bool = False) -> list[dict]:
     out: list[dict] = []
-    # A valid clean response is exactly a list with zero entries. Anything else is
-    # an AI-stage failure and must propagate so the runner withholds auto-approval.
+    # A valid clean response is exactly a list with zero entries. Anything else is an AI-stage failure and must propagate so the runner withholds auto-approval.
     if not isinstance(raw, list):
         raise AIReviewResponseError("judge response field 'findings' is not a list")
     for r in raw:
@@ -686,9 +631,7 @@ def _build_judge_findings(raw: list, config: dict, id2: dict,
 
 def within_table_judge(extraction: dict, prior: dict | None, label: str, title: str,
                        config: dict) -> list[dict]:
-    """One model call per table: within-table checklist (2.1 sums, 2.2 row sums, 2.3
-    integrity, 7.2 AE-overview zeros) plus — when a prior extraction is supplied — the
-    version items (6.1/6.2/6.3, 7.3/7.4) folded into the same call."""
+    """One model call per table: within-table checklist (2.1 sums, 2.2 row sums, 2.3 integrity, 7.2 AE-overview zeros) plus — when a prior extraction is supplied — the version items (6.1/6.2/6.3, 7.3/7.4) folded into the same call."""
     if not extraction:
         return []
     items = [it for it in _items_for_scope(config, {"within_table"}) if _applies(it, label, title)]
@@ -719,9 +662,7 @@ def within_table_judge(extraction: dict, prior: dict | None, label: str, title: 
 
 
 def cross_output_judge(bundle: list[dict], config: dict) -> list[dict]:
-    """One model call over the whole delivery: cross-output checklist (3 pooled, 4
-    by-study, 5 footnotes, 7.1 overview↔SOC/PT, 8 by-study↔Table 1). `bundle` is the
-    list of per-output compact extractions. cross_document items are gated out."""
+    """One model call over the whole delivery: cross-output checklist (3 pooled, 4 by-study, 5 footnotes, 7.1 overview↔SOC/PT, 8 by-study↔Table 1). `bundle` is the list of per-output compact extractions. cross_document items are gated out."""
     items = [it for it in _items_for_scope(config, {"cross_output"})
              if not it.get("requires_multi_document_upload")]
     if not items or not bundle:
@@ -752,18 +693,11 @@ _KEYROW_RE = re.compile(
 def _compact(ex: dict, max_rows: int | None = None) -> dict:
     """Projection of one extraction for the cross-output bundle.
 
-    EVERY body row is included by default. The previous behaviour kept only rows matching
-    _KEYROW_RE, which on real deliveries selected 1-5 rows per table — a 295-row SOC/PT
-    table contributed a single row, so checklist item 7.1 (AE overview categories match
-    SOC/PT) had almost nothing to reconcile against. A row the judge never sees cannot be
-    reconciled, so the cap was silently limiting what cross-output checking could find.
+EVERY body row is included by default. The previous behaviour kept only rows matching _KEYROW_RE, which on real deliveries selected 1-5 rows per table — a 295-row SOC/PT table contributed a single row, so checklist item 7.1 (AE overview categories match SOC/PT) had almost nothing to reconcile against. A row the judge never sees cannot be reconciled, so the cap was silently limiting what cross-output checking could find.
 
-    `pcts` and `row_kind` are dropped: items 3/4/5/7.1/8 compare COUNTS and group N's, not
-    percentages, and those two fields were the bulk of the bytes.
+`pcts` and `row_kind` are dropped: items 3/4/5/7.1/8 compare COUNTS and group N's, not percentages, and those two fields were the bulk of the bytes.
 
-    Pass `max_rows` to restore the old keyrow-only cap (kept for callers that need a
-    genuinely small projection).
-    """
+Pass `max_rows` to restore the old keyrow-only cap (kept for callers that need a genuinely small projection)."""
     if not ex:
         return {}
     rows = ex.get("summary_rows", []) or []
@@ -791,9 +725,7 @@ def _compact(ex: dict, max_rows: int | None = None) -> dict:
 # --------------------------------------------------------------------------- #
 
 def _contradicts(op: str, nums: list, obs, tol: float):
-    """True = the cited numbers really contradict the claim (keep the finding);
-    False = they are self-consistent (an LLM math slip → drop); None = not enough
-    information to verify (keep, don't silently suppress a possibly-real finding)."""
+    """True = the cited numbers really contradict the claim (keep the finding); False = they are self-consistent (an LLM math slip → drop); None = not enough information to verify (keep, don't silently suppress a possibly-real finding)."""
     if op == "none":
         return None
     if op == "sum_equals":
@@ -820,8 +752,7 @@ def _contradicts(op: str, nums: list, obs, tol: float):
 
 
 def verify_findings(findings: list[dict], config: dict) -> tuple[list[dict], int]:
-    """Drop numeric findings whose own cited arithmetic does not actually hold. Returns
-    (kept, n_dropped). Qualitative findings (operation 'none') always pass through."""
+    """Drop numeric findings whose own cited arithmetic does not actually hold. Returns (kept, n_dropped). Qualitative findings (operation 'none') always pass through."""
     vp = (config or {}).get("verify_pass", {}) or {}
     if not vp.get("enabled", True):
         return findings, 0

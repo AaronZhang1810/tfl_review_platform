@@ -4,8 +4,7 @@
 const pdfjsLib = window.pdfjsLib;
 pdfjsLib.GlobalWorkerOptions.workerSrc = "/vendor/pdf.worker.mjs";
 
-// Human-settable review statuses. "Auto-approved" is set by the system (a clean AI run /
-// import) and is never offered here — a reviewer taking ownership picks "Manually approved".
+// Human-settable review statuses. "Auto-approved" is set by the system (a clean AI run / import) and is never offered here — a reviewer taking ownership picks "Manually approved".
 const STATUSES = ["Not Reviewed", "In Progress", "Manually approved", "Needs Revision"];
 
 const state = {
@@ -27,13 +26,10 @@ const state = {
 const $ = (sel, root = document) => root.querySelector(sel);
 const app = () => $("#app");
 
-// Comments are no longer attributed to a named reviewer; findings-actions still send an
-// author, so this stays as a fixed label rather than a per-user name.
+// Comments are no longer attributed to a named reviewer; findings-actions still send an author, so this stays as a fixed label rather than a per-user name.
 function reviewer() { return "Reviewer"; }
 
-// Light / dark theme toggle. The saved (or OS-preferred) theme is already applied
-// to <html> in the page <head> before first paint; here we only sync the toggle
-// button glyph and flip + persist the choice on click.
+// Light / dark theme toggle. The saved (or OS-preferred) theme is already applied to <html> in the page <head> before first paint; here we only sync the toggle button glyph and flip + persist the choice on click.
 (function initTheme() {
   const paint = btn => { btn.textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙"; };
   const wire = () => {
@@ -51,11 +47,7 @@ function reviewer() { return "Reviewer"; }
 })();
 
 // ---------------------------------------------------------------- helpers
-// Global "working…" indicator: a thin indeterminate bar pinned to the top of the
-// viewport, shown whenever one or more tracked requests are in flight. Ref-counted so
-// overlapping calls (e.g. loadFindings + loadLastRun) don't flicker it off early. The
-// element is created lazily, so no markup change is needed. Pass {quiet:true} to opt a
-// request OUT — the run-progress poller does, so it doesn't strobe the bar every 1.2s.
+// Global "working…" indicator: a thin indeterminate bar pinned to the top of the viewport, shown whenever one or more tracked requests are in flight. Ref-counted so overlapping calls (e.g. loadFindings + loadLastRun) don't flicker it off early. The element is created lazily, so no markup change is needed. Pass {quiet:true} to opt a request OUT — the run-progress poller does, so it doesn't strobe the bar every 1.2s.
 let _busyN = 0;
 function setBusy(on) {
   _busyN = Math.max(0, _busyN + (on ? 1 : -1));
@@ -126,10 +118,7 @@ const FINDING_STATE_CLASSES = Object.freeze({
 const stClass = s => STATUS_CLASSES[s] || "st-NotReviewed";
 const findingStateClass = s => FINDING_STATE_CLASSES[s] || "state-pending";
 
-// Split a table title into its descriptive name and the trailing analysis-population
-// parenthetical, e.g. "… Studies (Safety Analysis Set)" → {name, population}.
-// Only the LAST parenthetical is treated as a population, and only if it reads like one
-// (so "(Narrow)" mid-title stays part of the name).
+// Split a table title into its descriptive name and the trailing analysis-population parenthetical, e.g. "… Studies (Safety Analysis Set)" → {name, population}. Only the LAST parenthetical is treated as a population, and only if it reads like one (so "(Narrow)" mid-title stays part of the name).
 function splitTitle(title) {
   const t = (title || "").trim();
   const m = t.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
@@ -231,10 +220,7 @@ async function renderHome() {
   compoundInp.addEventListener("input", syncStudy);
   syncStudy();
 
-  // --- Staged delivery uploads: add one at a time, replace, delete, drag-drop ---
-  // Files are held in memory until Create; the form is then submitted as one
-  // multipart POST with each staged file appended under the "delivery" field the
-  // backend already expects (repeated part). No new endpoint needed.
+  // --- Staged delivery uploads: add one at a time, replace, delete, drag-drop --- Files are held in memory until Create; the form is then submitted as one multipart POST with each staged file appended under the "delivery" field the backend already expects (repeated part). No new endpoint needed.
   const staged = [];
   const dz = $("#dropzone"), fileInput = $("#deliveryInput"), stagedList = $("#stagedList");
   const replaceInput = document.createElement("input");
@@ -250,9 +236,7 @@ async function renderHome() {
     const multi = staged.length > 1;   // "main document" only matters when there's something to compare
     staged.forEach((f, i) => {
       const isMain = f === mainFile;
-      // The main-document control sits between Replace and ✕. It shows only with 2+ files
-      // (a lone upload is implicitly the one under review). One main at a time: the chosen
-      // row is highlighted with a MAIN badge and its button flips to "De-select".
+      // The main-document control sits between Replace and ✕. It shows only with 2+ files (a lone upload is implicitly the one under review). One main at a time: the chosen row is highlighted with a MAIN badge and its button flips to "De-select".
       const mainTip = isMain
         ? "Clear the main-document choice"
         : "Mark this as the main document to review; the others become comparison editions only";
@@ -395,10 +379,7 @@ async function renderHome() {
   });
 }
 
-// Import one shared project bundle. On a name collision the server returns a
-// {conflict} flag (nothing written); ask whether to replace the existing project
-// or add a separate copy, then re-POST with the chosen mode. Returns the import
-// result; the caller handles toasts/navigation so it can batch multiple files.
+// Import one shared project bundle. On a name collision the server returns a {conflict} flag (nothing written); ask whether to replace the existing project or add a separate copy, then re-POST with the chosen mode. Returns the import result; the caller handles toasts/navigation so it can batch multiple files.
 async function importProject(file, mode) {
   const fd = new FormData();
   fd.append("file", file);
@@ -414,10 +395,7 @@ async function importProject(file, mode) {
 }
 
 // ---------------------------------------------------------------- project
-// The "main" (reviewed) edition — mirrors backend runner._pick_current_prior: the
-// highest-edition delivery document, which is the user-marked main when one was chosen at
-// creation (the others become role='prior'). Used to default the TLF view to the reviewed
-// edition instead of whichever file happens to sort first by document id / filename.
+// The "main" (reviewed) edition — mirrors backend runner._pick_current_prior: the highest-edition delivery document, which is the user-marked main when one was chosen at creation (the others become role='prior'). Used to default the TLF view to the reviewed edition instead of whichever file happens to sort first by document id / filename.
 function mainDocId(project) {
   const mains = (project.documents || []).filter(d => d.role === "delivery");
   if (!mains.length) return null;
@@ -425,11 +403,7 @@ function mainDocId(project) {
   return mains[0].id;
 }
 
-// The reviewable outputs are the tables in the MAIN document only. Comparison (prior)
-// editions are indexed so cross-edition checks can run, but they are not themselves review
-// targets, so they are excluded from the output count, the TOC, the dashboard totals and the
-// TLF bookmark tree / Prev-Next. Every edition stays in state.project.outputs so a finding on
-// any edition can still be resolved by output_id; only the *listed/counted* set is narrowed.
+// The reviewable outputs are the tables in the MAIN document only. Comparison (prior) editions are indexed so cross-edition checks can run, but they are not themselves review targets, so they are excluded from the output count, the TOC, the dashboard totals and the TLF bookmark tree / Prev-Next. Every edition stays in state.project.outputs so a finding on any edition can still be resolved by output_id; only the *listed/counted* set is narrowed.
 function reviewableOutputs(project) {
   const outs = project.outputs || [];
   const mid = mainDocId(project);
@@ -458,15 +432,10 @@ function renderTab() {
 }
 
 // ---------------------------------------------------------------- Overview tab
-// A colourful, low-detail summary of where the review stands. Everything is
-// aggregated client-side from endpoints that already exist; numbers wear ink,
-// only glyph chips / donut ring / bar segments / dots carry colour. Mirrors
-// renderAI's shell-first pattern so a fetch that lands after the user switches
-// tabs can't clobber the new view.
+// A colourful, low-detail summary of where the review stands. Everything is aggregated client-side from endpoints that already exist; numbers wear ink, only glyph chips / donut ring / bar segments / dots carry colour. Mirrors renderAI's shell-first pattern so a fetch that lands after the user switches tabs can't clobber the new view.
 const pct = (n, d) => (d ? Math.round((100 * n) / d) : 0);
 
-// Build a conic-gradient ring from [{val,color}]; forces the final stop to
-// 360deg so rounding can't leave a seam, and paints a neutral ring when empty.
+// Build a conic-gradient ring from [{val,color}]; forces the final stop to 360deg so rounding can't leave a seam, and paints a neutral ring when empty.
 function donutStyle(segs) {
   const total = segs.reduce((s, x) => s + x.val, 0);
   if (!total) return "background: var(--line);";
@@ -600,8 +569,7 @@ async function renderDashboard() {
     </ul></div>`;
 
   // ---- AI review panel: finding-disposition pie + legend -------------------
-  // Every finding falls in exactly one disposition, so the segments sum to fTotal.
-  // "Active" = still awaiting triage (split High/Low); the rest have been acted on.
+  // Every finding falls in exactly one disposition, so the segments sum to fTotal. "Active" = still awaiting triage (split High/Low); the rest have been acted on.
   if (!fTotal) {
     $("#dashFindings").innerHTML = `<div class="dash-empty">${lastRun.none
       ? "No AI review run yet.<br>Run one from the <b>AI Review</b> tab."
@@ -663,9 +631,7 @@ const TOC_COLS = [
   { key: "title", label: "Title", val: o => o.title, cell: o => esc(o.title) },
   { key: "pages", label: "Pages", val: o => safeInt(o.page_start) ? `${safeInt(o.page_start)}-${safeInt(o.page_end)}` : "",
     cell: o => safeInt(o.page_start) ? `${safeInt(o.page_start)}–${safeInt(o.page_end)}` : "" },
-  // How much of this output the AI actually read. A long table can be only partly
-  // extracted, and then "no findings" is not evidence that it is clean — so the TOC,
-  // where a reviewer decides whether to trust a row, has to show it.
+  // How much of this output the AI actually read. A long table can be only partly extracted, and then "no findings" is not evidence that it is clean — so the TOC, where a reviewer decides whether to trust a row, has to show it.
   { key: "coverage", label: "AI read", val: o => tocCoverage(o).text,
     cell: o => { const c = tocCoverage(o);
       return c.text ? `<span class="badge ${c.cls}" title="${esc(c.title)}">${esc(c.text)}</span>` : ""; } },
@@ -752,9 +718,7 @@ function renderTOC() {
   loadStructuralBanner();
 }
 
-// Deterministic (rule-based, non-AI) findings surfaced on the TOC page. These are written
-// at project creation, so they are visible BEFORE any AI review is triggered. Renders a
-// foldable summary card; a finding tied to an output jumps to that table in the TLF viewer.
+// Deterministic (rule-based, non-AI) findings surfaced on the TOC page. These are written at project creation, so they are visible BEFORE any AI review is triggered. Renders a foldable summary card; a finding tied to an output jumps to that table in the TLF viewer.
 async function loadStructuralBanner() {
   const box = $("#tocStructural"); if (!box) return;
   const rows = (await getJSON(`/api/projects/${state.project.id}/findings`, { quiet: true })
@@ -867,8 +831,7 @@ function renderTLF() {
     });
   });
   renderBmTree();
-  // Non-blocking: once findings + last-run land, the panel switches from table counts
-  // to remaining-finding counts (if an AI review has completed).
+  // Non-blocking: once findings + last-run land, the panel switches from table counts to remaining-finding counts (if an AI review has completed).
   loadBookmarkMeta().then(renderBmTree);
 
   $("#prevOut").addEventListener("click", () => moveOutput(-1));
@@ -915,8 +878,7 @@ function setupPanelResize() {
       document.body.style.cursor = "col-resize"; document.body.style.userSelect = "none";
       const move = ev => {
         const dx = ev.clientX - startX;
-        // left gutter grows the left panel with the cursor; right gutter grows the
-        // right panel as the cursor moves left.
+        // left gutter grows the left panel with the cursor; right gutter grows the right panel as the cursor moves left.
         const raw = side === "left" ? startW + dx : startW - dx;
         w[side] = Math.max(140, Math.min(680, raw));
         applyPanelWidths(w);
@@ -942,12 +904,7 @@ function moveOutput(d) {
 }
 
 // --- collapsible bookmark tree ------------------------------------------- #
-// Two layouts, toggled by the "Group by" control:
-//   file  : File  → Table N (leading number) → subtable leaves   (default)
-//   table : Table N → File → subtable leaves
-// "Table N" = the leading integer of the dotted output number (2.2.1 → "Table 2").
-// A standalone output whose number has no dotted part is shown as a plain leaf
-// instead of a redundant one-item group.
+// Two layouts are available through the "Group by" control: file (File → Table N → subtable leaves, the default) and table (Table N → File → subtable leaves). "Table N" is the leading integer of the dotted output number (2.2.1 → "Table 2"). A standalone output whose number has no dotted part is shown as a plain leaf instead of a redundant one-item group.
 function groupBy(items, keyFn) {
   const m = new Map();
   items.forEach(it => { const k = keyFn(it); (m.get(k) || m.set(k, []).get(k)).push(it); });
@@ -964,10 +921,7 @@ function fileHeaderHtml(o) {
     + (o.edition ? ` <span class="ed">(${esc(o.edition)})</span>` : "");
 }
 
-// Bookmark badge count: always the number of OPEN (pending, unactioned) AI findings for
-// these outputs — never a table count. Deterministic structural findings written at project
-// creation count too, so before any AI review is run/imported the badges are all zero except
-// on tables the deterministic checks flagged; a completed/imported review fills in the rest.
+// Bookmark badge count: always the number of OPEN (pending, unactioned) AI findings for these outputs — never a table count. Deterministic structural findings written at project creation count too, so before any AI review is run/imported the badges are all zero except on tables the deterministic checks flagged; a completed/imported review fills in the rest.
 function bmCount(outs) {
   return outs.reduce((s, o) => s + (state.aiFindingCounts[o.id] || 0), 0);
 }
@@ -1014,8 +968,7 @@ function groupNode(key, level, headerHtml, count) {
   return li;
 }
 
-// Append the Table-N level (and its leaves) under a container. `parentKey` scopes
-// the node keys so the same "Table 2" under two files stays independently openable.
+// Append the Table-N level (and its leaves) under a container. `parentKey` scopes the node keys so the same "Table 2" under two files stays independently openable.
 function appendBigtables(container, outs, parentKey) {
   groupBy(outs, bigtableKey).forEach((bigOuts, blabel) => {
     if (bigOuts.length === 1 && !hasSubtable(bigOuts[0])) { container.appendChild(leafNode(bigOuts[0])); return; }
@@ -1066,8 +1019,7 @@ function renderBmTree() {
   if (col) col.scrollTop = scroll;
 }
 
-// Open every group that could contain this output (extra keys are harmless), so a
-// leaf reached from a finding / Prev-Next is revealed even if its branch was closed.
+// Open every group that could contain this output (extra keys are harmless), so a leaf reached from a finding / Prev-Next is revealed even if its branch was closed.
 function expandToLeaf(o) {
   if (!o) return;
   const doc = o.document_id, b = bigtableKey(o);
@@ -1095,9 +1047,7 @@ async function selectOutput(o, page = 1) {
   } catch { state.annos = []; }
   try {
     const buf = await (await fetch("/api/tlf-clip?output_id=" + o.id)).arrayBuffer();
-    // Defense in depth for untrusted uploaded PDFs. Current PDF.js is patched for
-    // CVE-2024-4367; disabling dynamic evaluation also protects this viewer if a
-    // future dependency downgrade is introduced accidentally.
+    // Defense in depth for untrusted uploaded PDFs. Current PDF.js is patched for CVE-2024-4367; disabling dynamic evaluation also protects this viewer if a future dependency downgrade is introduced accidentally.
     state.pdf = await pdfjsLib.getDocument({ data: buf, isEvalSupported: false }).promise;
     gotoPage(page);
   } catch (err) { toast("PDF load failed: " + err.message, 4000); }
@@ -1116,17 +1066,13 @@ async function gotoPage(n) {
   state.pageNum = n;
   const page = await state.pdf.getPage(n);
   const canvas = $("#pdfCanvas"); if (!canvas) return;
-  // Fit to the available width, then apply the user's zoom. Render at the device
-  // pixel ratio so text stays crisp on HiDPI screens. Measure the scroll container
-  // (.pagewrap), NOT the canvas' immediate parent — the .canvas-stack wrapper sizes
-  // to the canvas itself, which would feed back and make "Fit" unstable.
+  // Fit to the available width, then apply the user's zoom. Render at the device pixel ratio so text stays crisp on HiDPI screens. Measure the scroll container (.pagewrap), NOT the canvas' immediate parent — the .canvas-stack wrapper sizes to the canvas itself, which would feed back and make "Fit" unstable.
   const wrap = canvas.closest(".pagewrap");
   let wrapW = 800;
   if (wrap) {
     const cs = getComputedStyle(wrap);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-    // clientWidth excludes the scrollbar; with scrollbar-gutter:stable it's constant
-    // whether or not a vertical scrollbar is showing, so Fit never overflows.
+    // clientWidth excludes the scrollbar; with scrollbar-gutter:stable it's constant whether or not a vertical scrollbar is showing, so Fit never overflows.
     wrapW = wrap.clientWidth - padX - 2;
   }
   wrapW = Math.max(320, wrapW);
@@ -1286,9 +1232,7 @@ function annoHit(a, nx, ny) {
   return nx >= g.x && nx <= g.x + g.w && ny >= g.y && ny <= g.y + g.h;
 }
 
-// Eraser: remove the topmost mark under the cursor. Optimistic — drop it from
-// state.annos and redraw right away (so a continued drag won't re-hit it), and
-// fire the delete at the server without a confirm dialog (it's an eraser).
+// Eraser: remove the topmost mark under the cursor. Optimistic — drop it from state.annos and redraw right away (so a continued drag won't re-hit it), and fire the delete at the server without a confirm dialog (it's an eraser).
 function eraseAt([nx, ny]) {
   const hit = [...state.annos].reverse().find(a => annoHit(a, nx, ny));
   if (!hit) return;
@@ -1435,9 +1379,7 @@ function replyCard(r) {
 }
 
 // ---------------------------------------------------------------- AI Review tab
-// One two-tier scale, shown as a single High/Low badge. `tier()` collapses a finding to
-// "high"|"low" from its risk, tolerating legacy rows (old severity critical/major/minor,
-// or risk Medium) so a mixed database still renders. TIER_ORDER sorts High before Low.
+// One two-tier scale, shown as a single High/Low badge. `tier()` collapses a finding to "high"|"low" from its risk, tolerating legacy rows (old severity critical/major/minor, or risk Medium) so a mixed database still renders. TIER_ORDER sorts High before Low.
 const TIER_ORDER = { high: 0, low: 1 };
 function tier(f) {
   const risk = (f.risk || "").toLowerCase();
@@ -1448,8 +1390,7 @@ function tier(f) {
 }
 const tierLabel = f => tier(f) === "high" ? "High" : "Low";
 
-// Subtable / section locator shown on a finding — tells the reviewer exactly which
-// printed subtable page ("TABLE PAGE x of N") and indication section the row is in.
+// Subtable / section locator shown on a finding — tells the reviewer exactly which printed subtable page ("TABLE PAGE x of N") and indication section the row is in.
 function locChip(f) {
   const bits = [];
   const printedPage = safeInt(f.printed_page);
@@ -1490,15 +1431,11 @@ function findingCard(f, refresh) {
   else { mkBtn("Edit & post", () => postFinding(f, refresh)); mkBtn("Reject", () => act(f.id, "reject", refresh)); }
   const open = card.querySelector("[data-open]");
   if (open) open.onclick = () => {
-    // Resolve by output_id first: in a multi-edition project two outputs can share
-    // the same label ("Table 1" in both the prior and current editions), and the finding's output_id is
-    // the authoritative link — matching on label alone lands on the wrong edition
-    // and the sidebar then shows "no findings" (findings filter by output_id).
+    // Resolve by output_id first: in a multi-edition project two outputs can share the same label ("Table 1" in both the prior and current editions), and the finding's output_id is the authoritative link — matching on label alone lands on the wrong edition and the sidebar then shows "no findings" (findings filter by output_id).
     const o = state.project.outputs.find(x => x.id === f.output_id)
            || state.project.outputs.find(x => x.label === f.output_label);
     if (!o) return;
-    // Jump the viewer straight to the finding's page (a table spans many pages);
-    // carry the locator so #pgInfo can confirm the subtable/section on arrival.
+    // Jump the viewer straight to the finding's page (a table spans many pages); carry the locator so #pgInfo can confirm the subtable/section on arrival.
     state.output = o;
     state.jumpPage = f.page || 1;
     state.jumpLoc = { page: f.page || 1, printed_page: f.printed_page,
@@ -1556,8 +1493,7 @@ async function renderAI() {
   $("#runBtn").onclick = () => startRun("incremental");
   $("#freshBtn").onclick = () => startRun("fresh");
   $("#expBtn").onclick = () => {
-    // A download navigation gives no readable progress; flash the busy bar briefly so
-    // the click visibly registers while the file is generated server-side.
+    // A download navigation gives no readable progress; flash the busy bar briefly so the click visibly registers while the file is generated server-side.
     setBusy(true); setTimeout(() => setBusy(false), 1500);
     location.href = `/api/projects/${state.project.id}/export/findings.xlsx`;
   };
@@ -1565,9 +1501,7 @@ async function renderAI() {
   $("#impFile").onchange = async e => {
     const f = e.target.files[0]; if (!f) return;
     e.target.value = "";   // allow re-selecting the same file later
-    // Importing reads the workbook and inserts every finding row, which can take a few
-    // seconds. Disable + relabel the button so it's obvious work is underway (the global
-    // busy bar also shows, via postForm), and restore it whatever the outcome.
+    // Importing reads the workbook and inserts every finding row, which can take a few seconds. Disable + relabel the button so it's obvious work is underway (the global busy bar also shows, via postForm), and restore it whatever the outcome.
     const btn = $("#impBtn"), label = btn && btn.textContent;
     if (btn) { btn.disabled = true; btn.textContent = "Importing…"; }
     try {
@@ -1579,9 +1513,7 @@ async function renderAI() {
       const extra = bits.length ? ` (${bits.join(", ")})` : "";
       toast(`Imported ${r.imported} finding${r.imported === 1 ? "" : "s"} from "${f.name}"${extra}`, 3500);
       await Promise.all([loadFindings(), loadLastRun()]);
-      // Import counts as a review completion and may have auto-approved clean tables. Re-fetch
-      // the project so those statuses show everywhere (TOC / TLF / Dashboard) without a manual
-      // reload, mirroring the refresh after an in-app AI run.
+      // Import counts as a review completion and may have auto-approved clean tables. Re-fetch the project so those statuses show everywhere (TOC / TLF / Dashboard) without a manual reload, mirroring the refresh after an in-app AI run.
       try {
         const fresh = await getJSON(`/api/projects/${state.project.id}`, { quiet: true });
         state.project.outputs = fresh.outputs;
@@ -1605,10 +1537,7 @@ async function renderAI() {
   loadFindings();
 }
 
-// Render a backend timestamp in the viewer's LOCAL time. The server stores UTC with a
-// +00:00 offset (db.now_iso); the old code stripped the offset and printed the raw UTC
-// clock, so at UTC+8 "Last run" read 8 hours behind. Parse WITH the offset (treating a
-// naive legacy value as UTC, like timeAgo) and format local as "YYYY-MM-DD HH:MM".
+// Render a backend timestamp in the viewer's LOCAL time. The server stores UTC with a +00:00 offset (db.now_iso); the old code stripped the offset and printed the raw UTC clock, so at UTC+8 "Last run" read 8 hours behind. Parse WITH the offset (treating a naive legacy value as UTC, like timeAgo) and format local as "YYYY-MM-DD HH:MM".
 function fmtLocal(iso) {
   if (!iso) return "";
   const d = new Date(/[Z+]/.test(iso) ? iso : iso + "Z");
@@ -1649,17 +1578,14 @@ async function loadLastRun() {
   renderRunAlert(s);   // fail loudly if the run couldn't reach the API
 }
 
-// Fail loudly: a run whose extractions couldn't reach the API is NOT a clean
-// review even though it "finishes". Show a prominent red banner stating how many
-// outputs failed and the distinct connection error(s) behind it.
+// Fail loudly: a run whose extractions couldn't reach the API is NOT a clean review even though it "finishes". Show a prominent red banner stating how many outputs failed and the distinct connection error(s) behind it.
 function renderRunAlert(s) {
   const box = $("#runAlert"); if (!box) return;
   const errs = Array.isArray(s && s.errors) ? s.errors.map(String) : [];
   const total = safeInt(s && s.targets);
   const isConn = e => /connection error|could ?n.?t reach|timed out|APIConnectionError/i.test(e);
   const conn = errs.filter(isConn);
-  // Trip when: backend flags it unreachable (fix 1/2), OR a connection error hit at
-  // least half the analyzed outputs, OR the whole run threw a connection error.
+  // Trip when: backend flags it unreachable (fix 1/2), OR a connection error hit at least half the analyzed outputs, OR the whole run threw a connection error.
   const unreachable = (s && s.ai_unreachable)
     || (conn.length && conn.length >= Math.max(1, Math.ceil(total / 2)))
     || (s && s.error && isConn(s.error));
@@ -1692,11 +1618,7 @@ function renderRunAlert(s) {
     + (distinct.length ? `<ul class="run-alert-errs">${distinct.map(m => `<li>${esc(m)}</li>`).join("")}</ul>` : "");
 }
 
-// Second fail-loud case: the API WAS reachable, but a table longer than the slice
-// cap was only partially extracted. The pages past the cut never reached the model,
-// so no judge could raise a finding on them — "0 findings" there is not evidence of
-// a clean table. Amber (less severe than unreachable) but still surfaced, because the
-// alternative is silently presenting a partial review as complete.
+// Second fail-loud case: the API WAS reachable, but a table longer than the slice cap was only partially extracted. The pages past the cut never reached the model, so no judge could raise a finding on them — "0 findings" there is not evidence of a clean table. Amber (less severe than unreachable) but still surfaced, because the alternative is silently presenting a partial review as complete.
 function renderCoverageAlert(box, s) {
   const cov = (s && s.coverage) || {};
   const n = safeInt(cov.n_truncated);
@@ -1711,9 +1633,7 @@ function renderCoverageAlert(box, s) {
     .join("");
   box.classList.remove("hidden");
   box.classList.add("warn");
-  // Only advise raising the cap when the cap is actually why pages are missing; a failed
-  // page-read needs a re-run instead, and telling the reviewer to raise a limit that
-  // wasn't the cause would send them down the wrong path.
+  // Only advise raising the cap when the cap is actually why pages are missing; a failed page-read needs a re-run instead, and telling the reviewer to raise a limit that wasn't the cause would send them down the wrong path.
   const anyCapped = truncated.some(c => c.capped);
   const advice = anyCapped
     ? ` Raise <code>TLF_MAX_SLICES</code> (or set it to 0 for no limit) and re-run for full coverage.`
@@ -1727,8 +1647,7 @@ function renderCoverageAlert(box, s) {
     + (items ? `<ul class="run-alert-errs">${items}</ul>` : "");
 }
 
-// Open (collapsed=false) or close (collapsed=true) every severity + per-output group in the
-// findings tree at once, syncing each header's ▸/▾ twisty.
+// Open (collapsed=false) or close (collapsed=true) every severity + per-output group in the findings tree at once, syncing each header's ▸/▾ twisty.
 function setFindingsCollapsed(collapsed) {
   const box = $("#findings"); if (!box) return;
   box.querySelectorAll(".sev-sec > .sev-body, .out-grp > .out-body").forEach(body => {
@@ -1793,15 +1712,12 @@ function outputGroup(title, rows) {
     body.style.display = open ? "none" : "";
     e.currentTarget.querySelector(".tw").textContent = open ? "▸" : "▾";
   };
-  // All AI findings for this output are pooled together — aggregate / subtotal rows
-  // are shown inline alongside per-subject rows, not split into a separate sub-group.
+  // All AI findings for this output are pooled together — aggregate / subtotal rows are shown inline alongside per-subject rows, not split into a separate sub-group.
   rows.forEach(r => body.appendChild(findingCard(r, loadFindings)));
   return g;
 }
 
-// Populate the model + effort selectors from the configured API account,
-// preselecting the saved / default choice, then wire the
-// estimate to update whenever either changes.
+// Populate the model + effort selectors from the configured API account, preselecting the saved / default choice, then wire the estimate to update whenever either changes.
 async function setupAIConfig() {
   const mSel = $("#aiModel"), eSel = $("#aiEffort");
   if (!mSel || !eSel) return;
@@ -1861,8 +1777,7 @@ async function pollProgress() {
     $("#prog").classList.add("hidden");
     loadLastRun();
     loadFindings();
-    // The run may have auto-approved clean tables — re-fetch the project so those
-    // statuses show everywhere (TOC / TLF / Dashboard), then refresh bookmark counts.
+    // The run may have auto-approved clean tables — re-fetch the project so those statuses show everywhere (TOC / TLF / Dashboard), then refresh bookmark counts.
     try {
       const fresh = await getJSON(`/api/projects/${state.project.id}`, { quiet: true });
       state.project.outputs = fresh.outputs;
@@ -1925,9 +1840,7 @@ async function renderComments() {
     finally { btn.disabled = false; btn.textContent = label; }
   };
 
-  // A flat row per comment (ID | Table | Comment | Reply to | Resolved | Actions). "Reply to"
-  // shows the parent comment's per-Table ID; grouped rows leave Table blank (the group header
-  // carries it). byId maps global comment id → row so a reply can find its parent's num.
+  // A flat row per comment (ID | Table | Comment | Reply to | Resolved | Actions). "Reply to" shows the parent comment's per-Table ID; grouped rows leave Table blank (the group header carries it). byId maps global comment id → row so a reply can find its parent's num.
   const commentRow = (c, byId, grouped) => {
     const parent = c.parent_id != null ? byId[c.parent_id] : null;
     const tr = el(`<tr>

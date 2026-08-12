@@ -1,8 +1,6 @@
 """PDF utilities: clip page ranges into single-output PDFs, and extract text.
 
-Rendering happens client-side in pdf.js, so the server only needs to (a) produce a
-clipped PDF for one output's page range and (b) pull text for the AI/hashing.
-"""
+Rendering happens client-side in pdf.js, so the server only needs to (a) produce a clipped PDF for one output's page range and (b) pull text for the AI/hashing."""
 
 from __future__ import annotations
 
@@ -14,9 +12,7 @@ import threading
 import pypdf
 import pdfplumber
 
-# file_hash() results, keyed by (abspath, size, mtime_ns). A delivery is hashed once per
-# run instead of once per output, and the key self-invalidates: a file whose size or
-# mtime changed gets a fresh entry, so a stale digest can never be served.
+# file_hash() results, keyed by (abspath, size, mtime_ns). A delivery is hashed once per run instead of once per output, and the key self-invalidates: a file whose size or mtime changed gets a fresh entry, so a stale digest can never be served.
 _FILE_HASH_CACHE: dict[tuple, str] = {}
 _fh_lock = threading.Lock()
 
@@ -24,10 +20,7 @@ _fh_lock = threading.Lock()
 def validate_pdf(path: str, max_pages: int) -> int:
     """Check the bounded structural properties required by this application.
 
-    This rejects mislabeled files, encrypted documents, empty PDFs, and page-count
-    bombs before the indexer or renderer sees them.  It is a parser boundary check,
-    not a claim that arbitrary PDF content is safe.
-    """
+This rejects mislabeled files, encrypted documents, empty PDFs, and page-count bombs before the indexer or renderer sees them.  It is a parser boundary check, not a claim that arbitrary PDF content is safe."""
     try:
         with open(path, "rb") as fh:
             header = fh.read(1024)
@@ -51,10 +44,7 @@ def validate_pdf(path: str, max_pages: int) -> int:
 def file_hash(path: str) -> str:
     """Digest of the RAW FILE BYTES — the cheap, exact "has this PDF changed?" signal.
 
-    Reading a delivery's text to hash it costs ~0.6 s/page (pdfplumber); hashing the file
-    itself costs ~0.02 s for 12 MB. So this is what lets a run decide it can reuse a
-    stored extraction without opening the PDF at all. Byte-exact, unlike size+mtime.
-    """
+Reading a delivery's text to hash it costs ~0.6 s/page (pdfplumber); hashing the file itself costs ~0.02 s for 12 MB. So this is what lets a run decide it can reuse a stored extraction without opening the PDF at all. Byte-exact, unlike size+mtime."""
     st = os.stat(path)
     key = (os.path.abspath(path), st.st_size, st.st_mtime_ns)
     with _fh_lock:
@@ -108,11 +98,7 @@ def range_text(path: str, page_start: int, page_end: int, max_chars: int = 60000
 def page_top_texts(path: str, max_lines: int = 12) -> list[str]:
     """Top-of-page text (first ``max_lines`` lines) for each page, for caption detection.
 
-    Uses pypdfium2 (C-backed) so a many-hundred-page delivery is scanned in seconds:
-    the full pdfplumber text pass is ~90× slower and we only need the caption printed
-    at the top of each page. Falls back to pdfplumber if pypdfium2 is unavailable.
-    Returns one string per page in document order.
-    """
+Uses pypdfium2 (C-backed) so a many-hundred-page delivery is scanned in seconds: the full pdfplumber text pass is ~90× slower and we only need the caption printed at the top of each page. Falls back to pdfplumber if pypdfium2 is unavailable. Returns one string per page in document order."""
     try:
         import pypdfium2 as pdfium
     except Exception:
@@ -138,8 +124,7 @@ def content_hash(text: str) -> str:
 
 
 def page_char_counts(path: str) -> list[int]:
-    """Fast per-page character count via pypdfium2 (C-backed) — used for blank-page
-    detection without the cost of full text extraction. Falls back to [] on error."""
+    """Fast per-page character count via pypdfium2 (C-backed) — used for blank-page detection without the cost of full text extraction. Falls back to [] on error."""
     try:
         import pypdfium2 as pdfium
     except Exception:

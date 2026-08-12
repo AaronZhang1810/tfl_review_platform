@@ -1,9 +1,6 @@
 """Deterministic generation of fictional, internally consistent TLF opportunities.
 
-The public case records contain only observable evidence.  Issue labels are kept
-in a separate truth stream so predictors can be run on ``cases.jsonl`` without
-receiving the answers.
-"""
+The public case records contain only observable evidence.  Issue labels are kept in a separate truth stream so predictors can be run on ``cases.jsonl`` without receiving the answers."""
 
 from __future__ import annotations
 
@@ -28,8 +25,7 @@ def positive_project_indices(n_projects: int, family_index: int,
     """Select distinct projects for one family without relying on global RNG state."""
     if positives_per_family > n_projects:
         raise ValueError("positives_per_family cannot exceed n_projects")
-    # Pick a step coprime to common benchmark sizes, falling back until it spans
-    # all indices.  The offset differs by family, spreading defects across projects.
+    # Pick a step coprime to common benchmark sizes, falling back until it spans all indices.  The offset differs by family, spreading defects across projects.
     step = 7
     while len({(j * step) % n_projects for j in range(n_projects)}) != n_projects:
         step += 2

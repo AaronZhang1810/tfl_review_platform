@@ -1,8 +1,6 @@
 """Chat scopes: global (whole delivery) and per-output.
 
-Both build a compact context from stored data and ask Claude. SAP/Protocol text,
-when present, is attached as prompt-cached system blocks.
-"""
+Both build a compact context from stored data and ask Claude. SAP/Protocol text, when present, is attached as prompt-cached system blocks."""
 
 from __future__ import annotations
 

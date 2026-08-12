@@ -46,8 +46,7 @@ def _safe_ratio(num: float, den: float) -> float | None:
 
 
 def _f1(precision: float | None, recall: float | None) -> float | None:
-    # If truth positives exist but a system emits no prediction, precision is
-    # undefined while recall is zero; its F1 is conventionally zero, not missing.
+    # If truth positives exist but a system emits no prediction, precision is undefined while recall is zero; its F1 is conventionally zero, not missing.
     if precision is None or recall is None:
         return None if precision is None and recall is None else 0.0
     if precision + recall == 0:

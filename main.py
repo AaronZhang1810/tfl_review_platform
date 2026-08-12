@@ -1,9 +1,6 @@
 """TLF Review Platform — FastAPI backend.
 
-Single-user (no auth). Serves the SPA in static/ and a JSON/binary API for
-projects, outputs, the clipped-PDF viewer, comments, annotations, AI review, and
-exports.
-"""
+Single-user (no auth). Serves the SPA in static/ and a JSON/binary API for projects, outputs, the clipped-PDF viewer, comments, annotations, AI review, and exports."""
 
 from __future__ import annotations
 
@@ -36,8 +33,7 @@ def _positive_env_int(name: str, default: int) -> int:
     return value
 
 
-# Conservative defaults for the local public demonstration. Operators who have
-# reviewed a larger trusted workload can raise them explicitly in the environment.
+# Conservative defaults for the local public demonstration. Operators who have reviewed a larger trusted workload can raise them explicitly in the environment.
 UPLOAD_CHUNK_BYTES = 1024 * 1024
 MAX_DOCUMENT_BYTES = _positive_env_int("TLF_MAX_DOCUMENT_BYTES", 64 * 1024 * 1024)
 MAX_PROJECT_UPLOAD_BYTES = _positive_env_int("TLF_MAX_PROJECT_UPLOAD_BYTES", 192 * 1024 * 1024)
@@ -52,14 +48,11 @@ HUMAN_OUTPUT_STATUSES = frozenset({
     "Needs Revision",
 })
 UNSAFE_METHODS = frozenset({"POST", "PUT", "PATCH", "DELETE"})
-# SHA-256 hashes of the three intentionally inline bootstrap scripts in
-# static/index.html and static/tutorial.html (the theme script is shared). This
-# keeps inline event handlers disabled even if an output-encoding regression is
-# introduced later. tests/test_frontend_safety.py binds these hashes to the files.
+# SHA-256 hashes of the three intentionally inline bootstrap scripts in static/index.html and static/tutorial.html (the theme script is shared). This keeps inline event handlers disabled even if an output-encoding regression is introduced later. tests/test_frontend_safety.py binds these hashes to the files.
 INLINE_SCRIPT_HASHES = (
     "'sha256-ih8H3OtJF4l1wbGHI7OEfLSrSwZVcmrFJlTtYEm9adA='",
     "'sha256-z5tJ6H+wdKdAQqOlmyWzSClocNRR2DHEqK2URy2Aygs='",
-    "'sha256-FjR612gPHI42VD+yLPEwSOKbo8lIAh/6WvhFcSZJCtI='",
+    "'sha256-yKsyuYEJUKCHWIOdD4QC6v5GvFefPwNaWIBdFkC6uyE='",
 )
 TRUSTED_HOSTS = tuple(
     host.strip().lower()
@@ -115,8 +108,7 @@ async def _save_upload_limited(upload: UploadFile, dest: str, limit: int, label:
 
 
 def safe_filename(name: str) -> str:
-    """Strip any path components and unsafe characters so an uploaded filename can
-    never escape the project folder (defends against path-traversal like ../../x)."""
+    """Strip any path components and unsafe characters so an uploaded filename can never escape the project folder (defends against path-traversal like ../../x)."""
     base = os.path.basename((name or "").replace("\\", "/"))
     base = re.sub(r"[^A-Za-z0-9._ +\-]", "_", base).strip("._ ") or "upload"
     return base[:180]
@@ -168,8 +160,7 @@ async def _lifespan(_app: FastAPI):
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     os.makedirs(UPLOADS, exist_ok=True)
     db.init()
-    # Crash recovery: any AI run left unfinished by a restart is marked interrupted
-    # so the UI doesn't show a run stuck "in progress" forever.
+    # Crash recovery: any AI run left unfinished by a restart is marked interrupted so the UI doesn't show a run stuck "in progress" forever.
     n = db.recover_stale_runs()
     if n:
         logger.warning("Marked %d interrupted AI run(s) after restart", n)
@@ -221,9 +212,7 @@ async def _log_requests(request: Request, call_next):
             status_code=403,
             content={"detail": "cross-origin state-changing requests are not allowed"},
         )
-    # Reject ordinary oversized requests before Starlette parses/spools multipart
-    # data. Per-file streaming limits below remain authoritative when Content-Length
-    # is absent or untrustworthy (for example, chunked transfer encoding).
+    # Reject ordinary oversized requests before Starlette parses/spools multipart data. Per-file streaming limits below remain authoritative when Content-Length is absent or untrustworthy (for example, chunked transfer encoding).
     content_length = request.headers.get("content-length")
     if resp is None and content_length:
         try:
@@ -242,9 +231,7 @@ async def _log_requests(request: Request, call_next):
     if request.url.path.startswith("/api/"):
         logger.info("%s %s -> %s %.0fms", request.method, request.url.path,
                     resp.status_code, (time.perf_counter() - t0) * 1000)
-    # The app renders uploaded PDFs, so lock the browser to local application
-    # resources and forbid plug-ins/framing. Inline style/script is retained only
-    # for the tiny pre-paint theme snippet and module bootstrap in index.html.
+    # The app renders uploaded PDFs, so lock the browser to local application resources and forbid plug-ins/framing. Inline style/script is retained only for the tiny pre-paint theme snippet and module bootstrap in index.html.
     resp.headers.setdefault("Content-Security-Policy", "; ".join((
         "default-src 'self'", "base-uri 'none'", "object-src 'none'",
         "frame-ancestors 'none'", "form-action 'self'",
@@ -266,8 +253,7 @@ async def _log_requests(request: Request, call_next):
 
 @app.exception_handler(Exception)
 async def _unhandled(request: Request, exc: Exception):
-    """Return a clean JSON error instead of leaking a stack trace to the client;
-    the full traceback is logged server-side."""
+    """Return a clean JSON error instead of leaking a stack trace to the client; the full traceback is logged server-side."""
     logger.exception("Unhandled error on %s %s", request.method, request.url.path)
     return JSONResponse(status_code=500, content={"error": "Internal server error. See server log."})
 
@@ -290,8 +276,7 @@ def runtime_info():
 def list_projects():
     rows = db.query("SELECT * FROM project ORDER BY created_at DESC")
     for r in rows:
-        # Only the main (reviewed) document's tables count as outputs; comparison
-        # editions are indexed for cross-edition checks but are not review targets.
+        # Only the main (reviewed) document's tables count as outputs; comparison editions are indexed for cross-edition checks but are not review targets.
         current, _ = runner._pick_current_prior(r["id"])
         r["n_outputs"] = db.one(
             "SELECT COUNT(*) c FROM output WHERE project_id=? AND document_id=?",
@@ -369,10 +354,7 @@ async def create_project(
     total_outputs = 0
     try:
         for i, up in enumerate(delivery):
-            # The user-marked main document is the edition under review (role='delivery'); any
-            # others are kept as comparison editions (role='prior'). With no explicit pick
-            # (main_index<0, e.g. a single upload) every delivery doc stays 'delivery' and the
-            # reviewer falls back to the highest-edition auto-pick.
+            # The user-marked main document is the edition under review (role='delivery'); any others are kept as comparison editions (role='prior'). With no explicit pick (main_index<0, e.g. a single upload) every delivery doc stays 'delivery' and the reviewer falls back to the highest-edition auto-pick.
             role = "prior" if (main_index >= 0 and i != main_index) else "delivery"
             doc_id, dest = await _save(up, role)
             try:
@@ -382,8 +364,7 @@ async def create_project(
             for o in indexed:   # index all editions: prior outputs feed comparison checks
                 db.insert("output", project_id=pid, document_id=doc_id, **o)
                 total_outputs += 1
-        # Optional documents (TOC workbook + AI reference docs). Stored for reference;
-        # indexing is bookmark-driven, so the TOC workbook is not required.
+        # Optional documents (TOC workbook + AI reference docs). Stored for reference; indexing is bookmark-driven, so the TOC workbook is not required.
         for up, role in optional_uploads:
             if up is not None and up.filename:
                 await _save(up, role)
@@ -395,16 +376,13 @@ async def create_project(
     db.audit("system", "project.create", "project", pid, pid,
              f"{compound}/{study}/{name}; {total_outputs} outputs")
 
-    # Run the deterministic (non-AI) structural checks now, so blank pages / numbering
-    # gaps / missing outputs are visible on the TOC page before any AI review is triggered.
-    # Guarded so a check failure can never block project creation.
+    # Run the deterministic (non-AI) structural checks now, so blank pages / numbering gaps / missing outputs are visible on the TOC page before any AI review is triggered. Guarded so a check failure can never block project creation.
     try:
         n_structural = runner.run_structural_checks(pid)
     except Exception:
         logger.exception("structural checks failed for project %s", pid)
         n_structural = 0
-    # Report the main (reviewed) document's table count — comparison editions were
-    # indexed too (see loop above) but are not review targets, so they don't count.
+    # Report the main (reviewed) document's table count — comparison editions were indexed too (see loop above) but are not review targets, so they don't count.
     current, _ = runner._pick_current_prior(pid)
     main_outputs = db.one(
         "SELECT COUNT(*) c FROM output WHERE project_id=? AND document_id=?",
@@ -418,9 +396,7 @@ def get_project(pid: int):
     if not proj:
         raise HTTPException(404, "project not found")
     proj["documents"] = db.query("SELECT id, role, filename, n_pages, edition FROM document WHERE project_id=?", (pid,))
-    # cov_read / cov_total come from the stored extraction so the TOC can show how much of
-    # each output the AI actually read. Pulled with json_extract rather than shipping the
-    # whole extraction_json (which is up to ~150 KB per output).
+    # cov_read / cov_total come from the stored extraction so the TOC can show how much of each output the AI actually read. Pulled with json_extract rather than shipping the whole extraction_json (which is up to ~150 KB per output).
     proj["outputs"] = db.query(
         """SELECT o.id, o.document_id, o.seq, o.output_type, o.number, o.label, o.title,
                   o.page_start, o.page_end, o.status, d.filename AS doc_filename, d.edition,
@@ -436,9 +412,7 @@ def get_project(pid: int):
 def delete_project(pid: int):
     if not db.one("SELECT id FROM project WHERE id=?", (pid,)):
         raise HTTPException(404, "project not found")
-    # audit_log/review_log intentionally have no FK so deleted-target history can
-    # exist while a project is live. A project deletion is a privacy deletion,
-    # however, so remove those rows in the same transaction as the project.
+    # audit_log/review_log intentionally have no FK so deleted-target history can exist while a project is live. A project deletion is a privacy deletion, however, so remove those rows in the same transaction as the project.
     conn = db.get()
     try:
         conn.execute("DELETE FROM audit_log WHERE project_id=?", (pid,))
@@ -454,8 +428,7 @@ def delete_project(pid: int):
 
 @app.get("/api/projects/{pid}/export/project.zip")
 def export_project(pid: int):
-    """Download one project as a portable *.zip (rows + PDFs) to share
-    with a teammate, who imports it via POST /api/projects/import."""
+    """Download one project as a portable *.zip (rows + PDFs) to share with a teammate, who imports it via POST /api/projects/import."""
     proj = db.one("SELECT compound, study, name FROM project WHERE id=?", (pid,))
     if not proj:
         raise HTTPException(404, "project not found")
@@ -470,9 +443,7 @@ def export_project(pid: int):
 
 @app.post("/api/projects/import")
 async def import_project(file: UploadFile = File(...), mode: str = Form("ask")):
-    """Import a *.zip project bundle as a NEW project. mode='ask' (default) returns a
-    {conflict} flag when a same-compound/study/name project exists so the UI can
-    prompt replace-vs-add; the UI then re-POSTs with mode='replace' or 'new'."""
+    """Import a *.zip project bundle as a NEW project. mode='ask' (default) returns a {conflict} flag when a same-compound/study/name project exists so the UI can prompt replace-vs-add; the UI then re-POSTs with mode='replace' or 'new'."""
     data = await _read_upload_limited(file, MAX_BUNDLE_BYTES, "project bundle")
     try:
         res = project_io.import_bundle(data, UPLOADS, safe_filename, mode=mode)
@@ -599,9 +570,7 @@ def export_comments(pid: int):
 
 @app.post("/api/projects/{pid}/import-comments")
 async def import_comments(pid: int, file: UploadFile = File(...)):
-    """Re-import an edited comments sheet (ID | Table | Comment | Reply to | Resolved).
-    (ID, Table) rows replace matching comments; a new (ID, Table) with a known Table creates
-    one. The whole sheet is validated first — any error aborts with a 400 and writes nothing."""
+    """Re-import an edited comments sheet (ID | Table | Comment | Reply to | Resolved). (ID, Table) rows replace matching comments; a new (ID, Table) with a known Table creates one. The whole sheet is validated first — any error aborts with a 400 and writes nothing."""
     if not db.one("SELECT id FROM project WHERE id=?", (pid,)):
         raise HTTPException(404, "project not found")
     data = await _read_upload_limited(file, MAX_SHEET_BYTES, "comments workbook")
@@ -625,17 +594,13 @@ def ai_available():
 
 @app.get("/api/ai/models")
 def ai_models():
-    """Selectable models + effort levels for the AI Review toolbar. Models are
-    discovered live from the current user's API key (`ai_client.available_models`),
-    so the list reflects exactly what that key grants."""
+    """Selectable models + effort levels for the AI Review toolbar. Models are discovered live from the current user's API key (`ai_client.available_models`), so the list reflects exactly what that key grants."""
     return {"models": ai_client.available_models(), "efforts": ai_client.EFFORTS,
             "default_model": ai_client.default_model(),
             "default_effort": ai_client.run_config()["effort"]}
 
 
-# Rough per-output wall-clock (seconds) by model family, scaled by effort, for the
-# pre-run time estimate. Family-based so it works for any discovered id (dated
-# releases, future versions). Deliberately conservative; shown as a range.
+# Rough per-output wall-clock (seconds) by model family, scaled by effort, for the pre-run time estimate. Family-based so it works for any discovered id (dated releases, future versions). Deliberately conservative; shown as a range.
 _EFFORT_MULT = {"low": 1.0, "medium": 1.5, "high": 2.5, "xhigh": 3.5, "max": 5.0}
 
 
@@ -689,15 +654,13 @@ def ai_estimate(pid: int, model: str = "", effort: str = ""):
         return {"targets": n, "seconds": round(secs), "cached": warm,
                 "calibrated": True, "text": text}
 
-    # First-run fallback: modelled, conservative, wide range. With nothing to anchor on we
-    # bias high — an under-estimate ("said 20m, took 3h") is the far worse surprise.
+    # First-run fallback: modelled, conservative, wide range. With nothing to anchor on we bias high — an under-estimate ("said 20m, took 3h") is the far worse surprise.
     base = _model_secs(model)
     mult = _EFFORT_MULT.get(effort, 2.5)
     # Extraction: only the UNCACHED pages actually run, on the fast model.
     extract_calls = info.get("extract_calls", 0)
     extract_secs = extract_calls * _model_secs(ai_review._extract_model() or model)
-    # Judges always re-run (findings are cleared and re-derived every run): one per table,
-    # plus the chunked cross-output pass (~1 call per ~12 tables, hub repeated).
+    # Judges always re-run (findings are cleared and re-derived every run): one per table, plus the chunked cross-output pass (~1 call per ~12 tables, hub repeated).
     xout_calls = max(1, round(n / 12))
     judge_secs = (n + xout_calls) * base * mult
     par = max(1.0, ai_client.MAX_INFLIGHT * 0.5)   # rate limiting keeps real overlap low
@@ -736,10 +699,7 @@ def ai_progress(pid: int):
 
 
 def _finding_scope(check_id: str, output_id) -> str:
-    """Prefix-based scope for the UI. AIV-* (version judge) and XOUT-020 (missing vs
-    prior) compare against the prior edition; AIX-* (cross-output judge), XOUT-001
-    (numbering gap) and any finding without an owning output are cross-output; the
-    rest live within a single file."""
+    """Prefix-based scope for the UI. AIV-* (version judge) and XOUT-020 (missing vs prior) compare against the prior edition; AIX-* (cross-output judge), XOUT-001 (numbering gap) and any finding without an owning output are cross-output; the rest live within a single file."""
     cid = check_id or ""
     if cid.startswith("AIV-") or cid == "XOUT-020":
         return "cross-file"
@@ -848,8 +808,7 @@ def export_findings_xlsx(pid: int):
 
 @app.post("/api/projects/{pid}/import-findings")
 async def import_findings(pid: int, file: UploadFile = File(...), actor: str = "Reviewer"):
-    """Load findings from a structured .xlsx (the reverse of the export). Non-destructive:
-    imported findings are ADDED alongside existing ones (phase 'imported')."""
+    """Load findings from a structured .xlsx (the reverse of the export). Non-destructive: imported findings are ADDED alongside existing ones (phase 'imported')."""
     if not db.one("SELECT id FROM project WHERE id=?", (pid,)):
         raise HTTPException(404, "project not found")
     data = await _read_upload_limited(file, MAX_SHEET_BYTES, "findings workbook")
@@ -910,12 +869,7 @@ def chat_endpoint(scope: str = Form(...), question: str = Form(...),
 # Static SPA (mounted last so /api/* wins)
 # --------------------------------------------------------------------------- #
 
-# Serve the tutorial with a revalidation header so the browser never shows a
-# stale cached copy after it is updated. StaticFiles sets only last-modified/etag
-# (no Cache-Control), which lets browsers apply heuristic freshness and keep
-# showing the OLD Help page. "no-cache" = always revalidate (cheap 304 when
-# unchanged, fresh 200 right after any edit). Defined before the "/" mount so it
-# takes precedence.
+# Serve the tutorial with a revalidation header so the browser never shows a stale cached copy after it is updated. StaticFiles sets only last-modified/etag (no Cache-Control), which lets browsers apply heuristic freshness and keep showing the OLD Help page. "no-cache" = always revalidate (cheap 304 when unchanged, fresh 200 right after any edit). Defined before the "/" mount so it takes precedence.
 @app.get("/tutorial.html")
 def tutorial():
     return FileResponse(
@@ -926,10 +880,7 @@ def tutorial():
 
 
 class _NoCacheStatic(StaticFiles):
-    """Serve every SPA asset with 'Cache-Control: no-cache' so the browser always
-    revalidates (cheap 304 when unchanged, fresh 200 right after an edit) instead
-    of showing a stale app.js / styles.css / index.html from heuristic cache. This
-    extends the /tutorial.html fix above to the whole mount."""
+    """Serve every SPA asset with 'Cache-Control: no-cache' so the browser always revalidates (cheap 304 when unchanged, fresh 200 right after an edit) instead of showing a stale app.js / styles.css / index.html from heuristic cache. This extends the /tutorial.html fix above to the whole mount."""
 
     async def get_response(self, path, scope):
         resp = await super().get_response(path, scope)

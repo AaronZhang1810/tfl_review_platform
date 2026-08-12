@@ -1,12 +1,6 @@
 """Round-trip tests for project export / import (project_io) — LOCAL edition.
 
-Seeds a project with the awkward shapes that break a naive id-remap (a
-cross-output XOUT finding with output_id=None, a comment reply, an AI comment
-tied to a finding, an annotation, and an audit row whose target row was later
-deleted), then exports and re-imports it and checks that every foreign key and
-non-FK logical reference was remapped to the NEW project's ids — plus the
-hostile-bundle, missing-PDF, atomicity, ask/replace edge cases.
-"""
+Seeds a project with the awkward shapes that break a naive id-remap (a cross-output XOUT finding with output_id=None, a comment reply, an AI comment tied to a finding, an annotation, and an audit row whose target row was later deleted), then exports and re-imports it and checks that every foreign key and non-FK logical reference was remapped to the NEW project's ids — plus the hostile-bundle, missing-PDF, atomicity, ask/replace edge cases."""
 
 from __future__ import annotations
 
@@ -111,8 +105,7 @@ def _seed_project(uploads_dir: str) -> dict:
     db.audit("Alice", "status.set", "output", o1, pid, "Not Reviewed -> Approved")
     db.audit("AI", "finding.post", "finding", f1, pid, "AIW-2.1")
     db.audit("Alice", "comment.add", "comment", c1, pid, "Q: please check")
-    # A dangling audit target: audit a comment, then delete the comment. Its
-    # audit_log row (no FK) survives and must import with entity_id -> NULL.
+    # A dangling audit target: audit a comment, then delete the comment. Its audit_log row (no FK) survives and must import with entity_id -> NULL.
     tmp_c = db.insert("comment", project_id=pid, output_id=o1, title="tmp", body="tmp",
                       source="manual", author="Alice", parent_id=None, created_at=db.now_iso())
     db.audit("Alice", "comment.add", "comment", tmp_c, pid, "temp")
@@ -428,8 +421,7 @@ def test_bundle_rejects_duplicate_member_names(iso_db, safe_name):
 
 
 def test_bundle_rejects_duplicate_manifest_keys(iso_db, safe_name):
-    # Python's default json loader silently keeps the last duplicate key. A bundle
-    # manifest is a security boundary, so ambiguous JSON is rejected instead.
+    # Python's default json loader silently keeps the last duplicate key. A bundle manifest is a security boundary, so ambiguous JSON is rejected instead.
     raw = (
         '{"format":"tlf_project_bundle","format":"tlf_project_bundle",'
         '"version":1,"tables":{"project":[]}}'

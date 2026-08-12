@@ -145,8 +145,7 @@ TEXT_SUFFIXES = {
 }
 TEXT_NAMES = {".dockerignore", ".gitattributes", ".gitignore", "Dockerfile", "LICENSE"}
 
-# Binary files are rejected unless they have been manually reviewed and pinned here.
-# This makes replacing a synthetic screenshot with an unreviewed image fail closed.
+# Binary files are rejected unless they have been manually reviewed and pinned here. This makes replacing a synthetic screenshot with an unreviewed image fail closed.
 APPROVED_BINARY_SHA256 = {
     "docs/images/01_dashboard.png": "d34e9cb277d7c92c5f4bfee7688e94c1c233de4deb41f25427a8ede821f85139",
     "docs/images/02_table_mismatch.png": "8b5d7cbd332834a663a0850fc89cb313ed4187bfd0d7b0804c4d82043e3045ba",
@@ -254,10 +253,7 @@ def collect_candidates(
 ) -> tuple[list[Candidate], list[Finding], int]:
     """Collect a conservative public tree and add the fictional root config.
 
-    A live-tree audit tolerates known local-only paths because they are intentionally
-    excluded from an archive. An index audit is strict: anything present in Git's
-    candidate tree must itself be publishable, so excluded paths become findings.
-    """
+A live-tree audit tolerates known local-only paths because they are intentionally excluded from an archive. An index audit is strict: anything present in Git's candidate tree must itself be publishable, so excluded paths become findings."""
     candidates: list[Candidate] = []
     findings: list[Finding] = []
     excluded = 0
@@ -308,8 +304,7 @@ def collect_candidates(
     if not synthetic_config.is_file():
         findings.append(Finding("configs/study_config.synthetic.json", 0, "synthetic config is missing", ""))
     else:
-        # The private root config is never included. The public artifact receives an exact
-        # copy of the reviewed fictional config at the location the application expects.
+        # The private root config is never included. The public artifact receives an exact copy of the reviewed fictional config at the location the application expects.
         candidates.append(
             Candidate(synthetic_config, "study_config.json", synthetic_config.read_bytes())
         )

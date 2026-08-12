@@ -2,16 +2,11 @@
 
 ## Status
 
-This document describes engineering verification for a fictional portfolio
-demonstration. It is not a computer-system-validation package, a GxP determination,
-or evidence that the application is fit for a regulated use.
+This document describes engineering verification for a fictional portfolio demonstration. It is not a computer-system-validation package, a GxP determination, or evidence that the application is fit for a regulated use.
 
 ## Intended demonstration
 
-The application assists a reviewer by indexing TLF PDFs, running deterministic
-structural checks, extracting table facts, generating AI review candidates, and
-recording human actions. It does not generate a regulatory conclusion and must not
-replace source-data verification or qualified review.
+The application assists a reviewer by indexing TLF PDFs, running deterministic structural checks, extracting table facts, generating AI review candidates, and recording human actions. It does not generate a regulatory conclusion and must not replace source-data verification or qualified review.
 
 ## What is deterministic and what is not
 
@@ -24,14 +19,11 @@ replace source-data verification or qualified review.
 | Numeric verification | Python recomputes arithmetic cited by a candidate | Unit and property-oriented cases |
 | Human workflow | Post, reject, reopen, comment, import/export | API and round-trip tests |
 
-The AI performs both extraction and parts of the judgment. Deterministic verification
-can reject an arithmetically unsupported candidate, but it cannot prove that the
-model read every relevant row or applied a qualitative rule correctly.
+The AI performs both extraction and parts of the judgment. Deterministic verification can reject an arithmetically unsupported candidate, but it cannot prove that the model read every relevant row or applied a qualitative rule correctly.
 
 ## Simulated evaluation set
 
-`run_demo.py` and `evaluation/` generate fictional documents with seeded, known
-conditions. The corpus should include:
+`run_demo.py` and `evaluation/` generate fictional documents with seeded, known conditions. The corpus should include:
 
 - clean tables;
 - subgroup and row-total mismatches;
@@ -42,10 +34,7 @@ conditions. The corpus should include:
 - renamed or moved fictional terms;
 - partial extraction, malformed model output, and unavailable-model cases.
 
-Each labeled issue records its document, output, page, check family, severity,
-expected evidence, and generation seed. A case may be negative for one check and
-positive for another. Train or prompt-development examples must be separated from
-the final evaluation partition.
+Each labeled issue records its document, output, page, check family, severity, expected evidence, and generation seed. A case may be negative for one check and positive for another. Train or prompt-development examples must be separated from the final evaluation partition.
 
 ## Metrics
 
@@ -60,8 +49,7 @@ Report at least:
 - latency and model token usage, clearly labeled as environment-specific;
 - repeated-run disagreement for non-deterministic model paths.
 
-Use exact binomial confidence intervals or a clearly documented bootstrap for rates.
-Do not present results from the simulated corpus as clinical performance.
+Use exact binomial confidence intervals or a clearly documented bootstrap for rates. Do not present results from the simulated corpus as clinical performance.
 
 ## Test and CI gates
 
@@ -74,14 +62,9 @@ The checked-in CI workflow performs:
 5. the pytest suite; and
 6. a dependency vulnerability audit.
 
-A release candidate additionally requires a clean fresh-environment run, successful
-Docker health check, reproducible simulated-evaluation output, and manual inspection
-of the generated documents.
+A release candidate additionally requires a clean fresh-environment run, successful Docker health check, reproducible simulated-evaluation output, and manual inspection of the generated documents.
 
-For each checked benchmark run, `benchmark_config.json` records the source-tree
-SHA-256 and exact development-lock SHA-256, while `artifact_hashes.txt` pins the
-deterministic artifacts. Machine-dependent timing stays in
-`runtime_environment.json` and is not part of the reproducibility hash contract.
+For each checked benchmark run, `benchmark_config.json` records the source-tree SHA-256 and exact development-lock SHA-256, while `artifact_hashes.txt` pins the deterministic artifacts. Machine-dependent timing stays in `runtime_environment.json` and is not part of the reproducibility hash contract.
 
 ## Known limitations
 
@@ -95,7 +78,4 @@ deterministic artifacts. Machine-dependent timing stays in
 
 ## Change control for the demonstration
 
-Changes to prompts, schemas, model selection, check configuration, extraction logic,
-or evaluation generation require a new source digest and a full simulated regression
-run. Keep generated metrics with the seed, dependency inventory, model identifier,
-prompt/configuration hash, and code revision used to produce them.
+Changes to prompts, schemas, model selection, check configuration, extraction logic, or evaluation generation require a new source digest and a full simulated regression run. Keep generated metrics with the seed, dependency inventory, model identifier, prompt/configuration hash, and code revision used to produce them.

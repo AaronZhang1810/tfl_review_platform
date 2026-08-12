@@ -1,10 +1,6 @@
 """Unit tests for the deterministic STRUCTURAL checks + finding signature/dedupe.
 
-After the AI-review inversion, checks.py produces only the three structural findings
-(blank pages 1.1 / FMT-010, missing-vs-prior 1.2 / XOUT-020, numbering gap 1.3 /
-XOUT-001). All numeric / version / pooled judging moved to the AI judges in
-ai_review.py and is covered by test_ai_review.py.
-"""
+After the AI-review inversion, checks.py produces only the three structural findings (blank pages 1.1 / FMT-010, missing-vs-prior 1.2 / XOUT-020, numbering gap 1.3 / XOUT-001). All numeric / version / pooled judging moved to the AI judges in ai_review.py and is covered by test_ai_review.py."""
 
 import checks
 
@@ -77,8 +73,7 @@ def test_finding_signature_differs_on_output_and_message():
 # --- dedupe ---------------------------------------------------------------- #
 
 def test_dedupe_collapses_same_family_same_cell():
-    # Two judge findings of the SAME family on the SAME cell (page/numbers/message)
-    # collapse to one; a distinct cell survives.
+    # Two judge findings of the SAME family on the SAME cell (page/numbers/message) collapse to one; a distinct cell survives.
     dup = [
         {"check_id": "AIW-2.1", "page": 1, "numbers": [1, 2], "message": "Row X: 1 != 2"},
         {"check_id": "AIW-2.3", "page": 1, "numbers": [1, 2], "message": "Row X: 1 != 2"},

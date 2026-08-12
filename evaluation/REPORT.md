@@ -61,7 +61,7 @@ Differences below are hybrid minus comparator. Lower is preferable for false-pos
 
 ## Reproducibility
 
-- Executable source SHA-256: `f39170efd967d28f69d5a135ab86c726d91f94dae6da6777fc112914b680f7e3`
+- Executable source SHA-256: `2285621a8d767f4df264143ca2168821b34855d2dbb5bcd33a628c94f37f98ea`
 - Dependency-lock SHA-256: `4dff8cbfaad8fd4ceb05ea401768e8cfb14656dc71cd4b112b1a2bc509d55254`
 - Dependency lock: `requirements-lock.txt`
 - `artifact_hashes.txt` binds every deterministic checked artifact; machine-dependent runtime metadata is intentionally excluded.

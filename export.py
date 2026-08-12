@@ -14,8 +14,7 @@ import db
 import ai_review
 import checks
 
-# One two-tier scale. _TIER maps any stored value — current (high/low) or legacy
-# (critical/major/minor) — to a High-first sort rank so old exports still order right.
+# One two-tier scale. _TIER maps any stored value — current (high/low) or legacy (critical/major/minor) — to a High-first sort rank so old exports still order right.
 _TIER = {"high": 0, "critical": 0, "major": 0, "low": 1, "minor": 1, "medium": 1}
 _RISK_FILL = {"High": "F8D7DA", "Low": "E8EBEF"}
 _FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r", "\n")
@@ -24,11 +23,7 @@ _FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r", "\n")
 def _excel_value(value):
     """Keep untrusted text from becoming a formula in an exported workbook.
 
-    Excel-compatible applications interpret several leading characters as formulas
-    or commands. Prefixing an apostrophe keeps the cell textual (the apostrophe is
-    normally not displayed by spreadsheet applications). Numeric values are retained
-    as numbers so sorting and summaries continue to work.
-    """
+Excel-compatible applications interpret several leading characters as formulas or commands. Prefixing an apostrophe keeps the cell textual (the apostrophe is normally not displayed by spreadsheet applications). Numeric values are retained as numbers so sorting and summaries continue to work."""
     if isinstance(value, str) and value.startswith(_FORMULA_PREFIXES):
         return "'" + value
     return value
@@ -42,9 +37,7 @@ _STATUS_FILL = {"posted": "D9EAD3", "rejected": "EAECEE", "resolved": "D9EAD3", 
 
 
 def comments_xlsx(project_id: int) -> bytes:
-    # ID | Table | Comment | Reply to | Resolved. `num` is the per-Table comment ID (see
-    # db.py); (ID, Table) is the round-trip key. "Reply to" carries the parent comment's
-    # own num (empty for a top-level comment); resolved reads back as Yes/No.
+    # ID | Table | Comment | Reply to | Resolved. `num` is the per-Table comment ID (see db.py); (ID, Table) is the round-trip key. "Reply to" carries the parent comment's own num (empty for a top-level comment); resolved reads back as Yes/No.
     rows = db.query(
         """SELECT c.num, o.label AS tbl, c.body, c.resolved, p.num AS reply_to
            FROM comment c LEFT JOIN output o ON o.id = c.output_id
@@ -84,8 +77,7 @@ def comments_xlsx(project_id: int) -> bytes:
 # --------------------------------------------------------------------------- #
 
 def _check_descriptions() -> dict:
-    """{check_id -> human description} built from the checklist config (title + guidance),
-    plus the structural/helper findings that aren't checklist items."""
+    """{check_id -> human description} built from the checklist config (title + guidance), plus the structural/helper findings that aren't checklist items."""
     try:
         idx = ai_review.checklist_index(ai_review.load_config())
         out = {}
@@ -99,9 +91,7 @@ def _check_descriptions() -> dict:
 
 
 def _scope(check_id: str, output_id) -> str:
-    """Prefix-based scope. AIV-* / XOUT-020 compare against the prior edition;
-    AIX-* / XOUT-001 / findings without an owning output are cross-output; the rest
-    are within a single file."""
+    """Prefix-based scope. AIV-* / XOUT-020 compare against the prior edition; AIX-* / XOUT-001 / findings without an owning output are cross-output; the rest are within a single file."""
     cid = check_id or ""
     if cid.startswith("AIV-") or cid == "XOUT-020":
         return "Cross-file (vs prior edition)"
@@ -334,10 +324,7 @@ def _add_annotation(writer, page_number, a):
 
 
 # --------------------------------------------------------------------------- #
-# Import: load findings from a structured Excel file (the reverse of the export
-# above). Lets a reviewer author findings offline, or export → edit → re-import.
-# Columns are matched by HEADER NAME (case-insensitive), so the export's own sheet
-# round-trips and a hand-made sheet works as long as it has a "Finding" column.
+# Import: load findings from a structured Excel file (the reverse of the export above). Lets a reviewer author findings offline, or export → edit → re-import. Columns are matched by HEADER NAME (case-insensitive), so the export's own sheet round-trips and a hand-made sheet works as long as it has a "Finding" column.
 # --------------------------------------------------------------------------- #
 
 import re as _re
@@ -424,8 +411,7 @@ def _load_import_rows(data: bytes, preferred_sheet: str):
     finally:
         wb.close()
 
-# header alias  ->  finding field. Matched on a normalised header (lowercased,
-# non-alphanumerics stripped), so "Output Label", "output_label", "OUTPUT" all hit "output".
+# header alias  ->  finding field. Matched on a normalised header (lowercased, non-alphanumerics stripped), so "Output Label", "output_label", "OUTPUT" all hit "output".
 _IMPORT_HEADERS = {
     "output": "output", "outputlabel": "output", "table": "output",
     "check": "check_id", "checkid": "check_id",
@@ -452,17 +438,13 @@ def _import_risk(v) -> str:
 
 
 def import_findings_xlsx(project_id: int, data: bytes, actor: str = "import") -> dict:
-    """Insert findings from an .xlsx into `project_id`, ADDING to whatever is there
-    (non-destructive). Returns a summary dict. Raises ValueError on an unreadable file
-    or a sheet with no recognisable 'Finding' column."""
+    """Insert findings from an .xlsx into `project_id`, ADDING to whatever is there (non-destructive). Returns a summary dict. Raises ValueError on an unreadable file or a sheet with no recognisable 'Finding' column."""
     # Prefer the export's own sheet; else the first sheet.
     rows, sheet_title = _load_import_rows(data, "AI Findings")
     if not rows:
         raise ValueError("The spreadsheet is empty.")
 
-    # Find the header row: the first row (within the first few) that maps a "message"
-    # column — the export puts a title in row 1 and headers in row 2, but a hand-made
-    # sheet may start at row 1, so scan rather than assume.
+    # Find the header row: the first row (within the first few) that maps a "message" column — the export puts a title in row 1 and headers in row 2, but a hand-made sheet may start at row 1, so scan rather than assume.
     header_idx = col_map = None
     for i, row in enumerate(rows[:6]):
         m = {}
@@ -493,9 +475,7 @@ def import_findings_xlsx(project_id: int, data: bytes, actor: str = "import") ->
         msg = cell(row, "message")
         if msg is None or str(msg).strip() == "":
             continue
-        # Deterministic structural checks (FMT-*/XOUT-*) are generated automatically at
-        # project creation. A round-tripped export carries them too, so skip them here —
-        # the app's own copies are authoritative and re-importing must not duplicate them.
+        # Deterministic structural checks (FMT-*/XOUT-*) are generated automatically at project creation. A round-tripped export carries them too, so skip them here — the app's own copies are authoritative and re-importing must not duplicate them.
         if checks.is_deterministic_check(cell(row, "check_id")):
             n_deterministic += 1
             continue
@@ -525,11 +505,7 @@ def import_findings_xlsx(project_id: int, data: bytes, actor: str = "import") ->
                   affected="[]" if out else __import__("json").dumps([str(lbl)] if lbl else []))
         n += 1
 
-    # Importing an AI review counts as review completion: every output still 'Not Reviewed'
-    # that carries no finding of any kind (neither an imported AI finding nor a deterministic
-    # structural one) is a clean table and flips to Auto-approved — mirroring the auto-approve
-    # that follows a full in-app AI run. Only 'Not Reviewed' is overwritten, so a human-set
-    # status (or an already-approved table) is never lost.
+    # Importing an AI review counts as review completion: every output still 'Not Reviewed' that carries no finding of any kind (neither an imported AI finding nor a deterministic structural one) is a clean table and flips to Auto-approved — mirroring the auto-approve that follows a full in-app AI run. Only 'Not Reviewed' is overwritten, so a human-set status (or an already-approved table) is never lost.
     clean = db.query(
         "SELECT id FROM output WHERE project_id=? AND status='Not Reviewed' "
         "AND id NOT IN (SELECT output_id FROM finding "
@@ -560,24 +536,16 @@ _COMMENT_IMPORT_HEADERS = {
 
 
 def _import_resolved(v) -> int:
-    """A Resolved cell -> 0/1. Only '', 'yes', 'no' are valid (empty == no); the caller
-    validates the spelling, so here 'yes' is the only truthy value."""
+    """A Resolved cell -> 0/1. Only '', 'yes', 'no' are valid (empty == no); the caller validates the spelling, so here 'yes' is the only truthy value."""
     return 1 if str(v or "").strip().lower() == "yes" else 0
 
 
 def import_comments_xlsx(project_id: int, data: bytes, actor: str = "import") -> dict:
     """Re-import an edited comments sheet (the reverse of `comments_xlsx`).
 
-    Schema: ID | Table | Comment | Reply to | Resolved. (ID, Table) is the identity — a row
-    whose (ID, Table) already exists REPLACES that comment (body / reply / resolved); a new
-    (ID, Table) with an existing Table CREATES one. The whole sheet is validated up front and
-    applied atomically: on ANY error nothing is written and a ValueError lists every problem.
+Schema: ID | Table | Comment | Reply to | Resolved. (ID, Table) is the identity — a row whose (ID, Table) already exists REPLACES that comment (body / reply / resolved); a new (ID, Table) with an existing Table CREATES one. The whole sheet is validated up front and applied atomically: on ANY error nothing is written and a ValueError lists every problem.
 
-    Validation (see rules below): ID/Table/Comment non-empty; ID a positive integer; Table
-    must exist; Resolved in {empty, yes, no} (case-insensitive); Reply to empty or a positive
-    integer pointing to another comment in the SAME Table (existing or elsewhere in the sheet)
-    and never itself; (ID, Table) unique within the sheet.
-    """
+Validation (see rules below): ID/Table/Comment non-empty; ID a positive integer; Table must exist; Resolved in {empty, yes, no} (case-insensitive); Reply to empty or a positive integer pointing to another comment in the SAME Table (existing or elsewhere in the sheet) and never itself; (ID, Table) unique within the sheet."""
     rows, sheet_title = _load_import_rows(data, "Review Comments")
     if not rows:
         raise ValueError("The spreadsheet is empty.")
@@ -629,8 +597,7 @@ def import_comments_xlsx(project_id: int, data: bytes, actor: str = "import") ->
         raw_reply, raw_res = cell(row, "reply_to"), (cell(row, "resolved") if has_resolved else None)
 
         lbl = str(raw_tbl).strip() if raw_tbl is not None else ""
-        # Guard against `raw_id or ""` — a literal 0 is falsy but NOT empty; it must fall
-        # through to the positive-integer check below, not be reported as a blank cell.
+        # Guard against `raw_id or ""` — a literal 0 is falsy but NOT empty; it must fall through to the positive-integer check below, not be reported as a blank cell.
         id_str = str(raw_id).strip() if raw_id is not None else ""
         if not id_str or not lbl or not body:
             errors.append(f"Row {rownum}: ID, Table and Comment must all be filled in.")

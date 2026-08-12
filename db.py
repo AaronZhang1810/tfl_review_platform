@@ -1,9 +1,6 @@
 """SQLite persistence for the TLF Review Platform.
 
-Single-user: no auth / roles / per-user isolation. One SQLite file holds projects,
-their outputs (one per TLF table), reviewer comments, AI findings, annotations, and
-AI-run bookkeeping.
-"""
+Single-user: no auth / roles / per-user isolation. One SQLite file holds projects, their outputs (one per TLF table), reviewer comments, AI findings, annotations, and AI-run bookkeeping."""
 
 from __future__ import annotations
 
@@ -27,15 +24,9 @@ def now_iso() -> str:
 
 
 def get() -> sqlite3.Connection:
-    """One connection per thread (FastAPI runs handlers across a threadpool, and an AI
-    run fans its per-table work out over a thread pool of its own).
+    """One connection per thread (FastAPI runs handlers across a threadpool, and an AI run fans its per-table work out over a thread pool of its own).
 
-    WAL + busy_timeout matter for that second case: several extraction workers finish at
-    once and each writes its own extraction_json. Under the default rollback journal a
-    writer blocks readers and a 5 s timeout is easy to exceed, which surfaces as
-    "database is locked". WAL lets one writer proceed alongside readers, and the timeout
-    makes a contended write wait its turn instead of failing.
-    """
+WAL + busy_timeout matter for that second case: several extraction workers finish at once and each writes its own extraction_json. Under the default rollback journal a writer blocks readers and a 5 s timeout is easy to exceed, which surfaces as "database is locked". WAL lets one writer proceed alongside readers, and the timeout makes a contended write wait its turn instead of failing."""
     conn = getattr(_local, "conn", None)
     if conn is None:
         os.makedirs(DATA_DIR, exist_ok=True)
@@ -156,46 +147,29 @@ def init() -> None:
     for stmt in (
         "ALTER TABLE comment ADD COLUMN author TEXT",
         "ALTER TABLE comment ADD COLUMN parent_id INTEGER",
-        # Per-Table sequential comment number (1,2,3,…) — the ID a reviewer sees and the
-        # (Table, num) key that comment import/export round-trips on. Backfilled below.
+        # Per-Table sequential comment number (1,2,3,…) — the ID a reviewer sees and the (Table, num) key that comment import/export round-trips on. Backfilled below.
         "ALTER TABLE comment ADD COLUMN num INTEGER",
         "ALTER TABLE finding ADD COLUMN printed_page INTEGER",
         "ALTER TABLE finding ADD COLUMN pages_total INTEGER",
         "ALTER TABLE finding ADD COLUMN section TEXT",
         "ALTER TABLE finding ADD COLUMN row_kind TEXT",
         "ALTER TABLE finding ADD COLUMN risk TEXT",
-        # Byte hash of the source PDF when this output's extraction was stored. If the
-        # file still hashes the same, the page text cannot have changed, so a run can
-        # reuse the extraction WITHOUT re-reading the PDF (pdfplumber is ~0.6 s/page —
-        # ~18 min per run on a two-edition delivery that has not changed at all).
+        # Byte hash of the source PDF when this output's extraction was stored. If the file still hashes the same, the page text cannot have changed, so a run can reuse the extraction WITHOUT re-reading the PDF (pdfplumber is ~0.6 s/page — ~18 min per run on a two-edition delivery that has not changed at all).
         "ALTER TABLE output ADD COLUMN src_hash TEXT",
-        # Fingerprint of what this output's WITHIN-TABLE findings depend on (its
-        # extraction, the prior edition's, the model, effort and checklist). If it still
-        # matches, the findings are current, so a re-run — or a run resumed after a crash
-        # — skips re-judging this table and keeps them. This is what makes "Run AI review"
-        # continuable: completed tables are durable and are not redone.
+        # Fingerprint of what this output's WITHIN-TABLE findings depend on (its extraction, the prior edition's, the model, effort and checklist). If it still matches, the findings are current, so a re-run — or a run resumed after a crash — skips re-judging this table and keeps them. This is what makes "Run AI review" continuable: completed tables are durable and are not redone.
         "ALTER TABLE output ADD COLUMN judge_key TEXT",
-        # Which phase produced a finding: 'within' (per-table judge), 'cross'
-        # (cross-output), 'structural' (deterministic) or 'imported' (from Excel). Lets a
-        # run replace exactly one phase's findings without disturbing the others — e.g.
-        # re-judge one table, or re-import, without wiping cross-output or AI findings.
+        # Which phase produced a finding: 'within' (per-table judge), 'cross' (cross-output), 'structural' (deterministic) or 'imported' (from Excel). Lets a run replace exactly one phase's findings without disturbing the others — e.g. re-judge one table, or re-import, without wiping cross-output or AI findings.
         "ALTER TABLE finding ADD COLUMN phase TEXT",
     ):
         try:
             conn.execute(stmt)
         except Exception:
             pass
-    # Review status was split into human ('Manually approved') vs AI ('Auto-approved'). Legacy
-    # rows only ever stored 'Approved'; reclassify them the way a fresh run now would — a table
-    # with no finding against it was a clean AI pass → 'Auto-approved'; one that still carries a
-    # finding was a human sign-off despite it → 'Manually approved'. Order matters (clear the
-    # clean rows first). Idempotent: a no-op once no 'Approved' rows remain.
+    # Review status was split into human ('Manually approved') vs AI ('Auto-approved'). Legacy rows only ever stored 'Approved'; reclassify them the way a fresh run now would — a table with no finding against it was a clean AI pass → 'Auto-approved'; one that still carries a finding was a human sign-off despite it → 'Manually approved'. Order matters (clear the clean rows first). Idempotent: a no-op once no 'Approved' rows remain.
     conn.execute("UPDATE output SET status='Auto-approved' WHERE status='Approved' "
                  "AND id NOT IN (SELECT output_id FROM finding WHERE output_id IS NOT NULL)")
     conn.execute("UPDATE output SET status='Manually approved' WHERE status='Approved'")
-    # Backfill `num` for any comment that predates the column: number each output's comments
-    # in creation order so every existing comment gets a stable per-Table ID. Idempotent —
-    # once every row is numbered the scan returns nothing.
+    # Backfill `num` for any comment that predates the column: number each output's comments in creation order so every existing comment gets a stable per-Table ID. Idempotent — once every row is numbered the scan returns nothing.
     unnumbered = conn.execute(
         "SELECT id, output_id FROM comment WHERE num IS NULL ORDER BY output_id, created_at, id"
     ).fetchall()
@@ -249,14 +223,12 @@ def audit(actor: str, action: str, entity: str, entity_id, project_id=None, deta
 # Human-review learning log (capture only; rule derivation is a FUTURE step)
 # --------------------------------------------------------------------------- #
 
-# check_id -> checklist item id for the structural checks and the missing-N note.
-# AI-judge findings carry their prefix (AIW-/AIX-/AIV-) + item id, stripped below.
+# check_id -> checklist item id for the structural checks and the missing-N note. AI-judge findings carry their prefix (AIW-/AIX-/AIV-) + item id, stripped below.
 _CHECK_TO_ITEM = {"FMT-010": "1.1", "XOUT-020": "1.2", "XOUT-001": "1.3", "FMT-002": "2"}
 
 
 def checklist_item_for(check_id: str) -> str:
-    """Map a finding's check_id back to its checklist item id (e.g. 'AIW-2.1' -> '2.1',
-    'FMT-010' -> '1.1'). Returns '' when there is no mapping."""
+    """Map a finding's check_id back to its checklist item id (e.g. 'AIW-2.1' -> '2.1', 'FMT-010' -> '1.1'). Returns '' when there is no mapping."""
     if not check_id:
         return ""
     if check_id in _CHECK_TO_ITEM:
@@ -268,8 +240,7 @@ def checklist_item_for(check_id: str) -> str:
 
 
 def log_finding_action(reviewer: str, action: str, finding_row: dict | None, comment_text: str = "") -> None:
-    """Record a human decision on a FINDING (post/reject/reopen) with its full context.
-    `finding_row` is the finding as stored (numbers/subjects are already JSON strings)."""
+    """Record a human decision on a FINDING (post/reject/reopen) with its full context. `finding_row` is the finding as stored (numbers/subjects are already JSON strings)."""
     if not finding_row:
         return
     out_label = ""
@@ -294,8 +265,7 @@ def log_finding_action(reviewer: str, action: str, finding_row: dict | None, com
 
 def log_comment_action(reviewer: str, action: str, project_id, output_label: str = "",
                        comment_text: str = "") -> None:
-    """Record a human COMMENT action (comment_add / comment_resolve) not tied to a
-    specific AI finding."""
+    """Record a human COMMENT action (comment_add / comment_resolve) not tied to a specific AI finding."""
     insert("review_log", ts=now_iso(), reviewer=reviewer or "system", action=action,
            project_id=project_id, output_label=output_label or "",
            check_id="", checklist_item="", risk="", message="",
@@ -304,8 +274,7 @@ def log_comment_action(reviewer: str, action: str, project_id, output_label: str
 
 
 def recover_stale_runs() -> int:
-    """Mark AI runs that were left unfinished (e.g. by a server restart/crash) as
-    interrupted. Returns how many were reconciled."""
+    """Mark AI runs that were left unfinished (e.g. by a server restart/crash) as interrupted. Returns how many were reconciled."""
     conn = get()
     cur = conn.execute(
         "UPDATE ai_run SET finished_at=?, summary_json=? WHERE finished_at IS NULL",

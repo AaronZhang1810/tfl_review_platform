@@ -1,5 +1,4 @@
-# Local study configuration. The checked-in public substitute is
-# configs/study_config.synthetic.json; never commit the working configuration.
+# Local study configuration. The checked-in public substitute is configs/study_config.synthetic.json; never commit the working configuration.
 /study_config.json
 
 # Clinical/project material and mutable application state.

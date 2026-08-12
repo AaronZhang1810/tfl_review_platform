@@ -1,8 +1,6 @@
 """API smoke tests with an isolated temp database (no real app.db touched).
 
-Covers project create/list/delete, the path-traversal defense end-to-end, and
-crash-recovery of interrupted AI runs.
-"""
+Covers project create/list/delete, the path-traversal defense end-to-end, and crash-recovery of interrupted AI runs."""
 
 import io
 import os
@@ -36,8 +34,7 @@ def _blank_pdf(pages: int = 1) -> bytes:
 
 
 def _numbering_gap_pdf() -> bytes:
-    # Two bookmarked outputs, "Table 1" and "Table 3" — the missing Table 2 is a
-    # deterministic numbering gap (XOUT-001) the indexer + structural checks must surface.
+    # Two bookmarked outputs, "Table 1" and "Table 3" — the missing Table 2 is a deterministic numbering gap (XOUT-001) the indexer + structural checks must surface.
     w = PdfWriter()
     w.add_blank_page(width=200, height=200)
     w.add_blank_page(width=200, height=200)

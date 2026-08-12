@@ -162,8 +162,7 @@ def run(output_dir: Path, *, n_projects: int = 50, positives_per_family: int = 1
                      positives_per_family=positives_per_family)
     generation_seconds = time.perf_counter() - t0
 
-    # Machine-dependent measurement of the actual local rules baseline. It lives
-    # only in runtime_environment.json and never contaminates deterministic hashes.
+    # Machine-dependent measurement of the actual local rules baseline. It lives only in runtime_environment.json and never contaminates deterministic hashes.
     t0 = time.perf_counter()
     for case in cases:
         structural_rules(case, seed)

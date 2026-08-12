@@ -40,9 +40,7 @@ def test_dynamic_statuses_and_comment_numbers_use_safe_rendering_helpers():
 
 
 def test_persisted_import_fields_are_encoded_before_html_rendering():
-    # These values can originate in a shared project bundle or edited workbook.
-    # Keep the assertions close to the dangerous template sinks so a later UI
-    # refactor cannot accidentally remove the output-encoding boundary.
+    # These values can originate in a shared project bundle or edited workbook. Keep the assertions close to the dangerous template sinks so a later UI refactor cannot accidentally remove the output-encoding boundary.
     for safe_expression in (
         "${esc(p.name)}",
         "${esc(o.status)}",

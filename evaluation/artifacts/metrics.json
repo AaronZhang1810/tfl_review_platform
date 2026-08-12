@@ -107,11 +107,11 @@
       },
       "macro_f1": {
         "ci95": {
-          "high": 0.11851006130795116,
+          "high": 0.11851006130795128,
           "iterations": 2000,
-          "low": 0.05956405119475673
+          "low": 0.05956405119475663
         },
-        "estimate": 0.08788559296703058
+        "estimate": 0.08788559296703047
       },
       "numeric_cell_exact_accuracy": {
         "ci95": {
@@ -205,7 +205,7 @@
       },
       "macro_f1": {
         "ci95": {
-          "high": 0.6910182662117914,
+          "high": 0.6910182662117916,
           "iterations": 2000,
           "low": 0.5864908799925347
         },
@@ -285,7 +285,7 @@
           "low": 0.13714285714285715
         },
         "macro_f1": {
-          "high": 0.8674888544470855,
+          "high": 0.8674888544470857,
           "iterations": 2000,
           "low": 0.7629614682278288
         },
@@ -509,7 +509,7 @@
         "median_serial_seconds_per_project": 9.119044,
         "note": "Deterministic latency proxy, not measured model latency.",
         "p95_serial_seconds_per_project": 9.6182497,
-        "total_serial_seconds": 457.893849
+        "total_serial_seconds": 457.89384900000016
       },
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",
@@ -776,7 +776,7 @@
       },
       "high_risk_recall": 0.775,
       "issue_table_miss_rate": 0.24705882352941178,
-      "macro_f1": 0.737824009759509,
+      "macro_f1": 0.7378240097595091,
       "numeric_cell_exact_accuracy": 0.970508545227178,
       "precision": 0.7544910179640718,
       "recall": 0.7411764705882353,
@@ -784,7 +784,7 @@
         "median_serial_seconds_per_project": 9.119044,
         "note": "Deterministic latency proxy, not measured model latency.",
         "p95_serial_seconds_per_project": 9.6182497,
-        "total_serial_seconds": 457.893849
+        "total_serial_seconds": 457.89384900000016
       },
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",

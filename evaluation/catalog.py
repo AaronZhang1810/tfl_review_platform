@@ -24,8 +24,7 @@ class Family:
     detector_group: str
 
 
-# Exactly 17 executable finding families. Cross-document checklist item 9 is
-# intentionally excluded because the production code gates it out.
+# Exactly 17 executable finding families. Cross-document checklist item 9 is intentionally excluded because the production code gates it out.
 FAMILIES: tuple[Family, ...] = (
     Family("FMT-010", "Blank or empty page", "Low", "structural", "blank", "structural"),
     Family("XOUT-020", "Output missing versus prior edition", "Low", "structural", "missing_current", "structural"),
