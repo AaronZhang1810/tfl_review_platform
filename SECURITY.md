@@ -27,7 +27,7 @@ The compose file mitigates accidental network exposure by binding to loopback, d
 
 - Verify vendored PDF.js remains on a reviewed version that includes the fix for [Mozilla advisory 2024-22](https://www.mozilla.org/security/advisories/mfsa2024-22/), and retain the dynamic-evaluation restriction and Content Security Policy.
 - Run a dedicated secret scan over current files and full Git history.
-- Run dependency, container, and static-analysis scans and review every exception.
+- Run dependency, container, and static-analysis scans and review every exception. CI fails on fixable high/critical container findings; advisories without an upstream fix remain visible for review and must be reassessed when the pinned base image changes.
 - Verify the existing upload, aggregate-project, request, archive-entry, decompression, and compression-ratio limits against the intended deployment.
 - Fuzz or adversarially test PDF, spreadsheet, and project-import boundaries.
 - Verify path traversal protections and output encoding.

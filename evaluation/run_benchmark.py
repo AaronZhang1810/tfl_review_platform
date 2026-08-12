@@ -53,6 +53,19 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _canonicalize_floats(value: Any) -> Any:
+    """Remove insignificant platform-level float differences from artifacts."""
+
+    if isinstance(value, float):
+        rounded = round(value, 12)
+        return 0.0 if rounded == 0 else rounded
+    if isinstance(value, dict):
+        return {key: _canonicalize_floats(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_canonicalize_floats(item) for item in value]
+    return value
+
+
 def reproducibility_record(root: Path = ROOT) -> dict[str, Any]:
     """Bind checked benchmark artifacts to executable source and the exact lock."""
 
@@ -73,12 +86,22 @@ def reproducibility_record(root: Path = ROOT) -> dict[str, Any]:
 
 
 def _json_text(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    return json.dumps(
+        _canonicalize_floats(value), ensure_ascii=False, sort_keys=True, indent=2
+    ) + "\n"
 
 
 def _jsonl_text(rows: list[dict]) -> str:
-    return "".join(json.dumps(row, ensure_ascii=False, sort_keys=True,
-                              separators=(",", ":")) + "\n" for row in rows)
+    return "".join(
+        json.dumps(
+            _canonicalize_floats(row),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        + "\n"
+        for row in rows
+    )
 
 
 def _write(path: Path, text: str) -> None:
@@ -175,6 +198,10 @@ def run(output_dir: Path, *, n_projects: int = 50, positives_per_family: int = 1
     metrics, comparisons, detail = score_all(
         cases, truth, outputs, bootstrap_iterations=bootstrap_iterations, seed=seed,
         input_price=input_price, output_price=output_price)
+    metrics = _canonicalize_floats(metrics)
+    comparisons = _canonicalize_floats(comparisons)
+    detail = _canonicalize_floats(detail)
+    outputs = _canonicalize_floats(outputs)
     scoring_seconds = time.perf_counter() - t0
 
     card = _dataset_card(cases, truth)

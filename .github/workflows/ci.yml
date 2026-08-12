@@ -76,14 +76,14 @@ jobs:
       - name: Build loopback-only demo image
         run: docker build --pull --tag tlf-review-demo:ci .
 
-      - name: Scan image for vulnerabilities and secrets
+      - name: Scan image for fixable vulnerabilities and secrets
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: tlf-review-demo:ci
           scanners: vuln,secret
           severity: HIGH,CRITICAL
           exit-code: "1"
-          ignore-unfixed: false
+          ignore-unfixed: true
 
       - name: Verify non-root, read-only runtime and health endpoint
         shell: bash

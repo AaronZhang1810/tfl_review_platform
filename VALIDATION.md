@@ -60,7 +60,8 @@ The checked-in CI workflow performs:
 3. the public-release content audit;
 4. ruff static checks;
 5. the pytest suite; and
-6. a dependency vulnerability audit.
+6. dependency vulnerability audits; and
+7. a container build, high/critical fixable-vulnerability and secret scan, and hardened health check.
 
 A release candidate additionally requires a clean fresh-environment run, successful Docker health check, reproducible simulated-evaluation output, and manual inspection of the generated documents.
 

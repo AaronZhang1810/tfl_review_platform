@@ -7,7 +7,7 @@ from pathlib import Path
 
 from evaluation.catalog import DISCLAIMER, FAMILIES, STRUCTURAL_FAMILIES
 from evaluation.generate import evidence_is_violation, generate_dataset, validate_dataset
-from evaluation.run_benchmark import reproducibility_record, run
+from evaluation.run_benchmark import _canonicalize_floats, reproducibility_record, run
 from evaluation.scoring import one_to_one_match, score_all
 from evaluation.systems import (HYBRID, LLM_ONLY, RULES_ONLY, dedupe_predictions,
                                 run_systems, verify_predictions)
@@ -102,6 +102,17 @@ class SystemAndScoringTests(unittest.TestCase):
 
 
 class ArtifactTests(unittest.TestCase):
+    def test_artifact_floats_are_canonicalized(self):
+        value = {
+            "metric": 0.123456789012345,
+            "negative_zero": -1e-16,
+            "nested": [1.0000000000004],
+        }
+        self.assertEqual(
+            _canonicalize_floats(value),
+            {"metric": 0.123456789012, "negative_zero": 0.0, "nested": [1.0]},
+        )
+
     def test_artifacts_are_reproducible_and_disclaimed(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
             ra = run(Path(a), n_projects=10, positives_per_family=2,

@@ -2,7 +2,7 @@ system,metric,estimate,ci95_low,ci95_high,unit
 rules_only,precision,1,1,1,proportion
 rules_only,recall,0.176470588235,0.12962962963,0.224046071227,proportion
 rules_only,f1,0.3,0.229508196721,0.366074572435,proportion
-rules_only,high_risk_recall,0.0833333333333,0.0412307757309,0.128211009174,proportion
+rules_only,high_risk_recall,0.083333333333,0.041230775731,0.128211009174,proportion
 rules_only,macro_f1,0.176470588235,0.176470588235,0.176470588235,proportion
 rules_only,false_positive_findings_per_100_tables,0,0,0,findings_per_100_tables
 rules_only,clean_table_specificity,1,1,1,proportion
@@ -19,7 +19,7 @@ llm_only_simulated,macro_f1,0.73782400976,0.670460427517,0.785870411194,proporti
 llm_only_simulated,false_positive_findings_per_100_tables,8.2,5.6,11.2,findings_per_100_tables
 llm_only_simulated,clean_table_specificity,0.936363636364,0.904904323693,0.963858135244,proportion
 llm_only_simulated,issue_table_miss_rate,0.247058823529,0.183908045977,0.31250872905,proportion
-llm_only_simulated,unsafe_autoapproval_rate,0.119658119658,0.0925373134328,0.148258209813,proportion
+llm_only_simulated,unsafe_autoapproval_rate,0.119658119658,0.092537313433,0.148258209813,proportion
 llm_only_simulated,coverage_rate,0.986,0.978,0.993,proportion
 llm_only_simulated,extraction_row_recall,0.9596,0.9512,0.9676,proportion
 llm_only_simulated,numeric_cell_exact_accuracy,0.970508545227,0.967262845025,0.974030946359,proportion
@@ -31,7 +31,7 @@ hybrid_simulated,macro_f1,0.825709602727,0.762961468228,0.867488854447,proportio
 hybrid_simulated,false_positive_findings_per_100_tables,3,1.6,4.6,findings_per_100_tables
 hybrid_simulated,clean_table_specificity,0.969696969697,0.951948333876,0.985120151547,proportion
 hybrid_simulated,issue_table_miss_rate,0.2,0.137142857143,0.271606722329,proportion
-hybrid_simulated,unsafe_autoapproval_rate,0.0885714285714,0.0645161290323,0.113890669516,proportion
+hybrid_simulated,unsafe_autoapproval_rate,0.088571428571,0.064516129032,0.113890669516,proportion
 hybrid_simulated,coverage_rate,0.986,0.978,0.993,proportion
 hybrid_simulated,extraction_row_recall,0.9596,0.9512,0.9676,proportion
 hybrid_simulated,numeric_cell_exact_accuracy,0.983117965819,0.981008489051,0.985430351009,proportion

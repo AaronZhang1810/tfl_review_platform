@@ -51,11 +51,11 @@
     "hybrid_simulated_minus_llm_only_simulated": {
       "clean_table_specificity": {
         "ci95": {
-          "high": 0.05312823594674552,
+          "high": 0.053128235947,
           "iterations": 2000,
-          "low": 0.01552795031055898
+          "low": 0.015527950311
         },
-        "estimate": 0.033333333333333326
+        "estimate": 0.033333333333
       },
       "coverage_rate": {
         "ci95": {
@@ -75,93 +75,93 @@
       },
       "f1": {
         "ci95": {
-          "high": 0.11968878767617348,
+          "high": 0.119688787676,
           "iterations": 2000,
-          "low": 0.06554903808561933
+          "low": 0.065549038086
         },
-        "estimate": 0.09235091113736349
+        "estimate": 0.092350911137
       },
       "false_positive_findings_per_100_tables": {
         "ci95": {
-          "high": -3.400000000000001,
+          "high": -3.4,
           "iterations": 2000,
           "low": -7.2
         },
-        "estimate": -5.200000000000001
+        "estimate": -5.2
       },
       "high_risk_recall": {
         "ci95": {
-          "high": 0.03731343283582089,
+          "high": 0.037313432836,
           "iterations": 2000,
-          "low": -0.01834862385321101
+          "low": -0.018348623853
         },
-        "estimate": 0.008333333333333304
+        "estimate": 0.008333333333
       },
       "issue_table_miss_rate": {
         "ci95": {
-          "high": -0.0178571428571429,
+          "high": -0.017857142857,
           "iterations": 2000,
-          "low": -0.08384326851914149
+          "low": -0.083843268519
         },
-        "estimate": -0.047058823529411764
+        "estimate": -0.047058823529
       },
       "macro_f1": {
         "ci95": {
-          "high": 0.11851006130795128,
+          "high": 0.118510061308,
           "iterations": 2000,
-          "low": 0.05956405119475663
+          "low": 0.059564051195
         },
-        "estimate": 0.08788559296703047
+        "estimate": 0.087885592967
       },
       "numeric_cell_exact_accuracy": {
         "ci95": {
-          "high": 0.015035313553481405,
+          "high": 0.015035313553,
           "iterations": 2000,
-          "low": 0.01031239262286542
+          "low": 0.010312392623
         },
-        "estimate": 0.012609420591913278
+        "estimate": 0.012609420592
       },
       "precision": {
         "ci95": {
-          "high": 0.18207982702197287,
+          "high": 0.182079827022,
           "iterations": 2000,
-          "low": 0.10601929844264746
+          "low": 0.106019298443
         },
-        "estimate": 0.1448378410963309
+        "estimate": 0.144837841096
       },
       "recall": {
         "ci95": {
-          "high": 0.08572660098522163,
+          "high": 0.085726600985,
           "iterations": 2000,
-          "low": 0.012195121951219523
+          "low": 0.012195121951
         },
-        "estimate": 0.04705882352941171
+        "estimate": 0.047058823529
       },
       "unsafe_autoapproval_rate": {
         "ci95": {
-          "high": -0.015741401268132078,
+          "high": -0.015741401268,
           "iterations": 2000,
-          "low": -0.048787898081564585
+          "low": -0.048787898082
         },
-        "estimate": -0.0310866910866911
+        "estimate": -0.031086691087
       }
     },
     "hybrid_simulated_minus_rules_only": {
       "clean_table_specificity": {
         "ci95": {
-          "high": -0.014879848452734162,
+          "high": -0.014879848453,
           "iterations": 2000,
-          "low": -0.04805166612395531
+          "low": -0.048051666124
         },
-        "estimate": -0.030303030303030276
+        "estimate": -0.030303030303
       },
       "coverage_rate": {
         "ci95": {
-          "high": -0.007000000000000006,
+          "high": -0.007,
           "iterations": 2000,
-          "low": -0.02200000000000002
+          "low": -0.022
         },
-        "estimate": -0.014000000000000012
+        "estimate": -0.014
       },
       "extraction_row_recall": {
         "ci95": {
@@ -173,11 +173,11 @@
       },
       "f1": {
         "ci95": {
-          "high": 0.60200949505557,
+          "high": 0.602009495056,
           "iterations": 2000,
-          "low": 0.4830541358755035
+          "low": 0.483054135876
         },
-        "estimate": 0.5401253918495297
+        "estimate": 0.54012539185
       },
       "false_positive_findings_per_100_tables": {
         "ci95": {
@@ -189,27 +189,27 @@
       },
       "high_risk_recall": {
         "ci95": {
-          "high": 0.7796610169491526,
+          "high": 0.779661016949,
           "iterations": 2000,
-          "low": 0.6146421152847499
+          "low": 0.614642115285
         },
         "estimate": 0.7
       },
       "issue_table_miss_rate": {
         "ci95": {
-          "high": -0.5632183908045977,
+          "high": -0.563218390805,
           "iterations": 2000,
-          "low": -0.6807293591544091
+          "low": -0.680729359154
         },
-        "estimate": -0.6235294117647059
+        "estimate": -0.623529411765
       },
       "macro_f1": {
         "ci95": {
-          "high": 0.6910182662117916,
+          "high": 0.691018266212,
           "iterations": 2000,
-          "low": 0.5864908799925347
+          "low": 0.586490879993
         },
-        "estimate": 0.6492390144912454
+        "estimate": 0.649239014491
       },
       "numeric_cell_exact_accuracy": {
         "ci95": {
@@ -221,27 +221,27 @@
       },
       "precision": {
         "ci95": {
-          "high": -0.057683121019108344,
+          "high": -0.057683121019,
           "iterations": 2000,
-          "low": -0.1486661986661987
+          "low": -0.148666198666
         },
-        "estimate": -0.10067114093959728
+        "estimate": -0.10067114094
       },
       "recall": {
         "ci95": {
-          "high": 0.6687926136363633,
+          "high": 0.668792613636,
           "iterations": 2000,
-          "low": 0.5529375228352211
+          "low": 0.552937522835
         },
-        "estimate": 0.6117647058823529
+        "estimate": 0.611764705882
       },
       "unsafe_autoapproval_rate": {
         "ci95": {
-          "high": -0.1802145458113893,
+          "high": -0.180214545811,
           "iterations": 2000,
-          "low": -0.23884432558280896
+          "low": -0.238844325583
         },
-        "estimate": -0.20930091185410332
+        "estimate": -0.209300911854
       }
     }
   },
@@ -250,9 +250,9 @@
       "cells_recovered_by_self_check": 121,
       "ci95": {
         "clean_table_specificity": {
-          "high": 0.9851201515472657,
+          "high": 0.985120151547,
           "iterations": 2000,
-          "low": 0.9519483338760447
+          "low": 0.951948333876
         },
         "coverage_rate": {
           "high": 0.993,
@@ -265,9 +265,9 @@
           "low": 0.9512
         },
         "f1": {
-          "high": 0.8821796694508618,
+          "high": 0.882179669451,
           "iterations": 2000,
-          "low": 0.7874421659907467
+          "low": 0.787442165991
         },
         "false_positive_findings_per_100_tables": {
           "high": 4.6,
@@ -275,42 +275,42 @@
           "low": 1.6
         },
         "high_risk_recall": {
-          "high": 0.8571709786276713,
+          "high": 0.857170978628,
           "iterations": 2000,
-          "low": 0.7036892361111111
+          "low": 0.703689236111
         },
         "issue_table_miss_rate": {
-          "high": 0.27160672232926564,
+          "high": 0.271606722329,
           "iterations": 2000,
-          "low": 0.13714285714285715
+          "low": 0.137142857143
         },
         "macro_f1": {
-          "high": 0.8674888544470857,
+          "high": 0.867488854447,
           "iterations": 2000,
-          "low": 0.7629614682278288
+          "low": 0.762961468228
         },
         "numeric_cell_exact_accuracy": {
-          "high": 0.9854303510092692,
+          "high": 0.985430351009,
           "iterations": 2000,
-          "low": 0.9810084890510237
+          "low": 0.981008489051
         },
         "precision": {
-          "high": 0.9423168789808917,
+          "high": 0.942316878981,
           "iterations": 2000,
-          "low": 0.8513338013338013
+          "low": 0.851333801334
         },
         "recall": {
-          "high": 0.8503062839837566,
+          "high": 0.850306283984,
           "iterations": 2000,
-          "low": 0.7151506342494716
+          "low": 0.715150634249
         },
         "unsafe_autoapproval_rate": {
-          "high": 0.11389066951566951,
+          "high": 0.113890669516,
           "iterations": 2000,
-          "low": 0.06451612903225806
+          "low": 0.064516129032
         }
       },
-      "clean_table_specificity": 0.9696969696969697,
+      "clean_table_specificity": 0.969696969697,
       "counts": {
         "fn": 36,
         "fp": 15,
@@ -321,7 +321,7 @@
       "coverage_rate": 0.986,
       "display_name": "Hybrid (simulated proxy + deterministic guards)",
       "extraction_row_recall": 0.9596,
-      "f1": 0.8401253918495297,
+      "f1": 0.84012539185,
       "false_positive_findings_per_100_tables": 3.0,
       "families": {
         "AIV-6.1": {
@@ -335,7 +335,7 @@
           "tp": 10
         },
         "AIV-6.2": {
-          "f1": 0.9473684210526316,
+          "f1": 0.947368421053,
           "fn": 1,
           "fp": 0,
           "precision": 1.0,
@@ -345,7 +345,7 @@
           "tp": 9
         },
         "AIV-6.3": {
-          "f1": 0.888888888888889,
+          "f1": 0.888888888889,
           "fn": 2,
           "fp": 0,
           "precision": 1.0,
@@ -355,7 +355,7 @@
           "tp": 8
         },
         "AIV-7.3": {
-          "f1": 0.9473684210526316,
+          "f1": 0.947368421053,
           "fn": 1,
           "fp": 0,
           "precision": 1.0,
@@ -365,7 +365,7 @@
           "tp": 9
         },
         "AIV-7.4": {
-          "f1": 0.6666666666666665,
+          "f1": 0.666666666667,
           "fn": 4,
           "fp": 2,
           "precision": 0.75,
@@ -385,7 +385,7 @@
           "tp": 10
         },
         "AIW-2.2": {
-          "f1": 0.9473684210526316,
+          "f1": 0.947368421053,
           "fn": 1,
           "fp": 0,
           "precision": 1.0,
@@ -395,7 +395,7 @@
           "tp": 9
         },
         "AIW-2.3": {
-          "f1": 0.6666666666666666,
+          "f1": 0.666666666667,
           "fn": 5,
           "fp": 0,
           "precision": 1.0,
@@ -415,7 +415,7 @@
           "tp": 9
         },
         "AIX-3": {
-          "f1": 0.888888888888889,
+          "f1": 0.888888888889,
           "fn": 2,
           "fp": 0,
           "precision": 1.0,
@@ -425,7 +425,7 @@
           "tp": 8
         },
         "AIX-4": {
-          "f1": 0.5714285714285715,
+          "f1": 0.571428571429,
           "fn": 6,
           "fp": 0,
           "precision": 1.0,
@@ -435,7 +435,7 @@
           "tp": 4
         },
         "AIX-5": {
-          "f1": 0.26666666666666666,
+          "f1": 0.266666666667,
           "fn": 8,
           "fp": 3,
           "precision": 0.4,
@@ -445,7 +445,7 @@
           "tp": 2
         },
         "AIX-7.1": {
-          "f1": 0.888888888888889,
+          "f1": 0.888888888889,
           "fn": 2,
           "fp": 0,
           "precision": 1.0,
@@ -455,7 +455,7 @@
           "tp": 8
         },
         "AIX-8": {
-          "f1": 0.8235294117647058,
+          "f1": 0.823529411765,
           "fn": 3,
           "fp": 0,
           "precision": 1.0,
@@ -465,10 +465,10 @@
           "tp": 7
         },
         "FMT-010": {
-          "f1": 0.8333333333333333,
+          "f1": 0.833333333333,
           "fn": 0,
           "fp": 4,
-          "precision": 0.7142857142857143,
+          "precision": 0.714285714286,
           "recall": 1.0,
           "risk": "Low",
           "title": "Blank or empty page",
@@ -478,7 +478,7 @@
           "f1": 0.8,
           "fn": 0,
           "fp": 5,
-          "precision": 0.6666666666666666,
+          "precision": 0.666666666667,
           "recall": 1.0,
           "risk": "High",
           "title": "Gap in output numbering",
@@ -499,17 +499,17 @@
         "duplicates_dropped": 31,
         "verification_dropped": 17
       },
-      "high_risk_recall": 0.7833333333333333,
+      "high_risk_recall": 0.783333333333,
       "issue_table_miss_rate": 0.2,
-      "macro_f1": 0.8257096027265396,
-      "numeric_cell_exact_accuracy": 0.9831179658190913,
-      "precision": 0.8993288590604027,
-      "recall": 0.788235294117647,
+      "macro_f1": 0.825709602727,
+      "numeric_cell_exact_accuracy": 0.983117965819,
+      "precision": 0.89932885906,
+      "recall": 0.788235294118,
       "simulated_latency": {
         "median_serial_seconds_per_project": 9.119044,
         "note": "Deterministic latency proxy, not measured model latency.",
         "p95_serial_seconds_per_project": 9.6182497,
-        "total_serial_seconds": 457.89384900000016
+        "total_serial_seconds": 457.893849
       },
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",
@@ -519,15 +519,15 @@
         "output_tokens": 9758,
         "output_tokens_per_1000_pages": 9758.0
       },
-      "unsafe_autoapproval_rate": 0.08857142857142856
+      "unsafe_autoapproval_rate": 0.088571428571
     },
     "llm_only_simulated": {
       "cells_recovered_by_self_check": 0,
       "ci95": {
         "clean_table_specificity": {
-          "high": 0.9638581352436774,
+          "high": 0.963858135244,
           "iterations": 2000,
-          "low": 0.9049043236926673
+          "low": 0.904904323693
         },
         "coverage_rate": {
           "high": 0.993,
@@ -540,52 +540,52 @@
           "low": 0.9512
         },
         "f1": {
-          "high": 0.7987809455797261,
+          "high": 0.79878094558,
           "iterations": 2000,
-          "low": 0.6920821114369501
+          "low": 0.692082111437
         },
         "false_positive_findings_per_100_tables": {
-          "high": 11.200000000000001,
+          "high": 11.2,
           "iterations": 2000,
-          "low": 5.6000000000000005
+          "low": 5.6
         },
         "high_risk_recall": {
-          "high": 0.8495802663137869,
+          "high": 0.849580266314,
           "iterations": 2000,
-          "low": 0.6949034839924672
+          "low": 0.694903483992
         },
         "issue_table_miss_rate": {
-          "high": 0.31250872905027927,
+          "high": 0.31250872905,
           "iterations": 2000,
-          "low": 0.1839080459770115
+          "low": 0.183908045977
         },
         "macro_f1": {
-          "high": 0.7858704111935536,
+          "high": 0.785870411194,
           "iterations": 2000,
-          "low": 0.670460427517173
+          "low": 0.670460427517
         },
         "numeric_cell_exact_accuracy": {
-          "high": 0.9740309463592977,
+          "high": 0.974030946359,
           "iterations": 2000,
-          "low": 0.9672628450249661
+          "low": 0.967262845025
         },
         "precision": {
-          "high": 0.8194552277432712,
+          "high": 0.819455227743,
           "iterations": 2000,
-          "low": 0.6887526542408872
+          "low": 0.688752654241
         },
         "recall": {
-          "high": 0.805718487394958,
+          "high": 0.805718487395,
           "iterations": 2000,
-          "low": 0.6745494505494506
+          "low": 0.674549450549
         },
         "unsafe_autoapproval_rate": {
-          "high": 0.14825820981344237,
+          "high": 0.148258209813,
           "iterations": 2000,
-          "low": 0.09253731343283582
+          "low": 0.092537313433
         }
       },
-      "clean_table_specificity": 0.9363636363636364,
+      "clean_table_specificity": 0.936363636364,
       "counts": {
         "fn": 44,
         "fp": 41,
@@ -596,14 +596,14 @@
       "coverage_rate": 0.986,
       "display_name": "LLM-only (seeded simulated proxy)",
       "extraction_row_recall": 0.9596,
-      "f1": 0.7477744807121662,
-      "false_positive_findings_per_100_tables": 8.200000000000001,
+      "f1": 0.747774480712,
+      "false_positive_findings_per_100_tables": 8.2,
       "families": {
         "AIV-6.1": {
-          "f1": 0.8695652173913044,
+          "f1": 0.869565217391,
           "fn": 0,
           "fp": 3,
-          "precision": 0.7692307692307693,
+          "precision": 0.769230769231,
           "recall": 1.0,
           "risk": "Low",
           "title": "New study versus prior edition",
@@ -620,10 +620,10 @@
           "tp": 9
         },
         "AIV-6.3": {
-          "f1": 0.761904761904762,
+          "f1": 0.761904761905,
           "fn": 2,
           "fp": 3,
-          "precision": 0.7272727272727273,
+          "precision": 0.727272727273,
           "recall": 0.8,
           "risk": "Low",
           "title": "N increased versus prior edition",
@@ -640,7 +640,7 @@
           "tp": 9
         },
         "AIV-7.4": {
-          "f1": 0.6666666666666665,
+          "f1": 0.666666666667,
           "fn": 4,
           "fp": 2,
           "precision": 0.75,
@@ -650,7 +650,7 @@
           "tp": 6
         },
         "AIW-2.1": {
-          "f1": 0.7692307692307693,
+          "f1": 0.769230769231,
           "fn": 0,
           "fp": 6,
           "precision": 0.625,
@@ -660,20 +660,20 @@
           "tp": 10
         },
         "AIW-2.2": {
-          "f1": 0.9523809523809523,
+          "f1": 0.952380952381,
           "fn": 0,
           "fp": 1,
-          "precision": 0.9090909090909091,
+          "precision": 0.909090909091,
           "recall": 1.0,
           "risk": "High",
           "title": "Component columns do not sum to row total",
           "tp": 10
         },
         "AIW-2.3": {
-          "f1": 0.5263157894736842,
+          "f1": 0.526315789474,
           "fn": 5,
           "fp": 4,
-          "precision": 0.5555555555555556,
+          "precision": 0.555555555556,
           "recall": 0.5,
           "risk": "High",
           "title": "Within-table numeric integrity",
@@ -690,10 +690,10 @@
           "tp": 9
         },
         "AIX-3": {
-          "f1": 0.761904761904762,
+          "f1": 0.761904761905,
           "fn": 2,
           "fp": 3,
-          "precision": 0.7272727272727273,
+          "precision": 0.727272727273,
           "recall": 0.8,
           "risk": "High",
           "title": "Pooled-indication N mismatch",
@@ -703,7 +703,7 @@
           "f1": 0.5,
           "fn": 6,
           "fp": 2,
-          "precision": 0.6666666666666666,
+          "precision": 0.666666666667,
           "recall": 0.4,
           "risk": "High",
           "title": "Table 1 versus by-study N mismatch",
@@ -713,14 +713,14 @@
           "f1": 0.25,
           "fn": 8,
           "fp": 4,
-          "precision": 0.3333333333333333,
+          "precision": 0.333333333333,
           "recall": 0.2,
           "risk": "Low",
           "title": "Footnote study-list mismatch",
           "tp": 2
         },
         "AIX-7.1": {
-          "f1": 0.9473684210526316,
+          "f1": 0.947368421053,
           "fn": 1,
           "fp": 0,
           "precision": 1.0,
@@ -730,7 +730,7 @@
           "tp": 9
         },
         "AIX-8": {
-          "f1": 0.8235294117647058,
+          "f1": 0.823529411765,
           "fn": 3,
           "fp": 0,
           "precision": 1.0,
@@ -750,17 +750,17 @@
           "tp": 6
         },
         "XOUT-001": {
-          "f1": 0.6363636363636365,
+          "f1": 0.636363636364,
           "fn": 3,
           "fp": 5,
-          "precision": 0.5833333333333334,
+          "precision": 0.583333333333,
           "recall": 0.7,
           "risk": "High",
           "title": "Gap in output numbering",
           "tp": 7
         },
         "XOUT-020": {
-          "f1": 0.7777777777777777,
+          "f1": 0.777777777778,
           "fn": 3,
           "fp": 1,
           "precision": 0.875,
@@ -775,16 +775,16 @@
         "verification_dropped": 0
       },
       "high_risk_recall": 0.775,
-      "issue_table_miss_rate": 0.24705882352941178,
-      "macro_f1": 0.7378240097595091,
-      "numeric_cell_exact_accuracy": 0.970508545227178,
-      "precision": 0.7544910179640718,
-      "recall": 0.7411764705882353,
+      "issue_table_miss_rate": 0.247058823529,
+      "macro_f1": 0.73782400976,
+      "numeric_cell_exact_accuracy": 0.970508545227,
+      "precision": 0.754491017964,
+      "recall": 0.741176470588,
       "simulated_latency": {
         "median_serial_seconds_per_project": 9.119044,
         "note": "Deterministic latency proxy, not measured model latency.",
         "p95_serial_seconds_per_project": 9.6182497,
-        "total_serial_seconds": 457.89384900000016
+        "total_serial_seconds": 457.893849
       },
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",
@@ -794,7 +794,7 @@
         "output_tokens": 10514,
         "output_tokens_per_1000_pages": 10514.0
       },
-      "unsafe_autoapproval_rate": 0.11965811965811966
+      "unsafe_autoapproval_rate": 0.119658119658
     },
     "rules_only": {
       "cells_recovered_by_self_check": 0,
@@ -815,9 +815,9 @@
           "low": null
         },
         "f1": {
-          "high": 0.3660745724346076,
+          "high": 0.366074572435,
           "iterations": 2000,
-          "low": 0.22950819672131148
+          "low": 0.229508196721
         },
         "false_positive_findings_per_100_tables": {
           "high": 0.0,
@@ -825,19 +825,19 @@
           "low": 0.0
         },
         "high_risk_recall": {
-          "high": 0.12821100917431189,
+          "high": 0.128211009174,
           "iterations": 2000,
-          "low": 0.04123077573094473
+          "low": 0.041230775731
         },
         "issue_table_miss_rate": {
-          "high": 0.8703703703703702,
+          "high": 0.87037037037,
           "iterations": 2000,
-          "low": 0.7759539287733181
+          "low": 0.775953928773
         },
         "macro_f1": {
-          "high": 0.17647058823529413,
+          "high": 0.176470588235,
           "iterations": 2000,
-          "low": 0.17647058823529413
+          "low": 0.176470588235
         },
         "numeric_cell_exact_accuracy": {
           "high": null,
@@ -850,14 +850,14 @@
           "low": 1.0
         },
         "recall": {
-          "high": 0.22404607122668171,
+          "high": 0.224046071227,
           "iterations": 2000,
-          "low": 0.12962962962962962
+          "low": 0.12962962963
         },
         "unsafe_autoapproval_rate": {
-          "high": 0.3203463203463204,
+          "high": 0.320346320346,
           "iterations": 2000,
-          "low": 0.2773077887871567
+          "low": 0.277307788787
         }
       },
       "clean_table_specificity": 1.0,
@@ -1049,12 +1049,12 @@
         "duplicates_dropped": 0,
         "verification_dropped": 0
       },
-      "high_risk_recall": 0.08333333333333333,
-      "issue_table_miss_rate": 0.8235294117647058,
-      "macro_f1": 0.17647058823529413,
+      "high_risk_recall": 0.083333333333,
+      "issue_table_miss_rate": 0.823529411765,
+      "macro_f1": 0.176470588235,
       "numeric_cell_exact_accuracy": null,
       "precision": 1.0,
-      "recall": 0.17647058823529413,
+      "recall": 0.176470588235,
       "simulated_latency": {
         "median_serial_seconds_per_project": 0.0,
         "note": "Deterministic latency proxy, not measured model latency.",
@@ -1069,7 +1069,7 @@
         "output_tokens": 0,
         "output_tokens_per_1000_pages": 0.0
       },
-      "unsafe_autoapproval_rate": 0.2978723404255319
+      "unsafe_autoapproval_rate": 0.297872340426
     }
   }
 }
