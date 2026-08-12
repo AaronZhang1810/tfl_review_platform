@@ -96,7 +96,7 @@ jobs:
             --cap-drop ALL \
             --security-opt no-new-privileges:true \
             --tmpfs /tmp:rw,noexec,nosuid,size=64m \
-            --tmpfs /app/data:rw,noexec,nosuid,size=64m \
+            --tmpfs /app/data:rw,noexec,nosuid,mode=1777,size=64m \
             --env TLF_DEMO_MODE=1 \
             --env TLF_DATA_DIR=/app/data \
             --publish 127.0.0.1:18000:8000 \
@@ -109,6 +109,11 @@ jobs:
           for attempt in {1..30}; do
             if curl --fail --silent --show-error http://127.0.0.1:18000/api/projects >/dev/null; then
               exit 0
+            fi
+            if [ "$(docker inspect --format '{{.State.Running}}' "${container_id}")" != "true" ]; then
+              echo "Container exited before becoming healthy" >&2
+              docker inspect --format 'status={{.State.Status}} exit={{.State.ExitCode}} error={{.State.Error}}' "${container_id}" >&2
+              exit 1
             fi
             sleep 1
           done
