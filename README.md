@@ -8,7 +8,7 @@ A human-in-the-loop quality-control prototype for clinical tables, listings, and
 
 ![Synthetic project dashboard](docs/images/01_dashboard.png)
 
-[Watch the two-minute walkthrough](docs/media/tlf-review-demo.mp4) · [Read the simulated evaluation report](evaluation/REPORT.md) · [Read the setup guide](SETUP.md)
+[Watch the two-minute walkthrough](docs/media/tlf-review-demo.mp4) · [Read the simulated evaluation report](evaluation/REPORT.md) · [Study the implementation and interview-defense guide](docs/INTERVIEW_DEFENSE_GUIDE.md) · [Read the setup guide](SETUP.md)
 
 ## My contribution
 
@@ -139,6 +139,7 @@ GitHub Actions runs the public-content audit, lint, application and evaluation t
 - `evaluation/` — deterministic simulated benchmark and report generator
 - `configs/study_config.synthetic.json` — fictional public checklist
 - `assets/architecture.svg` — editable architecture diagram
+- `docs/INTERVIEW_DEFENSE_GUIDE.md` — end-to-end implementation, function, data-flow, and design-defense guide
 - `VALIDATION.md` — verification scope, metrics, and limitations
 - `public_release.py` — privacy and public-content audit
 

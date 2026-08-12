@@ -52,6 +52,7 @@ REQUIRED_PUBLIC_PATHS = {
     "compose.demo.yml",
     "configs/study_config.synthetic.json",
     "docs/ASSET_PROVENANCE.md",
+    "docs/INTERVIEW_DEFENSE_GUIDE.md",
     "evaluation/run_benchmark.py",
     "evaluation/REPORT.md",
     "main.py",
