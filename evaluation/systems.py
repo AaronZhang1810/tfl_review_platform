@@ -8,7 +8,7 @@ from typing import Any
 
 from .catalog import (FAMILY_BY_ID, NUMERIC_OPERATIONS, SIMULATOR_VERSION,
                       STRUCTURAL_FAMILIES)
-from .generate import evidence_is_violation, stable_uniform
+from .generate import evidence_is_violation, opportunity_difficulty, stable_uniform
 
 RULES_ONLY = "rules_only"
 LLM_ONLY = "llm_only_simulated"
@@ -33,16 +33,17 @@ DIFFICULTY_MULTIPLIER = {"easy": 1.0, "medium": 0.91, "hard": 0.77}
 
 
 def _prediction_key_fields(opp: dict) -> dict:
+    family = FAMILY_BY_ID[opp["family"]]
     return {
         "project_id": opp["project_id"],
         "family": opp["family"],
-        "risk": opp["risk"],
+        "risk": family.risk,
         "locator": dict(opp["locator"]),
     }
 
 
 def _citation(opp: dict, *, corrupt: bool = False) -> tuple[str, list[float], float | None]:
-    op = opp["operation"]
+    op = FAMILY_BY_ID[opp["family"]].operation
     e = opp["evidence"]
     if op == "sum_equals":
         nums = list(e["addends"])
@@ -63,14 +64,15 @@ def _citation(opp: dict, *, corrupt: bool = False) -> tuple[str, list[float], fl
 
 def _make_prediction(opp: dict, system: str, ordinal: int, *, seed: int,
                      duplicate: bool = False) -> dict:
+    family = FAMILY_BY_ID[opp["family"]]
     is_issue = evidence_is_violation(opp)
-    corrupt = (is_issue and opp["operation"] in NUMERIC_OPERATIONS and
+    corrupt = (is_issue and family.operation in NUMERIC_OPERATIONS and
                stable_uniform(seed, opp["opportunity_id"], "citation") < 0.04)
     operation, cited, observed = _citation(opp, corrupt=corrupt)
-    confidence_base = (DETECTION_PROBABILITY[opp["detector_group"]]
+    confidence_base = (DETECTION_PROBABILITY[family.detector_group]
                        if is_issue else 0.52)
     jitter = (stable_uniform(seed, opp["opportunity_id"], "confidence") - 0.5) * 0.16
-    message = (f"{opp['title']} at {opp['locator']['output_label']} / "
+    message = (f"{family.title} at {opp['locator']['output_label']} / "
                f"{opp['locator']['row']}; review the cited synthetic evidence.")
     numbers = list(cited)
     if operation == "sum_equals" and observed is not None:
@@ -103,16 +105,18 @@ def simulated_llm_raw(case: dict, seed: int) -> list[dict]:
     """Seeded behavior stub. It is intentionally not presented as a real model."""
     predictions = []
     for opp in case["opportunities"]:
+        family = FAMILY_BY_ID[opp["family"]]
+        difficulty = opportunity_difficulty(opp)
         is_issue = evidence_is_violation(opp)
         if is_issue:
-            probability = (DETECTION_PROBABILITY[opp["detector_group"]]
-                           * DIFFICULTY_MULTIPLIER[opp["difficulty"]])
+            probability = (DETECTION_PROBABILITY[family.detector_group]
+                           * DIFFICULTY_MULTIPLIER[difficulty])
             emit = stable_uniform(seed, opp["opportunity_id"], "detect") < probability
         else:
-            probability = FALSE_POSITIVE_PROBABILITY[opp["detector_group"]]
-            if opp["difficulty"] == "hard":
+            probability = FALSE_POSITIVE_PROBABILITY[family.detector_group]
+            if difficulty == "hard":
                 probability *= 1.45
-            elif opp["difficulty"] == "medium":
+            elif difficulty == "medium":
                 probability *= 1.18
             emit = stable_uniform(seed, opp["opportunity_id"], "false_positive") < probability
         if not emit:
@@ -230,8 +234,9 @@ def _operational_stats(case: dict, predictions: list[dict], seed: int,
     # Deterministic proxy latency, never represented as measured wall-clock time.
     latency_s = 0.0
     for opp in case["opportunities"]:
+        detector_group = FAMILY_BY_ID[opp["family"]].detector_group
         base = {"structural": 0.22, "arithmetic": 0.48, "cross_output": 0.72,
-                "version": 0.58, "semantic": 0.68}[opp["detector_group"]]
+                "version": 0.58, "semantic": 0.68}[detector_group]
         latency_s += base * (0.82 + 0.36 * stable_uniform(seed, opp["opportunity_id"], "latency"))
     return {
         **extraction,

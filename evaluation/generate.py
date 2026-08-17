@@ -11,6 +11,18 @@ from typing import Any
 from .catalog import BENCHMARK_SEED, FAMILY_BY_ID, FAMILIES
 
 
+_FAMILY_INDEX_BY_ID = {family.id: index for index, family in enumerate(FAMILIES)}
+_OPPORTUNITY_FIELDS = frozenset({
+    "opportunity_id", "project_id", "family", "locator", "evidence",
+})
+_LOCATOR_FIELDS = frozenset({
+    "output_label", "page", "row", "column", "comparison_output",
+})
+_TRUTH_FIELDS = frozenset({
+    "truth_id", "opportunity_id", "project_id", "family", "locator", "evidence",
+})
+
+
 def stable_int(*parts: object) -> int:
     payload = "|".join(str(p) for p in parts).encode("utf-8")
     return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big")
@@ -88,7 +100,7 @@ def _evidence(family_id: str, positive: bool, rng: random.Random) -> dict[str, A
 
 def evidence_is_violation(opportunity: dict) -> bool:
     """Infer the label from observable evidence, without reading the truth manifest."""
-    op = opportunity["operation"]
+    op = FAMILY_BY_ID[opportunity["family"]].operation
     e = opportunity["evidence"]
     if op == "blank":
         return int(e["character_count"]) < 3
@@ -118,7 +130,24 @@ def evidence_is_violation(opportunity: dict) -> bool:
     raise KeyError(op)
 
 
+def opportunity_difficulty(opportunity: dict) -> str:
+    """Derive the simulator's deterministic difficulty stratum from stable IDs."""
+    project_id = opportunity["project_id"]
+    if not project_id.startswith("SYN-P") or not project_id[5:].isdigit():
+        raise ValueError(f"invalid synthetic project ID: {project_id!r}")
+    project_index = int(project_id[5:]) - 1
+    if project_index < 0:
+        raise ValueError(f"invalid synthetic project ID: {project_id!r}")
+    family_index = _FAMILY_INDEX_BY_ID[opportunity["family"]]
+    if (project_index + family_index) % 9 == 0:
+        return "hard"
+    if (project_index + family_index) % 4 == 0:
+        return "medium"
+    return "easy"
+
+
 def _locator(project_index: int, family_index: int) -> dict[str, Any]:
+    family = FAMILIES[family_index]
     table_no = (family_index * 3 + project_index) % 10 + 1
     compare_no = table_no % 10 + 1
     return {
@@ -126,7 +155,10 @@ def _locator(project_index: int, family_index: int) -> dict[str, Any]:
         "page": table_no,
         "row": f"SYNTHETIC ROW {family_index + 1}",
         "column": "Drug X",
-        "comparison_output": f"Table {compare_no}",
+        # A second output is meaningful only for a true cross-output check.
+        # Version checks compare current/prior editions of the same output.
+        "comparison_output": (f"Table {compare_no}"
+                              if family.scope == "cross_output" else None),
     }
 
 
@@ -184,14 +216,6 @@ def generate_dataset(n_projects: int = 50, positives_per_family: int = 10,
                 "opportunity_id": oid,
                 "project_id": pid,
                 "family": family.id,
-                "title": family.title,
-                "risk": family.risk,
-                "scope": family.scope,
-                "operation": family.operation,
-                "detector_group": family.detector_group,
-                "difficulty": ("hard" if (pidx + fidx) % 9 == 0
-                               else "medium" if (pidx + fidx) % 4 == 0 else "easy"),
-                "coverage_complete": (stable_uniform(seed, oid, "coverage") >= 0.025),
                 "locator": locator,
                 "evidence": evidence,
             }
@@ -202,7 +226,6 @@ def generate_dataset(n_projects: int = 50, positives_per_family: int = 10,
                     "opportunity_id": oid,
                     "project_id": pid,
                     "family": family.id,
-                    "risk": family.risk,
                     "locator": locator,
                     "evidence": evidence,
                 })
@@ -239,8 +262,42 @@ def validate_dataset(cases: list[dict], truth: list[dict], *, n_projects: int,
     expected = {f.id: positives_per_family for f in FAMILIES}
     if counts != expected:
         raise AssertionError(f"truth family counts differ: {counts}")
+    expected_families = set(FAMILY_BY_ID)
+    for case in cases:
+        opportunities = case["opportunities"]
+        if {o["family"] for o in opportunities} != expected_families:
+            raise AssertionError("each project must contain one opportunity per family")
+        for opportunity in opportunities:
+            if set(opportunity) != _OPPORTUNITY_FIELDS:
+                raise AssertionError(
+                    f"noncanonical opportunity fields: {sorted(opportunity)}")
+            if set(opportunity["locator"]) != _LOCATOR_FIELDS:
+                raise AssertionError(
+                    f"noncanonical locator fields: {sorted(opportunity['locator'])}")
+            family = FAMILY_BY_ID[opportunity["family"]]
+            comparison = opportunity["locator"]["comparison_output"]
+            if (comparison is not None) != (family.scope == "cross_output"):
+                raise AssertionError(
+                    "comparison_output must be populated only for cross-output families")
+            expected_oid = f"{case['project_id']}:{family.id}"
+            if opportunity["project_id"] != case["project_id"] or \
+                    opportunity["opportunity_id"] != expected_oid:
+                raise AssertionError("opportunity identifiers are inconsistent")
+            opportunity_difficulty(opportunity)
+    for item in truth:
+        if set(item) != _TRUTH_FIELDS:
+            raise AssertionError(f"noncanonical truth fields: {sorted(item)}")
     # Independent evidence evaluation catches generator/label drift.
     by_id = {o["opportunity_id"]: o for c in cases for o in c["opportunities"]}
+    for item in truth:
+        opportunity = by_id.get(item["opportunity_id"])
+        if opportunity is None:
+            raise AssertionError("truth record has no matching opportunity")
+        if item["truth_id"] != f"TRUTH:{item['opportunity_id']}":
+            raise AssertionError("truth identifier is inconsistent")
+        for field in ("project_id", "family", "locator", "evidence"):
+            if item[field] != opportunity[field]:
+                raise AssertionError(f"truth and opportunity disagree on {field}")
     truth_ids = {t["opportunity_id"] for t in truth}
     observed_positive = {oid for oid, o in by_id.items() if evidence_is_violation(o)}
     if observed_positive != truth_ids:

@@ -1,7 +1,7 @@
 {
-  "benchmark_version": "synthetic-tlf-benchmark-v1",
+  "benchmark_version": "synthetic-tlf-benchmark-v2",
   "dataset": {
-    "benchmark_version": "synthetic-tlf-benchmark-v1",
+    "benchmark_version": "synthetic-tlf-benchmark-v2",
     "clean_opportunities": 680,
     "current_pages": 500,
     "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",
@@ -514,8 +514,8 @@
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",
         "cost_usd": null,
-        "input_tokens": 182095,
-        "input_tokens_per_1000_pages": 182095.0,
+        "input_tokens": 144078,
+        "input_tokens_per_1000_pages": 144078.0,
         "output_tokens": 9758,
         "output_tokens_per_1000_pages": 9758.0
       },
@@ -789,8 +789,8 @@
       "simulated_usage": {
         "cost_note": "N/A — no token prices supplied; no API call occurred.",
         "cost_usd": null,
-        "input_tokens": 182095,
-        "input_tokens_per_1000_pages": 182095.0,
+        "input_tokens": 144078,
+        "input_tokens_per_1000_pages": 144078.0,
         "output_tokens": 10514,
         "output_tokens_per_1000_pages": 10514.0
       },

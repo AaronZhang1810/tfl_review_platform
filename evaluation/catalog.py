@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 
-BENCHMARK_VERSION = "synthetic-tlf-benchmark-v1"
-SIMULATOR_VERSION = "simulated-llm-v1"
+BENCHMARK_VERSION = "synthetic-tlf-benchmark-v2"
+SIMULATOR_VERSION = "simulated-llm-v2"
 BENCHMARK_SEED = 20260808
 DISCLAIMER = (
     "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model "

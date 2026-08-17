@@ -10,6 +10,10 @@ This package provides a reproducible, offline demonstration of how to evaluate t
 
 The default benchmark has 50 fictional projects. Each project has ten current and ten prior pages with exactly one table per page: 1,000 pages in total. It plants exactly ten issues in each of 17 executable finding families, for 170 truth findings. Cross-document item 9, figures, listings, scanned PDFs, and patient-level data are excluded.
 
+## Case-record contract
+
+Each check opportunity stores only `opportunity_id`, `project_id`, `family`, `locator`, and observable `evidence`. The `family` ID is the single source of truth for the check title, risk, scope, operation, and detector group; those values live once in `taxonomy.json` and `evaluation/catalog.py` rather than being repeated in every record. The simulator's easy/medium/hard stratum is derived deterministically from the project and family indices. `locator.comparison_output` is populated only for a cross-output check and is `null` for structural, within-table, and current-versus-prior checks. A populated comparison label denotes a neutral synthetic table pair, not a clinically meaningful relationship.
+
 ## Run
 
 From the repository root:
@@ -30,7 +34,7 @@ python -m evaluation.run_benchmark \
 
 ## Statistical contract
 
-- Predictions match truth one-to-one by project, finding family, output, row, column, and comparison output. Message wording is ignored.
+- Predictions match truth one-to-one by project, finding family, output, row, column, and the nullable comparison output used only by cross-output families. Message wording is ignored.
 - Duplicates can match a truth finding only once; additional duplicates are false positives.
 - Confidence intervals use 2,000 paired percentile bootstrap resamples of whole projects, preserving within-delivery dependence.
 - Primary safety metrics include high-risk recall, false-positive findings per 100 current tables, clean-table specificity, issue-table miss rate, and unsafe auto-approval rate.

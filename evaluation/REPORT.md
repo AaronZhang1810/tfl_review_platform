@@ -2,7 +2,7 @@
 
 > **SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.**
 
-Benchmark `synthetic-tlf-benchmark-v1` · seed `20260808` · 2,000 paired whole-project bootstrap resamples.
+Benchmark `synthetic-tlf-benchmark-v2` · seed `20260808` · 2,000 paired whole-project bootstrap resamples.
 
 ## Executive result
 
@@ -54,14 +54,14 @@ Differences below are hybrid minus comparator. Lower is preferable for false-pos
 ## Evaluation contract and limitations
 
 - Predictors see generated cases; only the scorer sees the separate truth labels.
-- Matching is one-to-one by project, family, output, row, column, and comparison output. Duplicate predictions cannot reuse a truth match.
+- Matching is one-to-one by project, family, output, row, column, and the nullable comparison output used only by cross-output families. Duplicate predictions cannot reuse a truth match.
 - The rules-only arm contains the platform's current structural families only; it is not a general non-AI TLF reviewer.
 - Simulator probabilities are recorded assumptions, not fitted model characteristics.
 - Results do not support regulatory validation, medical decisions, production deployment, or performance claims on real documents.
 
 ## Reproducibility
 
-- Executable source SHA-256: `d7de2c0dbb3f58d3f3fc3ad0e14db1375801a3f38b995d43331e564225482bfc`
+- Executable source SHA-256: `371e9ec45022fd4dc33335c097ecfa5c979596847971d5670274534955110157`
 - Dependency-lock SHA-256: `4dff8cbfaad8fd4ceb05ea401768e8cfb14656dc71cd4b112b1a2bc509d55254`
 - Dependency lock: `requirements-lock.txt`
 - `artifact_hashes.txt` binds every deterministic checked artifact; machine-dependent runtime metadata is intentionally excluded.

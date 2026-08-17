@@ -22,7 +22,8 @@ if __package__ in (None, ""):  # Permit ``python evaluation/run_benchmark.py``.
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from evaluation.catalog import (BENCHMARK_SEED, BENCHMARK_VERSION, DISCLAIMER,
-                                FAMILIES, SIMULATOR_VERSION, taxonomy_json)
+                                FAMILY_BY_ID, FAMILIES, SIMULATOR_VERSION,
+                                taxonomy_json)
 from evaluation.generate import generate_dataset, validate_dataset
 from evaluation.report import DISPLAY, metrics_csv, render_html, render_markdown
 from evaluation.scoring import score_all
@@ -113,7 +114,7 @@ def _dataset_card(cases: list[dict], truth: list[dict]) -> dict:
     by_risk = {"High": 0, "Low": 0}
     for item in truth:
         by_family[item["family"]] += 1
-        by_risk[item["risk"]] += 1
+        by_risk[FAMILY_BY_ID[item["family"]].risk] += 1
     opportunities = sum(len(c["opportunities"]) for c in cases)
     return {
         "name": "Synthetic one-table-per-page TLF stress benchmark",
@@ -222,6 +223,17 @@ def run(output_dir: Path, *, n_projects: int = 50, positives_per_family: int = 1
         "bootstrap_unit": "project",
         "matching_key": ["project_id", "family", "output_label", "row", "column",
                          "comparison_output"],
+        "opportunity_record": {
+            "stored_fields": ["opportunity_id", "project_id", "family", "locator",
+                              "evidence"],
+            "family_metadata_source": "taxonomy.json / evaluation.catalog.FAMILY_BY_ID",
+            "derived_family_fields": ["title", "risk", "scope", "operation",
+                                      "detector_group"],
+            "difficulty": (
+                "derived deterministically from zero-based project and family indices"
+            ),
+            "comparison_output": "non-null only for cross-output families",
+        },
         "simulator_assumptions": {
             "detection_probability": DETECTION_PROBABILITY,
             "false_positive_probability": FALSE_POSITIVE_PROBABILITY,

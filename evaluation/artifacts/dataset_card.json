@@ -1,5 +1,5 @@
 {
-  "benchmark_version": "synthetic-tlf-benchmark-v1",
+  "benchmark_version": "synthetic-tlf-benchmark-v2",
   "clean_opportunities": 680,
   "current_pages": 500,
   "disclaimer": "SYNTHETIC ENGINEERING BENCHMARK — all studies, tables, counts, and model behaviors are simulated. Results do not measure performance on real TLFs, do not constitute clinical validation, and do not establish regulatory fitness.",

@@ -5,8 +5,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from evaluation.catalog import DISCLAIMER, FAMILIES, STRUCTURAL_FAMILIES
-from evaluation.generate import evidence_is_violation, generate_dataset, validate_dataset
+from evaluation.catalog import DISCLAIMER, FAMILY_BY_ID, FAMILIES, STRUCTURAL_FAMILIES
+from evaluation.generate import (evidence_is_violation, generate_dataset,
+                                 opportunity_difficulty, validate_dataset)
 from evaluation.run_benchmark import _canonicalize_floats, reproducibility_record, run
 from evaluation.scoring import one_to_one_match, score_all
 from evaluation.systems import (HYBRID, LLM_ONLY, RULES_ONLY, dedupe_predictions,
@@ -40,6 +41,58 @@ class GenerationTests(unittest.TestCase):
                     if evidence_is_violation(o)}
         labeled = {t["opportunity_id"] for t in self.truth}
         self.assertEqual(inferred, labeled)
+
+    def test_opportunity_records_are_normalized(self):
+        expected = {"opportunity_id", "project_id", "family", "locator", "evidence"}
+        locator_fields = {
+            "output_label", "page", "row", "column", "comparison_output",
+        }
+        for case in self.cases:
+            for opportunity in case["opportunities"]:
+                self.assertEqual(set(opportunity), expected)
+                self.assertEqual(set(opportunity["locator"]), locator_fields)
+                family = FAMILY_BY_ID[opportunity["family"]]
+                self.assertEqual(
+                    opportunity["locator"]["comparison_output"] is not None,
+                    family.scope == "cross_output",
+                )
+                self.assertIn(opportunity_difficulty(opportunity),
+                              {"easy", "medium", "hard"})
+
+    def test_truth_records_derive_risk_from_taxonomy(self):
+        expected = {
+            "truth_id", "opportunity_id", "project_id", "family", "locator",
+            "evidence",
+        }
+        self.assertTrue(all(set(item) == expected for item in self.truth))
+        self.assertEqual(
+            sum(FAMILY_BY_ID[item["family"]].risk == "High" for item in self.truth),
+            120,
+        )
+
+    def test_concrete_within_table_opportunity_uses_clean_schema(self):
+        opportunity = next(
+            item
+            for case in self.cases
+            for item in case["opportunities"]
+            if item["opportunity_id"] == "SYN-P005:AIW-2.1"
+        )
+        self.assertEqual(
+            opportunity,
+            {
+                "opportunity_id": "SYN-P005:AIW-2.1",
+                "project_id": "SYN-P005",
+                "family": "AIW-2.1",
+                "locator": {
+                    "output_label": "Table 4",
+                    "page": 4,
+                    "row": "SYNTHETIC ROW 4",
+                    "column": "Drug X",
+                    "comparison_output": None,
+                },
+                "evidence": {"addends": [45, 49], "printed_total": 91},
+            },
+        )
 
     def test_generation_is_reproducible(self):
         cases2, truth2 = generate_dataset()

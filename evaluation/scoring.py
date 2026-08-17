@@ -60,7 +60,10 @@ def _project_record(case: dict, truth: list[dict], predictions: list[dict],
     tp = len(match["matched"])
     fp = len(match["false_positives"])
     fn = len(match["missed"])
-    high_truth = {t["truth_id"] for t in truth if t["risk"] == "High"}
+    high_truth = {
+        t["truth_id"] for t in truth
+        if FAMILY_BY_ID[t["family"]].risk == "High"
+    }
     matched_truth = {m["truth_id"] for m in match["matched"]}
 
     tables = {f"Table {i}" for i in range(1, 11)}

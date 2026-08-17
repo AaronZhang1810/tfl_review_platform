@@ -186,8 +186,9 @@ def render_markdown(
         "## Evaluation contract and limitations",
         "",
         "- Predictors see generated cases; only the scorer sees the separate truth labels.",
-        "- Matching is one-to-one by project, family, output, row, column, and comparison "
-        "output. Duplicate predictions cannot reuse a truth match.",
+        "- Matching is one-to-one by project, family, output, row, column, and the nullable "
+        "comparison output used only by cross-output families. Duplicate predictions cannot "
+        "reuse a truth match.",
         "- The rules-only arm contains the platform's current structural families only; it is "
         "not a general non-AI TLF reviewer.",
         "- Simulator probabilities are recorded assumptions, not fitted model characteristics.",
@@ -326,7 +327,7 @@ small,.muted{{color:var(--muted)}} code{{font-size:.9em}} .score{{white-space:no
  <li>The rules-only arm contains only the current structural finding families: <code>FMT-010</code>, <code>XOUT-020</code>, and <code>XOUT-001</code>.</li>
  <li>The LLM-only arm is a seeded probabilistic simulator. Its probabilities are assumptions recorded in <code>benchmark_config.json</code>, not fitted or observed model characteristics.</li>
  <li>The hybrid receives the exact same raw simulated LLM predictions, then applies structural rules, arithmetic verification, deduplication, self-check simulation, and an incomplete-coverage auto-approval gate.</li>
- <li>Predictions match truth by project, family, output, row, column, and comparison output. Text similarity is never used, and duplicate predictions can match a truth finding only once.</li>
+ <li>Predictions match truth by project, family, output, row, column, and the nullable comparison output used only by cross-output families. Text similarity is never used, and duplicate predictions can match a truth finding only once.</li>
  <li>Before clinical use, replace this synthetic proxy with locked real-model runs on appropriately governed, expert-adjudicated data under the applicable SOPs.</li>
 </ul>
 <p class="muted"><strong>Reproducibility:</strong> executable source SHA-256

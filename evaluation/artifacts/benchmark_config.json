@@ -1,5 +1,5 @@
 {
-  "benchmark_version": "synthetic-tlf-benchmark-v1",
+  "benchmark_version": "synthetic-tlf-benchmark-v2",
   "bootstrap_iterations": 2000,
   "bootstrap_unit": "project",
   "current_tables_per_project": 10,
@@ -15,6 +15,25 @@
     "comparison_output"
   ],
   "one_table_per_page": true,
+  "opportunity_record": {
+    "comparison_output": "non-null only for cross-output families",
+    "derived_family_fields": [
+      "title",
+      "risk",
+      "scope",
+      "operation",
+      "detector_group"
+    ],
+    "difficulty": "derived deterministically from zero-based project and family indices",
+    "family_metadata_source": "taxonomy.json / evaluation.catalog.FAMILY_BY_ID",
+    "stored_fields": [
+      "opportunity_id",
+      "project_id",
+      "family",
+      "locator",
+      "evidence"
+    ]
+  },
   "pages_per_project": 20,
   "positives_per_family": 10,
   "prior_tables_per_project": 10,
@@ -30,7 +49,7 @@
       "evaluation/scoring.py",
       "evaluation/systems.py"
     ],
-    "source_tree_sha256": "d7de2c0dbb3f58d3f3fc3ad0e14db1375801a3f38b995d43331e564225482bfc"
+    "source_tree_sha256": "371e9ec45022fd4dc33335c097ecfa5c979596847971d5670274534955110157"
   },
   "seed": 20260808,
   "simulator_assumptions": {
@@ -57,7 +76,7 @@
     "numeric_citation_corruption_probability": 0.04,
     "self_check_recovery_probability": 0.82
   },
-  "simulator_version": "simulated-llm-v1",
+  "simulator_version": "simulated-llm-v2",
   "token_prices_per_million": {
     "input": null,
     "output": null
