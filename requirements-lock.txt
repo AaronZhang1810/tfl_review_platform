@@ -45,7 +45,7 @@ platformdirs==4.11.1
 pluggy==1.6.0
 py-serializable==2.1.0
 pycparser==3.0
-pydantic==2.13.4
+pydantic==2.13.5
 pydantic_core==2.46.4
 Pygments==2.20.0
 pyparsing==3.3.2
