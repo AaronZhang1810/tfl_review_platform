@@ -23,9 +23,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-demo = ["reportlab>=4.2,<5"]
+demo = ["reportlab>=4.2,<6"]
 dev = [
-  "reportlab>=4.2,<5",
+  "reportlab>=4.2,<6",
   "fpdf2>=2.8,<3",
   "bandit>=1.9,<2",
   "pytest>=8.3,<10",
